@@ -1,0 +1,58 @@
+% XeLaTeX can use any Mac OS X font. See the setromanfont command below.
+% Input to XeLaTeX is full Unicode, so Unicode characters can be typed directly into the source.
+
+% The next lines tell TeXShop to typeset with xelatex, and to open and save the source with Unicode encoding.
+
+%!TEX TS-program = xelatexmk
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[authoryearcitations]{UoYCSproject}
+\author{Andrew Durant}
+\title{Wireless Sensor Networks}
+%\date{}
+\supervisor{James Harbin}
+\MEng
+\wordcount{0}
+
+\includes{}
+
+\excludes{}
+
+\abstract{ \LaTeXe\ is a document markup and processing system built
+  upon Donald Knuth's type-setting system, \TeX.
+   
+  \lstinline|UoYCSproject| is a \LaTeXe\ class for producing reports
+  describing projects taken as part of a taught course in the
+  Department of Computer Science at the University of York.  (It is
+  not designed for research degree reports.)
+  
+  A brief introduction to \LaTeXe\ is given.  The
+  \lstinline|UoYCSproject| class is described.
+  
+  This document itself is (inappropriately) an example of the use of
+  the class \lstinline|UoYCSproject|.
+}
+
+\dedication{To all students everywhere}
+
+\acknowledgements{
+  I would like to thank my goldfish for all the help it gave me
+  writing this document.
+ 
+  As usual, my boss was an inspiring source of sagacious advice.
+}
+
+% More definitions & declarations in example.ldf
+
+\begin{document}
+\maketitle
+\listoffigures
+\listoftables
+\renewcommand*{\lstlistlistingname}{List of Listings}
+\lstlistoflistings
+
+\chapter{Introduction}
+\label{cha:Introduction}
+
+
+\end{document}

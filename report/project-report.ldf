@@ -1,0 +1,38 @@
+% extra packages and tweakings of their parameters
+
+\usepackage{color}
+
+% For code listings
+\usepackage{listings}
+\lstloadlanguages{[LaTeX]TeX}
+\lstset{%
+  language=[LaTeX]TeX,%
+  keywordstyle={\sffamily\bfseries\upshape},%
+  identifierstyle={\sffamily\mdseries\upshape},%
+  commentstyle={\upshape},%
+  columns={fullflexible},%
+  captionpos={b},%
+  showspaces={false},%
+  gobble={2},%
+  frame=single
+}
+
+% A command to record where the LaTeX source files live and a command
+% to typeset urls at that place
+
+\newcommand*{\UoYCSprojecthome}{file:///Users/aj/projects/wsn/report/}
+\newcommand*{\urlUoYCSP}[1]{\url{\UoYCSprojecthome#1}}
+
+% Commands to typeset logotypes.
+
+% BibTeX (why isn't this defined in the LaTeX base?)
+
+\newcommand*{\BibTeX}{\mbox{{\mdseries\scshape\rmfamily Bib}\hspace{-0.1em}\TeX}}
+
+% CTAN
+
+\newcommand*{\CTAN}{\href{http://www.ctan.org/}{CTAN}}
+
+% METAFONT
+
+\usepackage{mflogo}
