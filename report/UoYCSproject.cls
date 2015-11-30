@@ -11,7 +11,7 @@
 % 2004Apr27  Initial version
 % 2004May10  Generation of list of tables and figures removed
 % 2004Dec08  Minor fixes to error messages
-% 2005Feb02  Package pdfcprot replaced by microtype 
+% 2005Feb02  Package pdfcprot replaced by microtype
 % 2005Apr12  dedication and acknowledgements now come after abstract
 % 2005Jul27  added option `sc' to `mathpazo' package & `textcomp' package
 % 2005Aug31  added packages for Helvetica and Courier fonts
@@ -68,6 +68,7 @@
 \UoYCSP@mk@degree{BSc}
 \UoYCSP@mk@degree{MEng}
 \UoYCSP@mk@degree{MMath}
+\newcommand*{\CSESE}{\newcommand*{\UoYCSP@degree}{MEng~in Computer~Science~with~Embedded~Systems~Engineering}}
 \newcommand*{\SWE}{\newcommand*{\UoYCSP@degree}{MSc~in~Software~Engineering}}
 \newcommand*{\SCSE}{\newcommand*{\UoYCSP@degree}{MSc~in~Safety~Critical~Systems~Engineering}}
 \newcommand*{\MIP}{\newcommand*{\UoYCSP@degree}{MSc~in~Information~Processing}}
@@ -83,7 +84,7 @@
 \newcommand*{\UoYCSP@excludes}{}
 \newcommand*{\supervisor}[1]{\newcommand*{\UoYCSP@supervisor}{#1}}
 
-\date{\fbox{\Huge DRAFT PROCESSED \today}}
+\date{\fbox{\huge DRAFT PROCESSED \today}}
 
 \titlehead{The University of York\hfill Department of Computer Science}
 
@@ -105,7 +106,7 @@
   \ifx\UoYCSP@supervisor\undefined%
     \ClassError{UoYCSproject}%
                {supervisor not set}
-               {Declare the supervisor in the preamble using \protect\supervisor{Name}}  
+               {Declare the supervisor in the preamble using \protect\supervisor{Name}}
   \else%
     Supervisor: \UoYCSP@supervisor%
   \fi%
@@ -118,7 +119,7 @@
                {Declare the word count in the preamble using \protect\wordcount{Numeral}.} %
   \else
     Number of words = \UoYCSP@wordcount, as counted by
-    \textsf{wc~-w}.
+    \textsf{texcount -sum -1 project-report.tex}.
   \fi
 
   This includes the body of the report%
@@ -210,7 +211,7 @@
   }%
   \cleardoublepage%
   \microtypesetup{protrusion=false}%
-  \tableofcontents%  
+  \tableofcontents%
   \microtypesetup{protrusion=true}%
 }
 
