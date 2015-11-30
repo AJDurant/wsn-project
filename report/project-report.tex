@@ -45,7 +45,51 @@
 \chapter{Literature Review}
 \label{cha:LitReview}
 
+Wireless sensor networks are used in a wide range of applications, and in recent times this is only expanding. Due to their nature of being small, low-power devices, and the common network connectivity being multi-hop routing, network dropouts and partitioning of devices is a common problem that has been tackled in a variety of ways. There are two main approaches to network and device management for combating and fixing these issues, the distributed approach and the centralised approach.
+
+According to \citet{Tong2009} self-healing by means of mobile nodes still remains a greatly unstudied area.
+
+The effectiveness of these two approaches is debated, however the application for a particular WSN determines the effectiveness of a particular algorithm or management paradigm. Certain use cases, for example in industrial equipment monitoring, power usage is less likely to be an important contributing factor but speed of detection and recovery might be more pressing. In an environmental monitoring situation network nodes are more likely to be physically difficult to get to once deployed, and longevity of battery power is highly important.
+
+With these considerations, performance metrics for particular algorithms may not give a fair comparison, as algorithms optimised for low power consumption have a very different purpose to those optimised for rapid recovery. However the approaches and algorithms for communication in WSNs are still very different from traditional networking models because it is common for the network topology and availability to change often and quickly, the storage and network capacity is much lower, and wireless channels are prone to interference and dropouts.
+
 \section{Self-Healing Algorithms}
+
+\subsection{Distributed}
+
+There have been many algorithms developed for distributed control and self-healing for WSNs as a large amount to academic research has gone into systems such as environmental monitoring. A basis for many of these are DARA \citep{Abbasi2007} and PADRA \citep{Akkaya2008} which both aim to restore connectivity to a local area after a node has failed, whilst minimising the total distance travelled, and without external supervision or involvement.
+
+RIM \citep{Younis2010} improves upon DARA and PADRA which each need 2-hop knowledge of the network to only requiring 1-hop knowledge on each node. This significantly reduces the network overhead for maintaining the required knowledge of the network topology, however the simplicity means that the distance travelled by the nodes is greater in larger networks for RIM than for DARA and PADRA. Depending on the application for the WSN the communication overhead to maintain the topology data could be justified over the generally more efficient algorithm.
+
+- p2 Lots of detailed information / calculation is too much overhead for low-power / complexity systems, particularly if they can change often / easily
+
+- Only localised algorithms are properly scalable
+
+Another flaw in RIM is that it assumes and requires only one node failure at a time. Whilst this may be the case, failures in WSNs are most commonly battery depletion, which is likely to occur at similar times across the network, or random failure due to environmental conditions, which could happen at any time to one or multiple nodes.
+
+SFRA \citep{Alfadhly2012} aims to combat the multiple failure problem of RIM.
+
+- Designed for multiple simultaneous failures
+
+- fair bit of overhead in building the trees
+
+- Waiting for all child node messages reduces the number of updates needed to send
+
+
+- mobile nodes
+
+- most algorithms require knowledge of location / GPS
+
+\subsection{Centralised}
+
 \section{WSN Applications}
+
+\section{Performance Metrics}
+
+\section{Simulation Environment / Real World Factors}
+
+- Weibull reliability function - useful for simulating node failures?
+
+\bibliography{project-report}
 
 \end{document}
