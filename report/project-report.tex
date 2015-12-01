@@ -59,26 +59,16 @@ With these considerations, performance metrics for particular algorithms may not
 
 There have been many algorithms developed for distributed control and self-healing for WSNs as a large amount to academic research has gone into systems such as environmental monitoring. A basis for many of these are DARA \citep{Abbasi2007} and PADRA \citep{Akkaya2008} which both aim to restore connectivity to a local area after a node has failed, whilst minimising the total distance travelled, and without external supervision or involvement.
 
-RIM \citep{Younis2010} improves upon DARA and PADRA which each need 2-hop knowledge of the network to only requiring 1-hop knowledge on each node. This significantly reduces the network overhead for maintaining the required knowledge of the network topology, however the simplicity means that the distance travelled by the nodes is greater in larger networks for RIM than for DARA and PADRA. Depending on the application for the WSN the communication overhead to maintain the topology data could be justified over the generally more efficient algorithm.
-
-- p2 Lots of detailed information / calculation is too much overhead for low-power / complexity systems, particularly if they can change often / easily
-
-- Only localised algorithms are properly scalable
+RIM \citep{Younis2010} improves upon DARA and PADRA which each need 2-hop knowledge of the network to only requiring 1-hop knowledge on each node. This significantly reduces the network overhead for maintaining the required knowledge of the network topology, however the simplicity means that the distance travelled by the nodes is greater in larger networks for RIM than for DARA or PADRA. Calculating and transmitting a lot of detailed information is often considered too much overhead for low-power, low-complexity systems, particularly if the network can change often or easily. Depending on the application for the WSN the communication overhead to maintain the topology data could be justified over the generally more efficient algorithm.
 
 Another flaw in RIM is that it assumes and requires only one node failure at a time. Whilst this may be the case, failures in WSNs are most commonly battery depletion, which is likely to occur at similar times across the network, or random failure due to environmental conditions, which could happen at any time to one or multiple nodes.
 
-SFRA \citep{Alfadhly2012} aims to combat the multiple failure problem of RIM.
+SFRA \citep{Alfadhly2012} is designed specifically to deal with multiple simultaneous failures to combat the multiple failure problem in RIM. Network trees are built from the root node, with local cluster-head nodes, this introduces a fair amount of network overhead compared with RIM. The number of updates needed to send is reduced by waiting for all child node messages before propagating back up the tree.
 
-- Designed for multiple simultaneous failures
-
-- fair bit of overhead in building the trees
-
-- Waiting for all child node messages reduces the number of updates needed to send
-
-
-- mobile nodes
-
+- Only localised algorithms are properly scalable
+- mobile nodes / redundant distribution
 - most algorithms require knowledge of location / GPS
+- bio-inspired approaches
 
 \subsection{Centralised}
 
