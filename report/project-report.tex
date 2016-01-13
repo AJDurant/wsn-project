@@ -45,15 +45,21 @@
 \chapter{Literature Review}
 \label{cha:LitReview}
 
-Wireless sensor networks are used in a wide range of applications, and in recent times this is only expanding. Due to their nature of being small, low-power devices, and the common network connectivity being multi-hop routing, network dropouts and partitioning of devices is a common problem that has been tackled in a variety of ways. There are two main approaches to network and device management for combating and fixing these issues, the distributed approach and the centralised approach.
+% Introduction
 
-According to \citet{Tong2009} self-healing by means of mobile nodes still remains a greatly unstudied area.
+In order to consider self-healing in real-world applications of wireless sensor networks an understanding of the possible applications is required. A survey of approaches to self-healing is then presented along with metrics that can be used to evaluate and compare them. This is followed with a review of evaluation techniques and real-world factors for wireless sensor networks.
 
-The effectiveness of these two approaches is debated, however the application for a particular WSN determines the effectiveness of a particular algorithm or management paradigm. Certain use cases, for example in industrial equipment monitoring, power usage is less likely to be an important contributing factor but speed of detection and recovery might be more pressing. In an environmental monitoring situation network nodes are more likely to be physically difficult to get to once deployed, and longevity of battery power is highly important.
+\section{WSN applications}
 
-With these considerations, performance metrics for particular algorithms may not give a fair comparison, as algorithms optimised for low power consumption have a very different purpose to those optimised for rapid recovery. However the approaches and algorithms for communication in WSNs are still very different from traditional networking models because it is common for the network topology and availability to change often and quickly, the storage and network capacity is much lower, and wireless channels are prone to interference and dropouts.
 
-\section{Self-Healing Algorithms}
+
+\section{Approaches to self-healing in WSNs}
+
+
+
+\subsection{Centralised}
+
+
 
 \subsection{Distributed}
 
@@ -68,17 +74,30 @@ SFRA \citep{Alfadhly2012} is designed specifically to deal with multiple simulta
 - Only localised algorithms are properly scalable
 - mobile nodes / redundant distribution
 - most algorithms require knowledge of location / GPS
-- bio-inspired approaches
+- biological-inspired approaches
 
-\subsection{Centralised}
+\section{Metrics for evaluating self-healing WSNs}
 
-\section{WSN Applications}
 
-\section{Performance Metrics}
-
-\section{Simulation Environment / Real World Factors}
+\section{Review of evaluation techniques for WSNs}
 
 - Weibull reliability function - useful for simulating node failures?
+
+% benefits and drawbacks of simulation / real-word factors affecting
+
+\section{Conclusions}
+
+
+\chapter{}
+
+Wireless sensor networks are used in a wide range of applications, and in recent times this is only expanding. Due to their nature of being small, low-power devices, and the common network connectivity being multi-hop routing, network drop-outs and partitioning of devices is a common problem that has been tackled in a variety of ways. There are two main approaches to network and device management for combating and fixing these issues, the distributed approach and the centralised approach.
+
+According to \citet{Tong2009} self-healing by means of mobile nodes still remains a greatly unstudied area.
+
+The effectiveness of these two approaches is debated, however the application for a particular WSN determines the effectiveness of a particular algorithm or management paradigm. Certain use cases, for example in industrial equipment monitoring, power usage is less likely to be an important contributing factor but speed of detection and recovery might be more pressing. In an environmental monitoring situation network nodes are more likely to be physically difficult to get to once deployed, and longevity of battery power is highly important.
+
+With these considerations, performance metrics for particular algorithms may not give a fair comparison, as algorithms optimised for low power consumption have a very different purpose to those optimised for rapid recovery. However the approaches and algorithms for communication in WSNs are still very different from traditional networking models because it is common for the network topology and availability to change often and quickly, the storage and network capacity is much lower, and wireless channels are prone to interference and drop-outs.
+
 
 \bibliography{project-report}
 
