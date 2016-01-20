@@ -15,3 +15,14 @@ use diagrams for protocols - expand on their results and conclusions
 
 part of feasibility - economic cost
 requirements from other algorithms eg localisation
+
+
+
+centralised approaches tend to focus on energy efficient routing / deployment
+
+
+
+if you can choose your deployment locations - eg within a building - an a priori centralised deployment plan will produce the best network for beginning with.
+if you are in an open and/or changing environment non-priori distributed management of the network will be more successful as it can adapt.
+however once any network is running it may need to adapt.
+

@@ -66,7 +66,18 @@ Environmental monitoring on volcanoes has been investigated by \citet{Werner-All
 
 \subsection{Centralised}
 
+The main way centralised approaches are used in WSNs is in the configuration of the network structure to minimise energy use and ensure good coverage of the area of interest \citep{Wang2003,Ding2005,Wang2005,Derr2013}. Centralised evaluation of the network and area of interest prior to deployment ensures the connectivity and coverage requirements of the application are met.
+\begin{quote}
+Coverage requires that every location in the sensing field is monitored by at least one sensor. Connectivity requires that the network is not partitioned in terms of nodes' communication capability. Note that coverage is affected by sensors' sensitivity, while connectivity is influenced by sensors' communication ranges.
+\citep{Wang2005}
+\end{quote}
+These vary by application for instance, detection and localisation of events require multiple nodes covering smaller areas (a dense coverage) whereas other applications may only need one node within its transmission range (a sparse coverage). By pre-planning to match the deployment to the application needs the network will be much more efficient in power use and accurate in data collection.
 
+Networks with a high degree of connectivity are more resilient to node failures. \Citet{Wang2003} investigate the relationship between coverage and connectivity to produce an integrated solution that is able to maintain both requirements whilst reducing energy consumption. The degree of connectivity is described as $K$-connected, where any $K-1$ nodes may fail without loosing network connectivity. So the higher the connectivity ($>K$) the more nodes are able to fail without disrupting the rest of the functioning network.
+
+Due to the differences in applications a number of application specific methods have been proposed in addition to those previously mentioned \citep{Meguerdichian2001,Meguerdichian2001a,Meguerdichian2003}. All of these provide for different application requirements in different ways. However a single parametrised method that can be applied to many differing applications has been developed by \citet*{Derr2013}. This allows the specification of the number of nodes and the distance between the nodes which defines the desired coverage and connectivity respectively. The algorithm can then take a mesh of the area and simplify it to provide the desired parameters.
+
+Most centralised approaches use a priori information to specify exact deployment in the area of interest. However \citet*{Qu2012} have developed a post deployment particle swarm optimization (PSO) algorithm that is computed centrally to provide optimal coverage and reduce energy consumption. A centralised algorithm is able to understand the entire network, available devices, and area, and therefore produce the optimal distribution of nodes. The nodes are on a mobile platform that is able to move within the area. Reduction of energy consumption is done by dynamically reducing the range of sensing and communication on each device to the minimum needed once the locations have been determined. \citeauthor*{Qu2012} do not address node failures, as they assume all node are working throughout the time of use.
 
 \subsection{Distributed}
 
