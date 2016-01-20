@@ -81,6 +81,8 @@ Most centralised approaches use a priori information to specify exact deployment
 
 \subsection{Distributed}
 
+In \citet{Abbasi2007}'s seminal paper DARA (a Distributed Actor Recovery Algorithm) in introduced. Developing a localised scheme to restore a network of mobile nodes when it has been partitioned by a node failure. The distributed nature of the algorithm avoids involving every single node, only requiring the local nodes to respond. The algorithm selects a node to replace a failed node and coordinates the local nodes to relocate to rebuild the network. As nodes relocate they may cause other partitioning, but this is dealt with in the same way forming a chain reaction until the entire network is reconnected. The self-healing process requires no supervision or centralised control.
+
 There have been many algorithms developed for distributed control and self-healing for WSNs as a large amount to academic research has gone into systems such as environmental monitoring. A basis for many of these are DARA \citep{Abbasi2007} and PADRA \citep{Akkaya2008} which both aim to restore connectivity to a local area after a node has failed, whilst minimising the total distance travelled, and without external supervision or involvement.
 
 RIM \citep{Younis2010} improves upon DARA and PADRA which each need 2-hop knowledge of the network to only requiring 1-hop knowledge on each node. This significantly reduces the network overhead for maintaining the required knowledge of the network topology, however the simplicity means that the distance travelled by the nodes is greater in larger networks for RIM than for DARA or PADRA. Calculating and transmitting a lot of detailed information is often considered too much overhead for low-power, low-complexity systems, particularly if the network can change often or easily. Depending on the application for the WSN the communication overhead to maintain the topology data could be justified over the generally more efficient algorithm.
@@ -89,10 +91,13 @@ Another flaw in RIM is that it assumes and requires only one node failure at a t
 
 SFRA \citep{Alfadhly2012} is designed specifically to deal with multiple simultaneous failures to combat the multiple failure problem in RIM. Network trees are built from the root node, with local cluster-head nodes, this introduces a fair amount of network overhead compared with RIM. The number of updates needed to send is reduced by waiting for all child node messages before propagating back up the tree.
 
-- Only localised algorithms are properly scalable
-- mobile nodes / redundant distribution
-- most algorithms require knowledge of location / GPS
-- biological-inspired approaches
+Distributed approaches become much more efficient as the network scales because they are only concerned with the local nodes that are directly reachable. This allows networks built upon distributed algorithms to become much larger, and cover much wider areas as the overhead increase from additional nodes is minimal compared with the exponential increase in complexity from the centralised approaches.
+
+A number of biologically-inspired approaches exist utilising animal and insect coordination and inspired methods of load balancing. \citet{Caliskanelli2014} suggests the application of bee pheromone based load balancing to node distribution. The main thesis applies this algorithm to node redundancy enabling and disabling nodes within a dense area to preserve their life when they are unneeded. By deciding upon a cluster head for an area all other nodes move to a dormant state but coverage is maintained. If an active cluster head fails then a new cluster head will be assigned. Each cluster head emits a pheromone signal that prevents other nodes from becoming the head. To apply this to distribution, each node could emit a pheromone signal and move away from other signals within a maximum distance.
+
+Another approach based upon the behaviour of ants in a colony has been introduced by \citet{Wang2014}. The system separates mobile nodes from the normal sensor nodes that are static. The network functions as normal on the static nodes. However if there is a need for relocation of a node, due to failure or any other cause, the mobile nodes can pick up the static nodes and travel with them to another location redeploying them there. This reduces the power and cost overheads of adding mobility to all of the nodes. The mobile nodes can carry a larger battery or travel to a charging station when not actively moving nodes.
+
+A similar approach has been taken by \citet{Xu2015} for mobile nodes with high power capacity to travel between static sensor nodes, however the mobile nodes here are for recharging the static nodes. In most cases the reason for node failure is depletion of the battery, if this is the case, being able to recharge the sensor nodes in place increases the theoretical length of network use indefinitely.
 
 \section{Metrics for evaluating self-healing WSNs}
 
@@ -100,6 +105,8 @@ SFRA \citep{Alfadhly2012} is designed specifically to deal with multiple simulta
 \section{Review of evaluation techniques for WSNs}
 
 - Weibull reliability function - useful for simulating node failures?
+
+Most distribution / relocation algorithms require knowledge of the node location. Investigation into this is outside the scope of this paper, however there are many methods of obtaining location from GPS receivers to self-localisation algorithms that are well summarised by \citet*{Hu2004} and \citet*{Mao2007}.
 
 % benefits and drawbacks of simulation / real-word factors affecting
 
@@ -118,5 +125,7 @@ With these considerations, performance metrics for particular algorithms may not
 
 
 \bibliography{project-report}
+
+%author = {\c{C}al\i\c{s}kanelli, \.{I}pek},
 
 \end{document}
