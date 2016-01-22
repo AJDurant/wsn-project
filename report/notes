@@ -26,3 +26,25 @@ if you can choose your deployment locations - eg within a building - an a priori
 if you are in an open and/or changing environment non-priori distributed management of the network will be more successful as it can adapt.
 however once any network is running it may need to adapt.
 
+
+
+what assumptions have been made over reliability - what has been done to achieve reliability
+
+what advantages and disadvantages are there in their proposal
+critical analysis over what a protocol provides - figures on energy consumption etc.
+
+advantages and disadvantages of dist/central
+
+what that the actual failures, how do you know they have actually occurred / are just transient
+
+metrics:
+- time to recovery
+- energy consumption
+- energy wastage?
+- external dependencies?
+what are used by the papers, and why?
+ranking / comparison in a table
+
+conclusions:
+advantages/disadvantages - showing application dependence
+key points of metrics and evaluation
