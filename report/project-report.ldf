@@ -36,3 +36,9 @@
 % METAFONT
 
 \usepackage{mflogo}
+
+% GRAPHICS
+
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
