@@ -50,3 +50,20 @@ is there a metrics survey paper?
 conclusions:
 advantages/disadvantages - showing application dependence
 key points of metrics and evaluation
+
+
+document design choices - why visual sense, why not viptos etc.
+
+
+Simulation:
+
+potential for looking at optimisation of models and performance
+
+transient failures
+power from data-sheets
+multi-hop
+realistic channel - collisions etc
+java code for comms - otherwise it will be a mess
+mobility
+
+execution time - allows performance measurement

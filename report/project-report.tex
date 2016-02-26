@@ -115,12 +115,16 @@ Due to the differences in applications a number of application specific methods 
 
 Most centralised approaches use a priori information to specify exact deployment in the area of interest. However \citet*{Qu2012} have developed a post deployment particle swarm optimization (PSO) algorithm that is computed centrally to provide optimal coverage and reduce energy consumption. A centralised algorithm is able to understand the entire network, available devices, and area, and therefore produce the optimal distribution of nodes. The nodes are on a mobile platform that is able to move within the area. Reduction of energy consumption is done by dynamically reducing the range of sensing and communication on each device to the minimum needed once the locations have been determined. \citeauthor*{Qu2012} do not address node failures, as they assume all node are working throughout the time of use. The distance measurement is also assumed to be for a point-to-point movement with no consideration for difficulties navigating the terrain. The energy considerations take account of the mobility and sensing of the node, the other components power usage is ignored as it is not increased by the algorithm. The centralised calculations for deployment take place on a device with unlimited power. The significance of the algorithm is dependent upon the relative energy consumption of sensing and movement. If sensing requires more energy then the algorithm can provide significant improvements, however when movement has a higher energy cost the saving is negligible.
 
+No consideration is made for the energy cost of transmitting additional messages back to the root node, this is a concern as if all messages must be relayed back, the nodes near the top of the tree will have a significantly larger number of messages to receive and transmit, reducing their lifetime dramatically. This is partly mitigated by the algorithm only running at deployment rather than throughout, however the nodes closest to the root will still be depleted first, and therefore cut off communication in the network. Provision should be made for this, but \citeauthor*{Qu2012} leave it unmentioned.
+
 % JAMES
 % Qu and Georgakopolous... is their energy reduction taking into
 % account the additional costs of coordinating via the sink
 % nodes?
 %
 % done
+%
+% concerns over missing information
 
 \subsection{Distributed}
 
@@ -143,6 +147,8 @@ Another flaw in RIM is that it assumes and requires only one node failure at a t
 % JAMES
 % DARA, PADRA and RIM... what results do they give and how were they
 % evaluated in their papers.
+
+% a bit more explanation of diagrams / annotations
 
 SFRA \citep{Alfadhly2012} is designed specifically to deal with multiple simultaneous failures to combat the multiple failure problem in RIM. Network trees are built from the root node, with local cluster-head nodes, this introduces a fair amount of network overhead compared with RIM. The number of updates needed to send is reduced by waiting for all child node messages before propagating back up the tree.
 
@@ -172,6 +178,8 @@ Another approach based upon the behaviour of ants in a colony has been introduce
 % realism of any dependencies, and the types of failures protected
 % against.
 
+% difference in message overhead, control message transmission etc. - assumptions made - failure modes able to recover - time to recover - topologies tested with, random structured etc. - hardware, simulation
+
 A similar approach has been taken by \citet{Xu2015} for mobile nodes with high power capacity to travel between static sensor nodes, however the mobile nodes here are for recharging the static nodes. In most cases the reason for node failure is depletion of the battery, if this is the case, being able to recharge the sensor nodes in place increases the theoretical length of network use indefinitely.
 
 \section{Metrics for evaluating self-healing WSNs}
@@ -181,9 +189,13 @@ The most common metric used for evaluating recovery approaches is the distance t
 Another common measurement is the number of messages transmitted with regard to recovery. This shows the overhead produced by the recovery algorithm \citep{Abbasi2007}. As movement and radio use have the highest power usage, measuring and minimising them will produce the system with the lowest power consumption which is the ultimate objective for most WSN implementers.
 
 Measuring the number of nodes that have to be relocated shows the spread of power consumption across the network \citep{Younis2010}. A larger spread means that the time until the first node fails will be increased as the load has been balanced across the nodes. This is obviously countered if nodes are moving unnecessarily.
+This metric can then be fed back into the design to decide on the number of mobile nodes required in the network. If the number can be reduced then savings can be made.
+
+% how many nodes need mobility - this could be used to reduce that
 
 As discussed previously, connectivity and coverage are both important to WSNs. The average node degree is a good metric for connectivity as it shows the average number of direct neighbours for each node. Coverage can be measured by the sum area of the sensing radii \citep{Joshi2012}. Higher degrees of connectivity allow for re-routing and improve network reliability without the addition of movement, however it may be desired to reduce the degree of connectivity and thereby the density of the network so that the fewer nodes are needed and costs are lowered.
 % coverage with respect to time
+% time to recover
 
 % JAMES
 % External dependencies such as GPS/localisation should probably be in
@@ -202,7 +214,11 @@ Most distribution / relocation algorithms require knowledge of the node location
 
 Developments in wireless sensor networks can only feasibly take place in simulated environments. The cost and time of full or even scaled deployments is far too high to be practical. Reliability is a key issue, and needs to be maximised prior to deployment as difficulties will only be multiplied in a real-world setting and debugging these is a greatly increased challenge. The use of simulation for development and testing prior to deployment is therefore paramount. A large number of simulation environments exist: from generic network modellers to specific WSN frameworks, even simulators that are developed for a specific deployment. \citep{Egea-Lopez2005, Musznicki2012}
 
+% moving towards hardware should the the final goal
+
 Simulation environments must provide accurate models of real-world factors to be reliable and useful for development and testing. Often the more generic simulators provide less of these features, leaving the exercise to the system developer.
+
+% differences in low/high-level simulations
 
 When testing self-healing networks node failures must be induced, to do this a reliability function to control the failure rate of devices is needed. \citet{Lee2004} analyse the failures of nodes, which are predominantly due to energy depletion. Another common failure mode is the irregularity of radio transmissions which are often modelled, at worst, perfectly or at best very simply. \citet{Zhou2004} investigate radio performance and integrity modelling and how to apply real-world data to the simulated environment to achieve greater accuracy. Implementing and using these models becomes a very large challenge. As with any simulation environment more data can always be added to provide accuracy, but at the same time there is a risk of over-fitting a particular situation reducing the accuracy again.
 
@@ -213,12 +229,36 @@ One challenge of discrete event simulation as provided in VisualSense is modelli
 % benefits and drawbacks of simulation / real-word factors affecting
 % focus on this
 
+% look into further papers from initial applications
+% how hardware is used / affects performance
+
 \section{Conclusions}
 
 % JAMES
 % Conclusion - include a general chapter conclusion summarising any
 % consensus/your view on the literature you've surveyed
 
+% what is seen as most important to combat for self-healing
+
+
+% what are the key failure modes that are assumed - are they realistic, are there any missed?
+% - single node
+% - multi node
+% - transient
+
+% how are they solved in various forms?
+% - is transient targeted, should this therefore be looked at in more detail
+
+The key failure modes seen in the literature are single-node, multi-node and transient failures. Single-node failures are covered extensively, but approaches to them have mostly been developed and improved to combat multi-node failures due to the commonality of environment changes and other factors affecting regions of nodes. DARA, PADRA and RIM target single node failures stating that they cannot provide recovery from multi-node failures but without showing their behaviour for that case. SFRA and the bio-inspired approaches are designed with multi-node failures in mind as their likelihood is relatively high. The nature and timing of failures is relatively unpredictable, power depletion aside. Any node or group of nodes could fail at any one time due to a change in the environment, particularly when the deployment is in an unstable or dangerous area. Handling of multi-node failures therefore is important for network recovery to be achievable. One untested area is that of transient failures and how the algorithms respond to `failed' nodes that return to the network.
+
+% how are they evaluated - is the simulation robust, has there been hardware deployment?
+% - all simulation
+% - lack of hardware testing?
+% - what is the impact of an error in localisation?
+
+All most all algorithm evaluation in the literature is done by simulation. Whilst simulation can provide realistic data there are often assumptions in the model or perfect representations of for example radio transmission. The simulation frameworks are also often bespoke to the algorithm under test, making direct comparisons between the differing approaches tricky. Real world environment are a lot more difficult to work in, and slow down development, but without providing any comparison from the simulations to real world deployments it is hard to evaluate the robustness of the simulation platforms. The impact of other errors in the system are also not shown, whilst this is treated as out-of-scope for the research being performed, in practice errors in systems do happen. If the goal of each of these algorithms is to provide a network architecture that is able to recover from failures, then testing with failures should take place. Many approaches require accurate location data for each node, which leads to asking without this, or with a degraded localisation, how would they perform and would they be able to achieve anything?
+
+% why do people use distributed / not use centralised?
 
 
 % JAMES
