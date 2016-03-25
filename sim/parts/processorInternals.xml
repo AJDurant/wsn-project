@@ -1,0 +1,1047 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE entity PUBLIC "-//UC Berkeley//DTD MoML 1//EN"
+    "http://ptolemy.eecs.berkeley.edu/xml/dtd/MoML_1.dtd">
+<entity name="processorInternals" class="ptolemy.actor.TypedCompositeActor">
+    <property name="_createdBy" class="ptolemy.kernel.attributes.VersionAttribute" value="10.0.1_20141217">
+    </property>
+    <property name="dataType" class="ptolemy.data.expr.Parameter" value="2">
+        <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
+            <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{0.0, 0.0, 1.0, 1.0}">
+            </property>
+        </property>
+        <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
+            <configure>
+      <svg>
+        <text x="20" style="font-size:14; font-family:SansSerif; fill:blue" y="20">-P-</text>
+      </svg>
+    </configure>
+        </property>
+        <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[55.0, 155.0]">
+        </property>
+    </property>
+    <property name="nodeID" class="ptolemy.data.expr.Parameter" value="2">
+        <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
+            <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{0.0, 0.0, 1.0, 1.0}">
+            </property>
+        </property>
+        <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
+            <configure>
+      <svg>
+        <text x="20" style="font-size:14; font-family:SansSerif; fill:blue" y="20">-P-</text>
+      </svg>
+    </configure>
+        </property>
+        <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[325.0, 40.0]">
+        </property>
+    </property>
+    <property name="currentLocation" class="ptolemy.data.expr.Parameter" value="{730.0, 490.0}">
+        <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
+            <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{0.0, 0.0, 1.0, 1.0}">
+            </property>
+        </property>
+        <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
+            <configure>
+      <svg>
+        <text x="20" style="font-size:14; font-family:SansSerif; fill:blue" y="20">-P-</text>
+      </svg>
+    </configure>
+        </property>
+        <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[60.0, 90.0]">
+        </property>
+    </property>
+    <property name="inMotion" class="ptolemy.data.expr.Parameter" value="false">
+        <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
+            <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{0.0, 0.0, 1.0, 1.0}">
+            </property>
+        </property>
+        <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
+            <configure>
+      <svg>
+        <text x="20" style="font-size:14; font-family:SansSerif; fill:blue" y="20">-P-</text>
+      </svg>
+    </configure>
+        </property>
+        <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[60.0, 120.0]">
+        </property>
+    </property>
+    <property name="processorPowerRate" class="ptolemy.data.expr.Parameter" value="8.0">
+        <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
+            <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{0.0, 0.0, 1.0, 1.0}">
+            </property>
+        </property>
+        <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
+            <configure>
+      <svg>
+        <text x="20" style="font-size:14; font-family:SansSerif; fill:blue" y="20">-P-</text>
+      </svg>
+    </configure>
+        </property>
+        <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[325.0, 60.0]">
+        </property>
+    </property>
+    <property name="heatbeatType" class="ptolemy.data.expr.Parameter" value="1">
+        <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
+            <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{0.0, 0.0, 1.0, 1.0}">
+            </property>
+        </property>
+        <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
+            <configure>
+      <svg>
+        <text x="20" style="font-size:14; font-family:SansSerif; fill:blue" y="20">-P-</text>
+      </svg>
+    </configure>
+        </property>
+        <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[55.0, 140.0]">
+        </property>
+    </property>
+    <property name="heartBeatPeriod" class="ptolemy.data.expr.Parameter" value="2">
+        <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
+            <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{0.0, 0.0, 1.0, 1.0}">
+            </property>
+        </property>
+        <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
+            <configure>
+      <svg>
+        <text x="20" style="font-size:14; font-family:SansSerif; fill:blue" y="20">-P-</text>
+      </svg>
+    </configure>
+        </property>
+        <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[55.0, 190.0]">
+        </property>
+    </property>
+    <property name="hopCount" class="ptolemy.data.expr.Parameter" value="1">
+        <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
+            <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{0.0, 0.0, 1.0, 1.0}">
+            </property>
+        </property>
+        <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
+            <configure>
+      <svg>
+        <text x="20" style="font-size:14; font-family:SansSerif; fill:blue" y="20">-P-</text>
+      </svg>
+    </configure>
+        </property>
+        <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[60.0, 75.0]">
+        </property>
+    </property>
+    <property name="heartBeatCheckPeriod" class="ptolemy.data.expr.Parameter" value="heartBeatPeriod * 3">
+        <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
+            <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{0.0, 0.0, 1.0, 1.0}">
+            </property>
+        </property>
+        <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
+            <configure>
+      <svg>
+        <text x="20" style="font-size:14; font-family:SansSerif; fill:blue" y="20">-P-</text>
+      </svg>
+    </configure>
+        </property>
+        <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[55.0, 205.0]">
+        </property>
+    </property>
+    <property name="parentNode" class="ptolemy.data.expr.Parameter" value="1">
+        <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
+            <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{0.0, 0.0, 1.0, 1.0}">
+            </property>
+        </property>
+        <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
+            <configure>
+      <svg>
+        <text x="20" style="font-size:14; font-family:SansSerif; fill:blue" y="20">-P-</text>
+      </svg>
+    </configure>
+        </property>
+        <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[60.0, 60.0]">
+        </property>
+    </property>
+    <property name="Annotation" class="ptolemy.vergil.kernel.attributes.TextAttribute">
+        <property name="textSize" class="ptolemy.data.expr.Parameter" value="12">
+        </property>
+        <property name="text" class="ptolemy.kernel.util.StringAttribute" value="Pass data messages on to parent">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{376.51940155029297, 781.5253601074219}">
+        </property>
+    </property>
+    <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={740, 321, 934, 634}, maximized=false}">
+    </property>
+    <property name="_vergilSize" class="ptolemy.actor.gui.SizeAttribute" value="[700, 524]">
+    </property>
+    <property name="_vergilZoomFactor" class="ptolemy.data.expr.ExpertParameter" value="1.0">
+    </property>
+    <property name="_vergilCenter" class="ptolemy.data.expr.ExpertParameter" value="{355.0, 255.6015625}">
+    </property>
+    <port name="fromSens" class="ptolemy.domains.modal.modal.RefinementPort">
+        <property name="input"/>
+        <property name="defaultValue" class="ptolemy.data.expr.Parameter" value="">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{337.0, 514.6015625}">
+        </property>
+    </port>
+    <port name="consumption" class="ptolemy.domains.modal.modal.RefinementPort">
+        <property name="output"/>
+        <property name="defaultValue" class="ptolemy.data.expr.Parameter" value="">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{817.0, 589.6015625}">
+        </property>
+    </port>
+    <port name="sendMessage" class="ptolemy.domains.modal.modal.RefinementPort">
+        <property name="output"/>
+        <property name="defaultValue" class="ptolemy.data.expr.Parameter" value="">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{1343.25, 342.6015625}">
+        </property>
+    </port>
+    <port name="aquire" class="ptolemy.domains.modal.modal.RefinementPort">
+        <property name="output"/>
+        <property name="defaultValue" class="ptolemy.data.expr.Parameter" value="">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{467.0, 409.6015625}">
+        </property>
+    </port>
+    <port name="fromComm" class="ptolemy.domains.modal.modal.RefinementPort">
+        <property name="input"/>
+        <property name="defaultValue" class="ptolemy.data.expr.Parameter" value="">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{246.75, 704.6015625}">
+        </property>
+    </port>
+    <entity name="HeartBeatClock" class="ptolemy.actor.lib.DiscreteClock">
+        <property name="period" class="ptolemy.actor.parameters.PortParameter" value="heartBeatPeriod">
+        </property>
+        <doc>Create periodic timed events.</doc>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{332.0, 254.6015625}">
+        </property>
+    </entity>
+    <entity name="SensorClock" class="ptolemy.actor.lib.DiscreteClock">
+        <property name="period" class="ptolemy.actor.parameters.PortParameter" value="20.0">
+        </property>
+        <property name="values" class="ptolemy.data.expr.Parameter" value="{true}">
+        </property>
+        <doc>Create periodic timed events.</doc>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{322.0, 429.6015625}">
+        </property>
+    </entity>
+    <entity name="MessageToken" class="ptolemy.actor.lib.RecordAssembler">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{1248.25, 322.6015625}">
+        </property>
+        <port name="messageType" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+        <port name="messageData" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+    </entity>
+    <entity name="HeatBeatCounter" class="ptolemy.actor.lib.Ramp">
+        <doc>Create a sequence of tokens with increasing value</doc>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{617.0, 229.6015625}">
+        </property>
+    </entity>
+    <entity name="Const" class="ptolemy.actor.lib.Const">
+        <property name="value" class="ptolemy.data.expr.Parameter" value="processorPowerRate">
+        </property>
+        <doc>Create a constant sequence.</doc>
+        <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="value">
+            </property>
+            <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+            </property>
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{687.0, 589.6015625}">
+        </property>
+    </entity>
+    <entity name="fromCommDisplay" class="ptolemy.actor.lib.gui.Display">
+        <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={393, 23, 499, 980}, maximized=false}">
+        </property>
+        <property name="_paneSize" class="ptolemy.actor.gui.SizeAttribute" value="[499, 936]">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{307.0, 649.6015625}">
+        </property>
+    </entity>
+    <entity name="MessageType" class="ptolemy.actor.lib.Const">
+        <property name="value" class="ptolemy.data.expr.Parameter" value="heatbeatType">
+        </property>
+        <doc>Create a constant sequence.</doc>
+        <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="value">
+            </property>
+            <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+            </property>
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{1088.25, 232.6015625}">
+        </property>
+    </entity>
+    <entity name="MessageType2" class="ptolemy.actor.lib.Const">
+        <property name="value" class="ptolemy.data.expr.Parameter" value="dataType">
+        </property>
+        <doc>Create a constant sequence.</doc>
+        <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="value">
+            </property>
+            <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+            </property>
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{1103.25, 272.6015625}">
+        </property>
+    </entity>
+    <entity name="HeartBeatData" class="ptolemy.actor.lib.RecordAssembler">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{812.0, 309.6015625}">
+        </property>
+        <port name="count" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+        <port name="nodeID" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+        <port name="hopCount" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+        <port name="location" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+        <port name="motion" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+    </entity>
+    <entity name="HeartBeatNodeID" class="ptolemy.actor.lib.Const">
+        <property name="value" class="ptolemy.data.expr.Parameter" value="nodeID">
+        </property>
+        <doc>Create a constant sequence.</doc>
+        <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="value">
+            </property>
+            <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+            </property>
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{612.0, 274.6015625}">
+        </property>
+    </entity>
+    <entity name="HeartBeatHopCount" class="ptolemy.actor.lib.Const">
+        <property name="value" class="ptolemy.data.expr.Parameter" value="hopCount">
+        </property>
+        <doc>Create a constant sequence.</doc>
+        <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="value">
+            </property>
+            <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+            </property>
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{617.0, 314.6015625}">
+        </property>
+    </entity>
+    <entity name="MessageDisassembler" class="ptolemy.actor.lib.RecordDisassembler">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{357.0, 729.6015625}">
+        </property>
+        <port name="messageType" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+        <port name="messageData" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+    </entity>
+    <entity name="DataMessageData" class="ptolemy.actor.lib.RecordAssembler">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{817.0, 484.6015625}">
+        </property>
+        <port name="sensorData" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+        <port name="nodeID" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+    </entity>
+    <entity name="DataMessageNodeID" class="ptolemy.actor.lib.Const">
+        <property name="value" class="ptolemy.data.expr.Parameter" value="nodeID">
+        </property>
+        <doc>Create a constant sequence.</doc>
+        <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="value">
+            </property>
+            <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+            </property>
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{677.0, 524.6015625}">
+        </property>
+    </entity>
+    <entity name="HeartBeatDisassembler" class="ptolemy.actor.lib.RecordDisassembler">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{697.500005677689, 712.1015852107558}">
+        </property>
+        <port name="count" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+        <port name="nodeID" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+        <port name="hopCount" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+    </entity>
+    <entity name="Expression" class="ptolemy.actor.lib.Expression">
+        <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="hop &lt; hopCount">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="expression">
+            </property>
+            <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+            </property>
+            <property name="displayHeight" class="ptolemy.data.expr.Parameter" value="10">
+            </property>
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{880.63623046875, 774.53857421875}">
+        </property>
+        <port name="hop" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+    </entity>
+    <entity name="SetHop" class="ptolemy.actor.lib.SetVariable">
+        <property name="variableName" class="ptolemy.kernel.util.StringAttribute" value="hopCount">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="variableName">
+            </property>
+            <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="40">
+            </property>
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{1202.500005677689, 732.1015852107558}">
+        </property>
+    </entity>
+    <entity name="BooleanSwitch" class="ptolemy.actor.lib.BooleanSwitch">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{1002.500005677689, 742.1015852107558}">
+        </property>
+    </entity>
+    <entity name="BooleanSwitch2" class="ptolemy.actor.lib.BooleanSwitch">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{957.0, 674.6015625}">
+        </property>
+    </entity>
+    <entity name="SetParent" class="ptolemy.actor.lib.SetVariable">
+        <property name="variableName" class="ptolemy.kernel.util.StringAttribute" value="parentNode">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="variableName">
+            </property>
+            <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="40">
+            </property>
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{1122.0, 664.6015625}">
+        </property>
+    </entity>
+    <entity name="HopInc" class="ptolemy.actor.lib.Expression">
+        <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="hop +1">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="expression">
+            </property>
+            <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+            </property>
+            <property name="displayHeight" class="ptolemy.data.expr.Parameter" value="10">
+            </property>
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{1112.500005677689, 732.1015852107558}">
+        </property>
+        <port name="hop" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+    </entity>
+    <entity name="Discard" class="ptolemy.actor.lib.Discard">
+        <property name="_hideName" class="ptolemy.data.expr.SingletonParameter" value="true">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{1292.500005677689, 812.1015852107558}">
+        </property>
+        <port name="input" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="multiport"/>
+            <property name="_cardinal" class="ptolemy.kernel.util.StringAttribute" value="NORTH">
+            </property>
+        </port>
+    </entity>
+    <entity name="Discard2" class="ptolemy.actor.lib.Discard">
+        <property name="_hideName" class="ptolemy.data.expr.SingletonParameter" value="true">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{792.500005677689, 682.1015852107558}">
+        </property>
+        <port name="input" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="multiport"/>
+            <property name="_cardinal" class="ptolemy.kernel.util.StringAttribute" value="NORTH">
+            </property>
+        </port>
+    </entity>
+    <entity name="UnionMerge" class="ptolemy.actor.lib.UnionMerge">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{922.0, 399.6015625}">
+        </property>
+        <port name="HeartBeat" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+        <port name="DataMessage" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+    </entity>
+    <entity name="UnionDisassembler" class="ptolemy.actor.lib.UnionDisassembler">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{437.0, 739.6015625}">
+        </property>
+        <port name="HeartBeat" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="{count = int, hopCount = int, location = arrayType(double,2), motion = boolean, nodeID = int}">
+            </property>
+        </port>
+        <port name="DataMessage" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="{sensorData=general, nodeID=int}">
+            </property>
+        </port>
+    </entity>
+    <entity name="UnionDisassembler2" class="ptolemy.actor.lib.UnionDisassembler">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{912.4458312988281, 222.5161075592041}">
+        </property>
+        <port name="HeartBeat" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="{count = int, hopCount = int, location = arrayType(double,2), motion = boolean, nodeID = int}">
+            </property>
+        </port>
+        <port name="DataMessage" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="{sensorData=general, nodeID=int}">
+            </property>
+        </port>
+    </entity>
+    <entity name="neighbours" class="ptolemy.actor.lib.Dictionary">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{1129.499984741211, 997.1015930175781}">
+        </property>
+    </entity>
+    <entity name="NeighbourData" class="ptolemy.actor.lib.RecordUpdater">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{809.4999847412109, 987.1015930175781}">
+        </property>
+        <port name="time" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+        <port name="alive" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="boolean">
+            </property>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+    </entity>
+    <entity name="HeatBeatGetID" class="ptolemy.actor.lib.RecordDisassembler">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{919.4999847412109, 1042.1015930175781}">
+        </property>
+        <port name="nodeID" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+    </entity>
+    <entity name="IntToString" class="ajdurant.wsn.actor.lib.IntToString">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{1024.499984741211, 1062.1015930175781}">
+        </property>
+    </entity>
+    <entity name="CurrentTime" class="ptolemy.actor.lib.CurrentTime">
+        <doc>Output the current time.</doc>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{644.4999847412109, 1037.1015930175781}">
+        </property>
+    </entity>
+    <entity name="Const2" class="ptolemy.actor.lib.Const">
+        <property name="value" class="ptolemy.data.expr.Parameter" value="true">
+        </property>
+        <doc>Create a constant sequence.</doc>
+        <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="value">
+            </property>
+            <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+            </property>
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{644.4999847412109, 1087.1015930175781}">
+        </property>
+    </entity>
+    <entity name="NeighbourCheckClock" class="ptolemy.actor.lib.DiscreteClock">
+        <property name="period" class="ptolemy.actor.parameters.PortParameter" value="heartBeatCheckPeriod">
+        </property>
+        <property name="offsets" class="ptolemy.data.expr.Parameter" value="{0.2}">
+        </property>
+        <doc>Create periodic timed events.</doc>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{1004.4999847412109, 1117.1015930175781}">
+        </property>
+    </entity>
+    <entity name="TimeDelay" class="ptolemy.actor.lib.TimeDelay">
+        <property name="delay" class="ptolemy.actor.parameters.PortParameter" value="0.0">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{1129.499984741211, 927.1015930175781}">
+        </property>
+    </entity>
+    <entity name="UpdateAliveNeighbours" class="ptolemy.actor.lib.hoc.IterateOverArray">
+        <doc>Iterate a contained actor over input arrays</doc>
+        <property name="_icon" class="ptolemy.vergil.icon.CopyCatIcon">
+        </property>
+        <property name="_configurer" class="ptolemy.actor.gui.InsideEntityEditorPaneFactory">
+        </property>
+        <property name="_tableauFactory" class="ptolemy.actor.gui.LevelSkippingTableauFactory">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{1249.499984741211, 1132.1015930175781}">
+        </property>
+        <port name="neighbour" class="ptolemy.actor.lib.hoc.IterateOverArray$IteratePort">
+            <property name="input"/>
+        </port>
+        <port name="update" class="ptolemy.actor.lib.hoc.IterateOverArray$IteratePort">
+            <property name="output"/>
+        </port>
+        <entity name="IterateComposite" class="ptolemy.actor.lib.hoc.IterateOverArray$IterateComposite">
+            <property name="DE Director" class="ptolemy.domains.de.kernel.DEDirector">
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[60.0, 35.0]">
+                </property>
+            </property>
+            <port name="neighbour" class="ptolemy.actor.lib.hoc.IterateOverArray$IteratePort">
+                <property name="input"/>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="{20.0, 200.0}">
+                </property>
+            </port>
+            <port name="update" class="ptolemy.actor.lib.hoc.IterateOverArray$IteratePort">
+                <property name="output"/>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[615.0, 210.0]">
+                </property>
+            </port>
+            <entity name="RecordDisassembler" class="ptolemy.actor.lib.RecordDisassembler">
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[120.0, 225.0]">
+                </property>
+                <port name="time" class="ptolemy.actor.TypedIOPort">
+                    <property name="output"/>
+                    <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                    </property>
+                </port>
+            </entity>
+            <entity name="CurrentTime" class="ptolemy.actor.lib.CurrentTime">
+                <doc>Output the current time.</doc>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="{120, 320}">
+                </property>
+            </entity>
+            <entity name="Expression" class="ptolemy.actor.lib.Expression">
+                <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="current &lt; (heartBeatTime + heartBeatCheckPeriod)">
+                </property>
+                <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+                    <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="expression">
+                    </property>
+                    <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+                    </property>
+                    <property name="displayHeight" class="ptolemy.data.expr.Parameter" value="10">
+                    </property>
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[345.0, 255.0]">
+                </property>
+                <port name="heartBeatTime" class="ptolemy.actor.TypedIOPort">
+                    <property name="input"/>
+                    <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                    </property>
+                </port>
+                <port name="current" class="ptolemy.actor.TypedIOPort">
+                    <property name="input"/>
+                    <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                    </property>
+                </port>
+            </entity>
+            <entity name="RecordUpdater" class="ptolemy.actor.lib.RecordUpdater">
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[510.0, 190.0]">
+                </property>
+                <port name="alive" class="ptolemy.actor.TypedIOPort">
+                    <property name="input"/>
+                    <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                    </property>
+                </port>
+            </entity>
+            <relation name="relation" class="ptolemy.actor.TypedIORelation">
+                <vertex name="vertex1" value="[75.0, 200.0]">
+                </vertex>
+            </relation>
+            <relation name="relation2" class="ptolemy.actor.TypedIORelation">
+            </relation>
+            <relation name="relation3" class="ptolemy.actor.TypedIORelation">
+            </relation>
+            <relation name="relation4" class="ptolemy.actor.TypedIORelation">
+            </relation>
+            <relation name="relation5" class="ptolemy.actor.TypedIORelation">
+            </relation>
+            <link port="neighbour" relation="relation"/>
+            <link port="update" relation="relation4"/>
+            <link port="RecordDisassembler.input" relation="relation"/>
+            <link port="RecordDisassembler.time" relation="relation2"/>
+            <link port="CurrentTime.output" relation="relation3"/>
+            <link port="CurrentTime.trigger" relation="relation"/>
+            <link port="Expression.output" relation="relation5"/>
+            <link port="Expression.heartBeatTime" relation="relation2"/>
+            <link port="Expression.current" relation="relation3"/>
+            <link port="RecordUpdater.output" relation="relation4"/>
+            <link port="RecordUpdater.input" relation="relation"/>
+            <link port="RecordUpdater.alive" relation="relation5"/>
+        </entity>
+    </entity>
+    <entity name="ArrayToSequence" class="ptolemy.domains.sdf.lib.ArrayToSequence">
+        <property name="arrayLength" class="ptolemy.data.expr.Parameter" value="1">
+        </property>
+        <property name="enforceArrayLength" class="ptolemy.data.expr.Parameter" value="false">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{1349.499984741211, 1132.1015930175781}">
+        </property>
+    </entity>
+    <entity name="TimeDelay2" class="ptolemy.actor.lib.TimeDelay">
+        <property name="delay" class="ptolemy.actor.parameters.PortParameter" value="0.0">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{849.4999847412109, 1182.1015930175781}">
+        </property>
+    </entity>
+    <entity name="TimeDelay3" class="ptolemy.actor.lib.TimeDelay">
+        <property name="delay" class="ptolemy.actor.parameters.PortParameter" value="0.0">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{839.4999847412109, 1117.1015930175781}">
+        </property>
+    </entity>
+    <entity name="TimeDelay4" class="ptolemy.actor.lib.TimeDelay">
+        <property name="delay" class="ptolemy.actor.parameters.PortParameter" value="0.0">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{794.4999847412109, 1062.1015930175781}">
+        </property>
+    </entity>
+    <entity name="HeartBeatLocation" class="ptolemy.actor.lib.Const">
+        <property name="value" class="ptolemy.data.expr.Parameter" value="currentLocation">
+        </property>
+        <doc>Create a constant sequence.</doc>
+        <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="value">
+            </property>
+            <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+            </property>
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{632.0, 349.6015625}">
+        </property>
+    </entity>
+    <entity name="HeartBeatInMotion" class="ptolemy.actor.lib.Const">
+        <property name="value" class="ptolemy.data.expr.Parameter" value="inMotion">
+        </property>
+        <doc>Create a constant sequence.</doc>
+        <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="value">
+            </property>
+            <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+            </property>
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{612.0, 384.6015625}">
+        </property>
+    </entity>
+    <relation name="relation" class="ptolemy.actor.TypedIORelation">
+        <vertex name="vertex1" value="{387.0, 254.6015625}">
+        </vertex>
+    </relation>
+    <relation name="relation2" class="ptolemy.actor.TypedIORelation">
+        <property name="width" class="ptolemy.data.expr.Parameter" value="-1">
+        </property>
+        <vertex name="vertex1" value="{437.0, 494.6015625}">
+        </vertex>
+    </relation>
+    <relation name="relation3" class="ptolemy.actor.TypedIORelation">
+        <vertex name="vertex1" value="{412.0, 429.6015625}">
+        </vertex>
+    </relation>
+    <relation name="relation4" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation5" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation6" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation7" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation8" class="ptolemy.actor.TypedIORelation">
+        <vertex name="vertex1" value="{303.25, 704.6015625}">
+        </vertex>
+    </relation>
+    <relation name="relation9" class="ptolemy.actor.TypedIORelation">
+        <property name="width" class="ptolemy.data.expr.Parameter" value="Auto">
+        </property>
+        <vertex name="vertex1" value="{592.0, 749.6015625}">
+        </vertex>
+    </relation>
+    <relation name="relation10" class="ptolemy.actor.TypedIORelation">
+        <property name="width" class="ptolemy.data.expr.Parameter" value="Auto">
+        </property>
+        <vertex name="vertex1" value="{562.0, 769.6015625}">
+        </vertex>
+    </relation>
+    <relation name="relation11" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation12" class="ptolemy.actor.TypedIORelation">
+        <vertex name="vertex1" value="{802.500005677689, 742.1015852107558}">
+        </vertex>
+    </relation>
+    <relation name="relation13" class="ptolemy.actor.TypedIORelation">
+        <vertex name="vertex1" value="{957.0, 774.6015625}">
+        </vertex>
+    </relation>
+    <relation name="relation14" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation15" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation16" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation17" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation18" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation19" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation20" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation21" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation22" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation23" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation24" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation25" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation26" class="ptolemy.actor.TypedIORelation">
+        <vertex name="vertex1" value="{877.0, 454.6015625}">
+        </vertex>
+    </relation>
+    <relation name="relation27" class="ptolemy.actor.TypedIORelation">
+        <vertex name="vertex1" value="{1193.25, 292.6015625}">
+        </vertex>
+    </relation>
+    <relation name="relation28" class="ptolemy.actor.TypedIORelation">
+        <vertex name="vertex1" value="{957.0, 399.6015625}">
+        </vertex>
+    </relation>
+    <relation name="relation29" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation30" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation31" class="ptolemy.actor.TypedIORelation">
+        <vertex name="vertex1" value="{592.0, 994.6015625}">
+        </vertex>
+    </relation>
+    <relation name="relation32" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation33" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation34" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation35" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation36" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation37" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation38" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation39" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation40" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation41" class="ptolemy.actor.TypedIORelation">
+        <vertex name="vertex1" value="{884.4999847412109, 1007.1015930175781}">
+        </vertex>
+    </relation>
+    <relation name="relation42" class="ptolemy.actor.TypedIORelation">
+        <vertex name="vertex1" value="{894.4999847412109, 1062.1015930175781}">
+        </vertex>
+    </relation>
+    <relation name="relation43" class="ptolemy.actor.TypedIORelation">
+        <vertex name="vertex1" value="{794.4999847412109, 1217.1015930175781}">
+        </vertex>
+    </relation>
+    <relation name="relation44" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation45" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <link port="fromSens" relation="relation2"/>
+    <link port="consumption" relation="relation4"/>
+    <link port="sendMessage" relation="relation24"/>
+    <link port="aquire" relation="relation3"/>
+    <link port="fromComm" relation="relation8"/>
+    <link port="HeartBeatClock.output" relation="relation"/>
+    <link port="SensorClock.output" relation="relation3"/>
+    <link port="MessageToken.output" relation="relation24"/>
+    <link port="MessageToken.messageType" relation="relation27"/>
+    <link port="MessageToken.messageData" relation="relation28"/>
+    <link port="HeatBeatCounter.output" relation="relation5"/>
+    <link port="HeatBeatCounter.trigger" relation="relation"/>
+    <link port="Const.output" relation="relation4"/>
+    <link port="Const.trigger" relation="relation2"/>
+    <link port="Const.trigger" relation="relation3"/>
+    <link port="Const.trigger" relation="relation"/>
+    <link port="Const.trigger" relation="relation9"/>
+    <link port="fromCommDisplay.input" relation="relation8"/>
+    <link port="MessageType.output" relation="relation27"/>
+    <link port="MessageType.trigger" relation="relation29"/>
+    <link port="MessageType2.output" relation="relation27"/>
+    <link port="MessageType2.trigger" relation="relation30"/>
+    <link port="HeartBeatData.output" relation="relation23"/>
+    <link port="HeartBeatData.count" relation="relation5"/>
+    <link port="HeartBeatData.nodeID" relation="relation6"/>
+    <link port="HeartBeatData.hopCount" relation="relation7"/>
+    <link port="HeartBeatData.location" relation="relation44"/>
+    <link port="HeartBeatData.motion" relation="relation45"/>
+    <link port="HeartBeatNodeID.output" relation="relation6"/>
+    <link port="HeartBeatNodeID.trigger" relation="relation"/>
+    <link port="HeartBeatHopCount.output" relation="relation7"/>
+    <link port="HeartBeatHopCount.trigger" relation="relation"/>
+    <link port="MessageDisassembler.input" relation="relation8"/>
+    <link port="MessageDisassembler.messageData" relation="relation25"/>
+    <link port="DataMessageData.output" relation="relation26"/>
+    <link port="DataMessageData.sensorData" relation="relation2"/>
+    <link port="DataMessageData.nodeID" relation="relation11"/>
+    <link port="DataMessageNodeID.output" relation="relation11"/>
+    <link port="DataMessageNodeID.trigger" relation="relation2"/>
+    <link port="HeartBeatDisassembler.input" relation="relation9"/>
+    <link port="HeartBeatDisassembler.count" relation="relation22"/>
+    <link port="HeartBeatDisassembler.nodeID" relation="relation17"/>
+    <link port="HeartBeatDisassembler.hopCount" relation="relation12"/>
+    <link port="Expression.output" relation="relation13"/>
+    <link port="Expression.hop" relation="relation12"/>
+    <link port="SetHop.input" relation="relation16"/>
+    <link port="SetHop.output" relation="relation20"/>
+    <link port="BooleanSwitch.input" relation="relation12"/>
+    <link port="BooleanSwitch.control" relation="relation13"/>
+    <link port="BooleanSwitch.trueOutput" relation="relation15"/>
+    <link port="BooleanSwitch.falseOutput" relation="relation18"/>
+    <link port="BooleanSwitch2.input" relation="relation17"/>
+    <link port="BooleanSwitch2.control" relation="relation13"/>
+    <link port="BooleanSwitch2.trueOutput" relation="relation14"/>
+    <link port="BooleanSwitch2.falseOutput" relation="relation19"/>
+    <link port="SetParent.input" relation="relation14"/>
+    <link port="SetParent.output" relation="relation21"/>
+    <link port="HopInc.output" relation="relation16"/>
+    <link port="HopInc.hop" relation="relation15"/>
+    <link port="Discard.input" relation="relation18"/>
+    <link port="Discard.input" relation="relation19"/>
+    <link port="Discard.input" relation="relation20"/>
+    <link port="Discard.input" relation="relation21"/>
+    <link port="Discard2.input" relation="relation22"/>
+    <link port="UnionMerge.output" relation="relation28"/>
+    <link port="UnionMerge.HeartBeat" relation="relation23"/>
+    <link port="UnionMerge.DataMessage" relation="relation26"/>
+    <link port="UnionDisassembler.input" relation="relation25"/>
+    <link port="UnionDisassembler.HeartBeat" relation="relation9"/>
+    <link port="UnionDisassembler.DataMessage" relation="relation10"/>
+    <link port="UnionDisassembler2.input" relation="relation28"/>
+    <link port="UnionDisassembler2.HeartBeat" relation="relation29"/>
+    <link port="UnionDisassembler2.DataMessage" relation="relation30"/>
+    <link port="neighbours.keys" relation="relation37"/>
+    <link port="neighbours.readKeyArray" relation="relation38"/>
+    <link port="neighbours.resultArray" relation="relation39"/>
+    <link port="neighbours.triggerKeys" relation="relation36"/>
+    <link port="neighbours.value" relation="relation41"/>
+    <link port="neighbours.writeKey" relation="relation33"/>
+    <link port="NeighbourData.output" relation="relation41"/>
+    <link port="NeighbourData.input" relation="relation31"/>
+    <link port="NeighbourData.time" relation="relation34"/>
+    <link port="NeighbourData.alive" relation="relation35"/>
+    <link port="HeatBeatGetID.input" relation="relation42"/>
+    <link port="HeatBeatGetID.nodeID" relation="relation32"/>
+    <link port="IntToString.input" relation="relation32"/>
+    <link port="IntToString.output" relation="relation33"/>
+    <link port="CurrentTime.output" relation="relation34"/>
+    <link port="CurrentTime.trigger" relation="relation31"/>
+    <link port="Const2.output" relation="relation35"/>
+    <link port="Const2.trigger" relation="relation31"/>
+    <link port="NeighbourCheckClock.output" relation="relation36"/>
+    <link port="TimeDelay.input" relation="relation37"/>
+    <link port="TimeDelay.output" relation="relation38"/>
+    <link port="UpdateAliveNeighbours.neighbour" relation="relation39"/>
+    <link port="UpdateAliveNeighbours.update" relation="relation40"/>
+    <link port="ArrayToSequence.input" relation="relation40"/>
+    <link port="ArrayToSequence.output" relation="relation43"/>
+    <link port="TimeDelay2.input" relation="relation43"/>
+    <link port="TimeDelay2.output" relation="relation42"/>
+    <link port="TimeDelay3.input" relation="relation43"/>
+    <link port="TimeDelay3.output" relation="relation41"/>
+    <link port="TimeDelay4.input" relation="relation31"/>
+    <link port="TimeDelay4.output" relation="relation42"/>
+    <link port="HeartBeatLocation.output" relation="relation44"/>
+    <link port="HeartBeatLocation.trigger" relation="relation"/>
+    <link port="HeartBeatInMotion.output" relation="relation45"/>
+    <link port="HeartBeatInMotion.trigger" relation="relation"/>
+    <link relation1="relation9" relation2="relation31"/>
+    <link relation1="relation10" relation2="relation26"/>
+</entity>
