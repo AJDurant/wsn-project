@@ -5,21 +5,21 @@ import java.util.HashMap;
 import ptolemy.actor.NoTokenException;
 import ptolemy.actor.TypedAtomicActor;
 import ptolemy.actor.TypedIOPort;
-import ptolemy.data.Token;
-import ptolemy.data.UnionToken;
-import ptolemy.data.RecordToken;
 import ptolemy.data.ArrayToken;
 import ptolemy.data.BooleanToken;
 import ptolemy.data.DoubleToken;
 import ptolemy.data.IntToken;
+import ptolemy.data.RecordToken;
+import ptolemy.data.Token;
+import ptolemy.data.UnionToken;
 import ptolemy.data.expr.ModelScope;
 import ptolemy.data.expr.SingletonParameter;
 import ptolemy.data.expr.Variable;
-import ptolemy.data.type.Type;
-import ptolemy.data.type.UnionType;
 import ptolemy.data.type.ArrayType;
 import ptolemy.data.type.BaseType;
 import ptolemy.data.type.RecordType;
+import ptolemy.data.type.Type;
+import ptolemy.data.type.UnionType;
 import ptolemy.kernel.CompositeEntity;
 import ptolemy.kernel.util.Attribute;
 import ptolemy.kernel.util.IllegalActionException;
@@ -110,6 +110,7 @@ public class NodeProcessor extends TypedAtomicActor {
     /**
      * Setup internal variables and state.
      */
+    @Override
     public void initialize() throws IllegalActionException {
     	super.initialize();
     	
@@ -293,17 +294,26 @@ public class NodeProcessor extends TypedAtomicActor {
     	double currentTime = getDirector().getModelTime().getDoubleValue();
     	
     	neighbours.forEach((node, nodeData) -> {
-    		double nodeTime = ((DoubleToken) ((RecordToken) nodeData).get("updateTime")).doubleValue();
+            RecordToken nodeRecord = (RecordToken) nodeData;
+
+            double nodeUpdateTime = ((DoubleToken) nodeRecord.get("updateTime")).doubleValue();
+            boolean nodeInMotion = ((BooleanToken) nodeRecord.get("motion")).booleanValue();
     		
-    		if (currentTime >= nodeTime + heartbeatCheckPeriod) {
-    			RecordToken aliveToken;
-				try {
-					aliveToken = new RecordToken(new String[] {"alive"}, new Token[] {new BooleanToken(false)});
-					nodeData = RecordToken.merge(aliveToken, (RecordToken) nodeData);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+            if (currentTime >= nodeUpdateTime + heartbeatCheckPeriod) {
+                // Node has lost connectivity.
+
+                if (nodeInMotion) {
+                    // Node has moved away
+                } else {
+                    // Node has probably died
+                    try {
+                        nodeData = setNeighbourLive(nodeRecord, false);
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+
     		}
     	});
     }
@@ -328,6 +338,17 @@ public class NodeProcessor extends TypedAtomicActor {
         port.get(0);
     }
     
+    private RecordToken setNeighbourLive(RecordToken nodeData, boolean alive) throws IllegalActionException {
+        RecordToken aliveToken;
+        aliveToken = new RecordToken(new String[] { "alive" }, new Token[] { new BooleanToken(false) });
+        return RecordToken.merge(aliveToken, (RecordToken) nodeData);
+    }
+
+    private void computeNewPosition() {
+        int numInMotion = 0;
+
+    }
+
     /** Return the (presumably Settable) attribute modified by this
      *  actor.  This is the attribute in the container of this actor
      *  with the name given by the variableName attribute.  If no such
