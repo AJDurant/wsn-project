@@ -1,7 +1,9 @@
 package ajdurant.wsn.actor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import ajdurant.wsn.lib.ModelData;
 import ptolemy.actor.NoTokenException;
 import ptolemy.actor.TypedAtomicActor;
 import ptolemy.actor.TypedIOPort;
@@ -12,21 +14,15 @@ import ptolemy.data.IntToken;
 import ptolemy.data.RecordToken;
 import ptolemy.data.Token;
 import ptolemy.data.UnionToken;
-import ptolemy.data.expr.ModelScope;
 import ptolemy.data.expr.SingletonParameter;
-import ptolemy.data.expr.Variable;
 import ptolemy.data.type.ArrayType;
 import ptolemy.data.type.BaseType;
 import ptolemy.data.type.RecordType;
 import ptolemy.data.type.Type;
 import ptolemy.data.type.UnionType;
 import ptolemy.kernel.CompositeEntity;
-import ptolemy.kernel.util.Attribute;
 import ptolemy.kernel.util.IllegalActionException;
-import ptolemy.kernel.util.InternalErrorException;
 import ptolemy.kernel.util.NameDuplicationException;
-import ptolemy.kernel.util.NamedObj;
-import ptolemy.kernel.util.Settable;
 import ptolemy.kernel.util.Workspace;
 
 public class NodeProcessor extends TypedAtomicActor {
@@ -67,19 +63,18 @@ public class NodeProcessor extends TypedAtomicActor {
         new SingletonParameter(toSens, "_showName").setExpression("true");
         
         toMotion = new TypedIOPort(this, "toMotion", false, true);
+        toMotion.setTypeEquals(typeLocation);
         new SingletonParameter(toMotion, "_showName").setExpression("true");
         
      // Set Type constraints
         toComm.setTypeSameAs(fromComm);
         
-     // Internals
-        attribute = new HashMap<String, Attribute>();
-        attributeVersion = new HashMap<String, Long>();
+        modelData = new ModelData(container, "");
         
      // Setup node constants
-        emptyType = (IntToken) getVariable("emptyType");
-        heartbeatType = (IntToken) getVariable("heartbeatType");
-        dataType = (IntToken) getVariable("dataType");
+        emptyType = (IntToken) modelData.getVariable("emptyType");
+        heartbeatType = (IntToken) modelData.getVariable("heartbeatType");
+        dataType = (IntToken) modelData.getVariable("dataType");
     }
     
  // Inputs
@@ -98,14 +93,22 @@ public class NodeProcessor extends TypedAtomicActor {
     private final IntToken emptyType;
     private final IntToken heartbeatType;
     private final IntToken dataType;
+    private double heartbeatCheckPeriod;
     
  // Internals
     private IntToken nodeID;
     private HashMap<Integer, Token> neighbours;
-    private HashMap<String, Attribute> attribute;
-    private HashMap<String, Long> attributeVersion;
     private IntToken heartbeatCount;
-    private double heartbeatCheckPeriod;
+    private boolean alreadyMoved;
+    
+    private ModelData modelData;
+    
+    
+    
+    // Should be local to function but silly Java Closure rules prevent them working.
+    private int minRank;
+    private boolean inRange;
+    private ArrayList<ArrayToken> locationSenders;
     
     /**
      * Setup internal variables and state.
@@ -114,11 +117,13 @@ public class NodeProcessor extends TypedAtomicActor {
     public void initialize() throws IllegalActionException {
     	super.initialize();
     	
-    	nodeID = (IntToken) getVariable("nodeID");
+    	nodeID = (IntToken) modelData.getVariable("nodeID");
     	
     	neighbours = new HashMap<Integer, Token>();
         heartbeatCount = new IntToken(0);
-        heartbeatCheckPeriod = ((DoubleToken) getVariable("heartbeatCheckPeriod")).doubleValue();
+        heartbeatCheckPeriod = ((DoubleToken) modelData.getVariable("heartbeatCheckPeriod")).doubleValue();
+        
+        alreadyMoved = false;
     }
     
     /** Clone the actor into the specified workspace.
@@ -133,9 +138,6 @@ public class NodeProcessor extends TypedAtomicActor {
 
         // Set the type constraints.
         newObject.toComm.setTypeSameAs(newObject.fromComm);
-        
-        newObject.attribute = new HashMap<String, Attribute>();
-        newObject.attributeVersion = new HashMap<String, Long>();
 
         return newObject;
     }
@@ -196,14 +198,14 @@ public class NodeProcessor extends TypedAtomicActor {
     	int nodeID = ((IntToken) heartbeatMessage.get("nodeID")).intValue();
     	int hopCount = ((IntToken) heartbeatMessage.get("hopCount")).intValue();
     	
-    	int nodeHopCount = ((IntToken) getVariable("hopCount")).intValue();
+    	int nodeHopCount = ((IntToken) modelData.getVariable("hopCount")).intValue();
     	
     	if (hopCount < nodeHopCount) {
     		IntToken parentToken = new IntToken(nodeID);
     		IntToken newHopCount = new IntToken(hopCount + 1);
     		
-    		setVariable("parentNode", parentToken);
-    		setVariable("hopCount", newHopCount);
+    		modelData.setVariable("parentNode", parentToken);
+    		modelData.setVariable("hopCount", newHopCount);
     	}	
     }
     
@@ -264,9 +266,9 @@ public class NodeProcessor extends TypedAtomicActor {
     	
     	Token[] heartbeatTokens = {
     		heartbeatCount,
-    		(IntToken) getVariable("hopCount"),
-    		(ArrayToken) getVariable("currentLocation"),
-    		(BooleanToken) getVariable("inMotion"),
+    		(IntToken) modelData.getVariable("hopCount"),
+    		(ArrayToken) modelData.getVariable("targetLocation"),
+    		(BooleanToken) modelData.getVariable("inMotion"),
     		nodeID
     	};
     	
@@ -295,25 +297,48 @@ public class NodeProcessor extends TypedAtomicActor {
     	
     	neighbours.forEach((node, nodeData) -> {
             RecordToken nodeRecord = (RecordToken) nodeData;
+            
+            int hopCount = ((IntToken) modelData.getVariable("hopCount")).intValue();
 
+            int nodeHopCount = ((IntToken) nodeRecord.get("hopCount")).intValue();
             double nodeUpdateTime = ((DoubleToken) nodeRecord.get("updateTime")).doubleValue();
             boolean nodeInMotion = ((BooleanToken) nodeRecord.get("motion")).booleanValue();
+            ArrayToken nodeLocation = (ArrayToken) nodeRecord.get("location");
     		
-            if (currentTime >= nodeUpdateTime + heartbeatCheckPeriod) {
-                // Node has lost connectivity.
+            if ((currentTime >= nodeUpdateTime + heartbeatCheckPeriod) && (nodeHopCount <= hopCount)) {
+                // Higher ranked node has lost connectivity.
 
                 if (nodeInMotion) {
                     // Node has moved away
+                    if (alreadyMoved) {
+                        return;
+                    }
+                    
+                    ArrayToken newPosition = computeNewPosition();
+                    ArrayToken currentPosition = (ArrayToken) modelData.getVariable("currentLocation");
+                    
+                    if (!currentPosition.equals(newPosition)) {
+                        try {
+                            modelData.setVariable("inMotion", new BooleanToken(true));
+                            toMotion.send(0, newPosition);
+                        } catch (IllegalActionException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                    
                 } else {
                     // Node has probably died
                     try {
                         nodeData = setNeighbourLive(nodeRecord, false);
-                    } catch (Exception e) {
+                        modelData.setVariable("inMotion", new BooleanToken(true));
+                        toMotion.send(0, computePositionFromDeadNode(nodeLocation));
+                    } catch (IllegalActionException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 }
-
+                alreadyMoved = true;
     		}
     	});
     }
@@ -324,7 +349,7 @@ public class NodeProcessor extends TypedAtomicActor {
      * @throws IllegalActionException
      */
     protected void consumePower() throws IllegalActionException {
-    	DoubleToken consumptionRate = (DoubleToken) getVariable("processorPowerRate");
+    	DoubleToken consumptionRate = (DoubleToken) modelData.getVariable("processorPowerRate");
     	consumption.send(0, consumptionRate);
     }
     
@@ -343,110 +368,252 @@ public class NodeProcessor extends TypedAtomicActor {
         aliveToken = new RecordToken(new String[] { "alive" }, new Token[] { new BooleanToken(false) });
         return RecordToken.merge(aliveToken, (RecordToken) nodeData);
     }
-
-    private void computeNewPosition() {
-        int numInMotion = 0;
-
+    
+    private ArrayToken computePositionFromDeadNode(ArrayToken nodeLocation) {
+        ArrayToken currentLocation = (ArrayToken) modelData.getVariable("currentLocation");
+        
+        double coordX = ((DoubleToken) currentLocation.getElement(0)).doubleValue();
+        double coordY = ((DoubleToken) currentLocation.getElement(1)).doubleValue();
+        
+        double nodeX = ((DoubleToken) nodeLocation.getElement(0)).doubleValue();
+        double nodeY = ((DoubleToken) nodeLocation.getElement(1)).doubleValue();
+        
+        double distance = Math.sqrt( Math.pow((nodeX - coordX), 2) + Math.pow((nodeY - coordY), 2) );
+        double radius = ((DoubleToken) modelData.getVariable("txRange")).doubleValue();
+        double ratio = (radius / 2) / distance;
+        
+        DoubleToken newX = new DoubleToken((1-ratio) * nodeX + ratio * coordX);
+        DoubleToken newY = new DoubleToken((1-ratio) * nodeY + ratio * coordY);
+        
+        try {
+            ArrayToken newLocation = new ArrayToken(new Token[] {newX, newY});
+            return newLocation;
+        } catch (IllegalActionException e) {
+            e.printStackTrace();
+        }
+        
+        
+        return null;
     }
 
-    /** Return the (presumably Settable) attribute modified by this
-     *  actor.  This is the attribute in the container of this actor
-     *  with the name given by the variableName attribute.  If no such
-     *  attribute is found, then this method creates a new variable in
-     *  the actor's container with the correct name.  This method
-     *  gets write access on the workspace.
-     *  
-     *  Modified from ptolemy.actor.lib.SetVariable
-     *  
-     *  @exception IllegalActionException If the variable cannot be found.
-     *  @return The attribute modified by this actor.
-     */
-    private Attribute getModifiedVariable(String variableNameValue) throws IllegalActionException {
-    	if (attributeVersion.containsKey(variableNameValue)) {
-	        if (_workspace.getVersion() == attributeVersion.get(variableNameValue)) {
-	            return attribute.get(variableNameValue);
-	        }
-    	}
-        NamedObj container = getContainer();
-
-        if (container == null) {
-            throw new IllegalActionException(this, "No container.");
-        }
-
-        attribute.put(variableNameValue, null);
-
-        if (!variableNameValue.equals("")) {
-            // Look for the variableName anywhere in the hierarchy
-        	Attribute _attribute = ModelScope.getScopedAttribute(null, container,
-                    variableNameValue);
-            if (_attribute == null) {
-                try {
-                    workspace().getWriteAccess();
-
-                    // container might be null, so create the variable
-                    // in the container of this actor.
-                    _attribute = new Variable(getContainer(), variableNameValue);
-                } catch (IllegalActionException ex) {
-                    throw new IllegalActionException(this, ex,
-                            "Failed to create Variable \"" + variableNameValue
-                            + "\" in " + getContainer().getFullName()
-                            + ".");
-                } catch (NameDuplicationException ex) {
-                    throw new InternalErrorException(ex);
-                } finally {
-                    workspace().doneWriting();
+    private ArrayToken computeNewPosition() {
+        ArrayToken currentLocation = (ArrayToken) modelData.getVariable("currentLocation");
+        
+        // Number of neighbours in motion with lowest rank.
+        inRange = true;
+        minRank = Integer.MAX_VALUE;
+        locationSenders = new ArrayList<ArrayToken>();
+        
+        neighbours.forEach((node, nodeData) -> {
+            RecordToken nodeRecord = (RecordToken) nodeData;
+            
+            int nodeRank = ((IntToken) nodeRecord.get("nodeID")).intValue();
+            boolean nodeInMotion = ((BooleanToken) nodeRecord.get("motion")).booleanValue();
+            ArrayToken nodeLocation = (ArrayToken) nodeRecord.get("location");
+            
+            if (nodeInMotion) {
+                if (nodeRank < minRank) {
+                    // new lowest rank, reset
+                    inRange = true;
+                    minRank = nodeRank;
+                    locationSenders = new ArrayList<ArrayToken>();
+                }
+                
+                if (nodeRank <= minRank) {
+                    if (!checkNodeInRange(nodeLocation)) {
+                        inRange = false;
+                    }
+                    locationSenders.add(nodeLocation);
                 }
             }
-            attributeVersion.put(variableNameValue, _workspace.getVersion());
-            attribute.put(variableNameValue, _attribute);
+        });
+        
+        if (inRange) {
+            // Node stays connected with all neighbours with least rank.
+            return currentLocation;
         }
-        return attribute.get(variableNameValue);
+        
+        if (locationSenders.size() == 1) {
+            // Return a point r units away from neighbour, on direct path to neighbour.
+            return getOneNodeIntersection(currentLocation, locationSenders.get(0));
+        } else if (locationSenders.size() == 2) {
+            // Return closest point between two intersection points.
+            return getTwoNodeIntersection(currentLocation, locationSenders);
+        } else if (locationSenders.size() >= 3) {
+            // Return the closest point among intersection points which is located inside all other circles.
+            return getMultipleNodeIntersection(currentLocation, locationSenders);
+        }
+
+        return null;
     }
     
-    /** Set the value of the associated container's variable.
-     * 
-     * Modified from ptolemy.actor.lib.SetVariable
-     * 
-     *  @param variableNameValue The name of the variable to set.
-     *  @param value The new value.
-     *  @throws IllegalActionException
-     */
-    private void setVariable(String variableNameValue, Token value) throws IllegalActionException {
-        Attribute variable = getModifiedVariable(variableNameValue);
-
-        if (variable instanceof Variable) {
-            Token oldToken = ((Variable) variable).getToken();
-
-            if (oldToken == null || !oldToken.equals(value)) {
-                ((Variable) variable).setToken(value);
-
-                // NOTE: If we don't call validate(), then the
-                // change will not propagate to dependents.
-                ((Variable) variable).validate();
-            }
-        } else if (variable instanceof Settable) {
-            ((Settable) variable).setExpression(value.toString());
-
-            // NOTE: If we don't call validate(), then the
-            // change will not propagate to dependents.
-            ((Settable) variable).validate();
+    private boolean checkNodeInRange(ArrayToken nodeLocation) {
+        ArrayToken currentLocation = (ArrayToken) modelData.getVariable("currentLocation");
+        double coordX = ((DoubleToken) currentLocation.getElement(0)).doubleValue();
+        double coordY = ((DoubleToken) currentLocation.getElement(1)).doubleValue();
+        
+        double nodeX = ((DoubleToken) nodeLocation.getElement(0)).doubleValue();
+        double nodeY = ((DoubleToken) nodeLocation.getElement(1)).doubleValue();
+        
+        double radius = ((DoubleToken) modelData.getVariable("txRange")).doubleValue();
+        
+        return checkPointInRadius(coordX, coordY, nodeX, nodeY, radius);
+    }
+    
+    private boolean checkPointInRadius(double Xa, double Ya, double Xb, double Yb, double radius) {
+        double distance2 = Math.pow((Xb - Xa), 2) + Math.pow((Yb - Ya), 2);
+        double radius2 = Math.pow(radius, 2);
+        
+        if (distance2 <= radius2) {
+            return true;
         } else {
-            throw new IllegalActionException(this,
-                    "Cannot set the value of the variable " + "named: "
-                            + variableNameValue);
+            return false;
         }
     }
     
-    /**
-     * 
-     * @param variableNameValue The name of the variable to get.
-     * @return The value.
-     * @throws IllegalActionException
-     */
-    private Token getVariable(String variableNameValue) throws IllegalActionException {
-    	Attribute variable = getModifiedVariable(variableNameValue);
-    	
-    	return ((Variable) variable).getToken();
+    private ArrayToken getOneNodeIntersection(ArrayToken currentLocation, ArrayToken nodeLocation) {
+        double coordX = ((DoubleToken) currentLocation.getElement(0)).doubleValue();
+        double coordY = ((DoubleToken) currentLocation.getElement(1)).doubleValue();
+        
+        double nodeX = ((DoubleToken) nodeLocation.getElement(0)).doubleValue();
+        double nodeY = ((DoubleToken) nodeLocation.getElement(1)).doubleValue();
+        
+        double distance = Math.sqrt( Math.pow((nodeX - coordX), 2) + Math.pow((nodeY - coordY), 2) );
+        double radius = ((DoubleToken) modelData.getVariable("txRange")).doubleValue();
+        double ratio = radius / distance;
+        
+        DoubleToken newX = new DoubleToken((1-ratio) * nodeX + ratio * coordX);
+        DoubleToken newY = new DoubleToken((1-ratio) * nodeY + ratio * coordY);
+        
+        try {
+            ArrayToken newLocation = new ArrayToken(new Token[] {newX, newY});
+            return newLocation;
+        } catch (IllegalActionException e) {
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
+    
+    private ArrayToken getTwoNodeIntersection(ArrayToken currentLocation, ArrayList<ArrayToken> locations) {
+        double coordX = ((DoubleToken) currentLocation.getElement(0)).doubleValue();
+        double coordY = ((DoubleToken) currentLocation.getElement(1)).doubleValue();
+        
+        ArrayList<double[]> intersections = getIntersectionPoints(locations);
+        
+        double[] closestPoint = getClosestPoint(coordX, coordY, intersections);
+        
+        DoubleToken newX = new DoubleToken(closestPoint[0]);
+        DoubleToken newY = new DoubleToken(closestPoint[1]);
+        
+        try {
+            ArrayToken newLocation = new ArrayToken(new Token[] {newX, newY});
+            return newLocation;
+        } catch (IllegalActionException e) {
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
+    
+    private ArrayToken getMultipleNodeIntersection(ArrayToken currentLocation, ArrayList<ArrayToken> locations) {
+        double coordX = ((DoubleToken) currentLocation.getElement(0)).doubleValue();
+        double coordY = ((DoubleToken) currentLocation.getElement(1)).doubleValue();
+        
+        double radius = ((DoubleToken) modelData.getVariable("txRange")).doubleValue();
+        ArrayList<double[]> intersections = getIntersectionPoints(locations);
+        
+        ArrayList<double[]> candidateLocations = new ArrayList<double[]>();
+        
+        for (int i = 0; i < intersections.size(); i++) {
+            double[] aLocation = intersections.get(i);
+            double Xa = aLocation[0];
+            double Ya = aLocation[1];
+            
+            boolean pointInRadii = true;
+            
+            for (int j = 0; j < locations.size(); j++) {
+                
+                double[] bLocation = intersections.get(j);
+                double Xb = bLocation[0];
+                double Yb = bLocation[1];
+                
+                if (!checkPointInRadius(Xa, Ya, Xb, Yb, radius)) {
+                    pointInRadii = false;
+                }
+            }
+            
+            if (pointInRadii) {
+                candidateLocations.add(aLocation);
+            }
+        }
+        
+        double[] closestPoint = getClosestPoint(coordX, coordY, candidateLocations);
+        
+        DoubleToken newX = new DoubleToken(closestPoint[0]);
+        DoubleToken newY = new DoubleToken(closestPoint[1]);
+        
+        try {
+            ArrayToken newLocation = new ArrayToken(new Token[] {newX, newY});
+            return newLocation;
+        } catch (IllegalActionException e) {
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
+    
+    private ArrayList<double[]> getIntersectionPoints(ArrayList<ArrayToken> locations) {
+        
+        double radius = ((DoubleToken) modelData.getVariable("txRange")).doubleValue();
+        ArrayList<double[]> intersections = new ArrayList<double[]>();
+        
+        for (int i = 0; i < locations.size(); i++) {
+            ArrayToken aLocation = locations.get(i);
+            double Xa = ((DoubleToken) aLocation.getElement(0)).doubleValue();
+            double Ya = ((DoubleToken) aLocation.getElement(1)).doubleValue();
+            
+            for (int j = 0; j < locations.size(); j++) {
+                if (j == i){
+                    continue;
+                }
+                
+                ArrayToken bLocation = locations.get(j);
+
+                double Xb = ((DoubleToken) bLocation.getElement(0)).doubleValue();
+                double Yb = ((DoubleToken) bLocation.getElement(1)).doubleValue();
+                
+                double distance2 = Math.pow((Xa - Xb), 2) + Math.pow((Ya - Yb), 2);
+                
+                double K = 0.25 * Math.sqrt((Math.pow(radius + radius, 2) - distance2) * (distance2));
+                // radius is equal so some terms cancel
+                double X1 = 0.5 * (Xb + Xa) + 2 * (Yb - Ya) * K / distance2;
+                double X2 = 0.5 * (Xb + Xa) - 2 * (Yb - Ya) * K / distance2;
+                double Y1 = 0.5 * (Yb + Ya) - 2 * (Xb - Xa) * K / distance2;
+                double Y2 = 0.5 * (Yb + Ya) + 2 * (Xb - Xa) * K / distance2;
+                
+                intersections.add(new double[] {X1, Y1});
+                intersections.add(new double[] {X2, Y2});
+            }
+        }
+        
+        return intersections;
+    }
+    
+    private double[] getClosestPoint(double coordX, double coordY, ArrayList<double[]> points) {
+        
+        double minDistance = Double.MAX_VALUE;
+        int chosenPoint = 0;
+        
+        for (int i = 0; i < points.size(); i++) {
+            double distance = Math.pow((points.get(i)[0] - coordX), 2) + Math.pow((points.get(i)[1] - coordY), 2);
+            if (distance < minDistance) {
+                minDistance = distance;
+                chosenPoint = i;
+            }
+        }
+        
+        return points.get(chosenPoint);
     }
     
  // Types
@@ -509,6 +676,8 @@ public class NodeProcessor extends TypedAtomicActor {
         BaseType.BOOLEAN
     };
     private static RecordType typeRecordNeighbourState = new RecordType(labelsNeighbourState, typesNeighbourState);
+    
+    private static ArrayType typeLocation = new ArrayType(BaseType.DOUBLE, 2);
 }
 
 
