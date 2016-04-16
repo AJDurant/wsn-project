@@ -3,7 +3,9 @@ package ajdurant.wsn.lib;
 import java.util.HashMap;
 
 import ajdurant.wsn.actor.NodeProcessor;
+import ptolemy.actor.NoTokenException;
 import ptolemy.actor.TypedAtomicActor;
+import ptolemy.actor.TypedIOPort;
 import ptolemy.data.Token;
 import ptolemy.data.expr.ModelScope;
 import ptolemy.data.expr.Variable;
@@ -44,6 +46,16 @@ public class ModelData extends TypedAtomicActor {
         attributeVersion = new HashMap<String, Long>();
 
         return newObject;
+    }
+    
+    /**
+     * Discard Token from the given port.
+     * @param port Port to remove token from.
+     * @throws NoTokenException
+     * @throws IllegalActionException
+     */
+    public void clearToken(TypedIOPort port) throws NoTokenException, IllegalActionException {
+        port.get(0);
     }
 
     /** Return the (presumably Settable) attribute modified by this

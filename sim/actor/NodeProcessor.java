@@ -154,15 +154,15 @@ public class NodeProcessor extends TypedAtomicActor {
             receiveSensor();
         }
         if (triggerHeartBeat.getWidth() > 0 && triggerHeartBeat.hasToken(0)) {
-            clearToken(triggerHeartBeat);
+            modelData.clearToken(triggerHeartBeat);
             heartbeat();
         }
         if (triggerNeighbourCheck.getWidth() > 0 && triggerNeighbourCheck.hasToken(0)) {
-            clearToken(triggerNeighbourCheck);
+            modelData.clearToken(triggerNeighbourCheck);
             neighbourCheck();
         }
         if (triggerSensorRead.getWidth() > 0 && triggerSensorRead.hasToken(0)) {
-            clearToken(triggerSensorRead);
+            modelData.clearToken(triggerSensorRead);
             readSensor();
         }
         
@@ -298,14 +298,12 @@ public class NodeProcessor extends TypedAtomicActor {
     	neighbours.forEach((node, nodeData) -> {
             RecordToken nodeRecord = (RecordToken) nodeData;
             
-            int hopCount = ((IntToken) modelData.getVariable("hopCount")).intValue();
-
-            int nodeHopCount = ((IntToken) nodeRecord.get("hopCount")).intValue();
             double nodeUpdateTime = ((DoubleToken) nodeRecord.get("updateTime")).doubleValue();
+            boolean nodeAlive = ((BooleanToken) nodeRecord.get("alive")).booleanValue();
             boolean nodeInMotion = ((BooleanToken) nodeRecord.get("motion")).booleanValue();
             ArrayToken nodeLocation = (ArrayToken) nodeRecord.get("location");
     		
-            if ((currentTime >= nodeUpdateTime + heartbeatCheckPeriod) && (nodeHopCount <= hopCount)) {
+            if ((currentTime >= nodeUpdateTime + heartbeatCheckPeriod) && nodeAlive) {
                 // Higher ranked node has lost connectivity.
 
                 if (nodeInMotion) {
@@ -351,16 +349,6 @@ public class NodeProcessor extends TypedAtomicActor {
     protected void consumePower() throws IllegalActionException {
     	DoubleToken consumptionRate = (DoubleToken) modelData.getVariable("processorPowerRate");
     	consumption.send(0, consumptionRate);
-    }
-    
-    /**
-     * Discard Token from the given port.
-     * @param port Port to remove token from.
-     * @throws NoTokenException
-     * @throws IllegalActionException
-     */
-    private void clearToken(TypedIOPort port) throws NoTokenException, IllegalActionException {
-        port.get(0);
     }
     
     private RecordToken setNeighbourLive(RecordToken nodeData, boolean alive) throws IllegalActionException {
