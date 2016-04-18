@@ -2,7 +2,6 @@ package ajdurant.wsn.lib;
 
 import java.util.HashMap;
 
-import ajdurant.wsn.actor.NodeProcessor;
 import ptolemy.actor.NoTokenException;
 import ptolemy.actor.TypedAtomicActor;
 import ptolemy.actor.TypedIOPort;
@@ -40,7 +39,7 @@ public class ModelData extends TypedAtomicActor {
      */
     @Override
     public Object clone(Workspace workspace) throws CloneNotSupportedException {
-        NodeProcessor newObject = (NodeProcessor) super.clone(workspace);
+        ModelData newObject = (ModelData) super.clone(workspace);
 
         attribute = new HashMap<String, Attribute>();
         attributeVersion = new HashMap<String, Long>();

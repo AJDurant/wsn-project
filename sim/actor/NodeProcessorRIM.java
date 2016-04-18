@@ -25,9 +25,9 @@ import ptolemy.kernel.util.IllegalActionException;
 import ptolemy.kernel.util.NameDuplicationException;
 import ptolemy.kernel.util.Workspace;
 
-public class NodeProcessor extends TypedAtomicActor {
+public class NodeProcessorRIM extends TypedAtomicActor {
 
-    public NodeProcessor(CompositeEntity container, String name)
+    public NodeProcessorRIM(CompositeEntity container, String name)
         throws NameDuplicationException, IllegalActionException
     {
         super(container, name);
@@ -134,7 +134,7 @@ public class NodeProcessor extends TypedAtomicActor {
      */
     @Override
     public Object clone(Workspace workspace) throws CloneNotSupportedException {
-        NodeProcessor newObject = (NodeProcessor) super.clone(workspace);
+        NodeProcessorRIM newObject = (NodeProcessorRIM) super.clone(workspace);
 
         // Set the type constraints.
         newObject.toComm.setTypeSameAs(newObject.fromComm);
