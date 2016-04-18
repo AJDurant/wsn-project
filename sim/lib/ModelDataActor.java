@@ -17,9 +17,9 @@ import ptolemy.kernel.util.NamedObj;
 import ptolemy.kernel.util.Settable;
 import ptolemy.kernel.util.Workspace;
 
-public class ModelData extends TypedAtomicActor {
+public abstract class ModelDataActor extends TypedAtomicActor {
 
-    public ModelData(CompositeEntity container, String name)
+    public ModelDataActor(CompositeEntity container, String name)
         throws NameDuplicationException, IllegalActionException
     {
         super(container, name);
@@ -39,10 +39,10 @@ public class ModelData extends TypedAtomicActor {
      */
     @Override
     public Object clone(Workspace workspace) throws CloneNotSupportedException {
-        ModelData newObject = (ModelData) super.clone(workspace);
+        ModelDataActor newObject = (ModelDataActor) super.clone(workspace);
 
-        attribute = new HashMap<String, Attribute>();
-        attributeVersion = new HashMap<String, Long>();
+        newObject.attribute = new HashMap<String, Attribute>();
+        newObject.attributeVersion = new HashMap<String, Long>();
 
         return newObject;
     }

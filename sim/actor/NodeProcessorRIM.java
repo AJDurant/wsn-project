@@ -37,6 +37,13 @@ public class NodeProcessorRIM extends NodeProcessor {
         alreadyMoved = false;
     }
     
+    /**
+     * Handler for when a periodic neighbour check is triggered.
+     * 
+     * This function implements RIM.
+     * 
+     * @throws IllegalActionException
+     */
     @Override
     protected void neighbourCheck() throws IllegalActionException {
     	
@@ -60,11 +67,11 @@ public class NodeProcessorRIM extends NodeProcessor {
                     }
                     
                     ArrayToken newPosition = computeNewPosition();
-                    ArrayToken currentPosition = (ArrayToken) modelData.getVariable("currentLocation");
+                    ArrayToken currentPosition = (ArrayToken) getVariable("currentLocation");
                     
                     if (!currentPosition.equals(newPosition)) {
                         try {
-                            modelData.setVariable("inMotion", new BooleanToken(true));
+                            setVariable("inMotion", new BooleanToken(true));
                             toMotion.send(0, newPosition);
                         } catch (IllegalActionException e) {
                             // TODO Auto-generated catch block
@@ -76,7 +83,7 @@ public class NodeProcessorRIM extends NodeProcessor {
                     // Node has probably died
                     try {
                         nodeData = setNeighbourLive(nodeRecord, false);
-                        modelData.setVariable("inMotion", new BooleanToken(true));
+                        setVariable("inMotion", new BooleanToken(true));
                         toMotion.send(0, computePositionFromDeadNode(nodeLocation));
                     } catch (IllegalActionException e) {
                         // TODO Auto-generated catch block
@@ -95,7 +102,7 @@ public class NodeProcessorRIM extends NodeProcessor {
     }
     
     private ArrayToken computePositionFromDeadNode(ArrayToken nodeLocation) {
-        ArrayToken currentLocation = (ArrayToken) modelData.getVariable("currentLocation");
+        ArrayToken currentLocation = (ArrayToken) getVariable("currentLocation");
         
         double coordX = ((DoubleToken) currentLocation.getElement(0)).doubleValue();
         double coordY = ((DoubleToken) currentLocation.getElement(1)).doubleValue();
@@ -104,7 +111,7 @@ public class NodeProcessorRIM extends NodeProcessor {
         double nodeY = ((DoubleToken) nodeLocation.getElement(1)).doubleValue();
         
         double distance = Math.sqrt( Math.pow((nodeX - coordX), 2) + Math.pow((nodeY - coordY), 2) );
-        double radius = ((DoubleToken) modelData.getVariable("txRange")).doubleValue();
+        double radius = ((DoubleToken) getVariable("txRange")).doubleValue();
         double ratio = (radius / 2) / distance;
         
         DoubleToken newX = new DoubleToken((1-ratio) * nodeX + ratio * coordX);
@@ -122,7 +129,7 @@ public class NodeProcessorRIM extends NodeProcessor {
     }
 
     private ArrayToken computeNewPosition() {
-        ArrayToken currentLocation = (ArrayToken) modelData.getVariable("currentLocation");
+        ArrayToken currentLocation = (ArrayToken) getVariable("currentLocation");
         
         // Number of neighbours in motion with lowest rank.
         inRange = true;
@@ -173,14 +180,14 @@ public class NodeProcessorRIM extends NodeProcessor {
     }
     
     private boolean checkNodeInRange(ArrayToken nodeLocation) {
-        ArrayToken currentLocation = (ArrayToken) modelData.getVariable("currentLocation");
+        ArrayToken currentLocation = (ArrayToken) getVariable("currentLocation");
         double coordX = ((DoubleToken) currentLocation.getElement(0)).doubleValue();
         double coordY = ((DoubleToken) currentLocation.getElement(1)).doubleValue();
         
         double nodeX = ((DoubleToken) nodeLocation.getElement(0)).doubleValue();
         double nodeY = ((DoubleToken) nodeLocation.getElement(1)).doubleValue();
         
-        double radius = ((DoubleToken) modelData.getVariable("txRange")).doubleValue();
+        double radius = ((DoubleToken) getVariable("txRange")).doubleValue();
         
         return checkPointInRadius(coordX, coordY, nodeX, nodeY, radius);
     }
@@ -204,7 +211,7 @@ public class NodeProcessorRIM extends NodeProcessor {
         double nodeY = ((DoubleToken) nodeLocation.getElement(1)).doubleValue();
         
         double distance = Math.sqrt( Math.pow((nodeX - coordX), 2) + Math.pow((nodeY - coordY), 2) );
-        double radius = ((DoubleToken) modelData.getVariable("txRange")).doubleValue();
+        double radius = ((DoubleToken) getVariable("txRange")).doubleValue();
         double ratio = radius / distance;
         
         DoubleToken newX = new DoubleToken((1-ratio) * nodeX + ratio * coordX);
@@ -245,7 +252,7 @@ public class NodeProcessorRIM extends NodeProcessor {
         double coordX = ((DoubleToken) currentLocation.getElement(0)).doubleValue();
         double coordY = ((DoubleToken) currentLocation.getElement(1)).doubleValue();
         
-        double radius = ((DoubleToken) modelData.getVariable("txRange")).doubleValue();
+        double radius = ((DoubleToken) getVariable("txRange")).doubleValue();
         ArrayList<double[]> intersections = getIntersectionPoints(locations);
         
         ArrayList<double[]> candidateLocations = new ArrayList<double[]>();
@@ -290,7 +297,7 @@ public class NodeProcessorRIM extends NodeProcessor {
     
     private ArrayList<double[]> getIntersectionPoints(ArrayList<ArrayToken> locations) {
         
-        double radius = ((DoubleToken) modelData.getVariable("txRange")).doubleValue();
+        double radius = ((DoubleToken) getVariable("txRange")).doubleValue();
         ArrayList<double[]> intersections = new ArrayList<double[]>();
         
         for (int i = 0; i < locations.size(); i++) {

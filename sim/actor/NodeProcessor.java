@@ -2,8 +2,7 @@ package ajdurant.wsn.actor;
 
 import java.util.HashMap;
 
-import ajdurant.wsn.lib.ModelData;
-import ptolemy.actor.TypedAtomicActor;
+import ajdurant.wsn.lib.WSNActor;
 import ptolemy.actor.TypedIOPort;
 import ptolemy.data.ArrayToken;
 import ptolemy.data.BooleanToken;
@@ -13,17 +12,13 @@ import ptolemy.data.RecordToken;
 import ptolemy.data.Token;
 import ptolemy.data.UnionToken;
 import ptolemy.data.expr.SingletonParameter;
-import ptolemy.data.type.ArrayType;
 import ptolemy.data.type.BaseType;
-import ptolemy.data.type.RecordType;
-import ptolemy.data.type.Type;
-import ptolemy.data.type.UnionType;
 import ptolemy.kernel.CompositeEntity;
 import ptolemy.kernel.util.IllegalActionException;
 import ptolemy.kernel.util.NameDuplicationException;
 import ptolemy.kernel.util.Workspace;
 
-public abstract class NodeProcessor extends TypedAtomicActor {
+public abstract class NodeProcessor extends WSNActor {
 
     // Inputs
     public TypedIOPort fromComm;
@@ -32,7 +27,6 @@ public abstract class NodeProcessor extends TypedAtomicActor {
     public TypedIOPort triggerNeighbourCheck;
     public TypedIOPort triggerSensorRead;
     // Outputs
-    public TypedIOPort consumption;
     public TypedIOPort toComm;
     public TypedIOPort toSens;
     public TypedIOPort toMotion;
@@ -47,8 +41,14 @@ public abstract class NodeProcessor extends TypedAtomicActor {
     private IntToken nodeID;
     private IntToken heartbeatCount;
     protected HashMap<Integer, Token> neighbours;
-    protected ModelData modelData;
 
+    /**
+     * Handler for when a periodic neighbour check is triggered.
+     * 
+     * This function implements the recovery algorithm.
+     * 
+     * @throws IllegalActionException
+     */
     protected abstract void neighbourCheck() throws IllegalActionException;
 
     public NodeProcessor(CompositeEntity container, String name)
@@ -74,10 +74,6 @@ public abstract class NodeProcessor extends TypedAtomicActor {
         new SingletonParameter(triggerSensorRead, "_showName").setExpression("true");
         
         // Outputs
-        consumption = new TypedIOPort(this, "consumption", false, true);
-        consumption.setTypeEquals(BaseType.DOUBLE);
-        new SingletonParameter(consumption, "_showName").setExpression("true");
-        
         toComm = new TypedIOPort(this, "toComm", false, true);
         toComm.setTypeEquals(typeRecordComm);
         new SingletonParameter(toComm, "_showName").setExpression("true");
@@ -93,12 +89,10 @@ public abstract class NodeProcessor extends TypedAtomicActor {
         // Set Type constraints
         toComm.setTypeSameAs(fromComm);
         
-        modelData = new ModelData(container, "");
-        
         // Setup node constants
-        emptyType = (IntToken) modelData.getVariable("emptyType");
-        heartbeatType = (IntToken) modelData.getVariable("heartbeatType");
-        dataType = (IntToken) modelData.getVariable("dataType");
+        emptyType = (IntToken) getVariable("emptyType");
+        heartbeatType = (IntToken) getVariable("heartbeatType");
+        dataType = (IntToken) getVariable("dataType");
     }
     
     /**
@@ -108,11 +102,11 @@ public abstract class NodeProcessor extends TypedAtomicActor {
     public void initialize() throws IllegalActionException {
     	super.initialize();
     	
-    	nodeID = (IntToken) modelData.getVariable("nodeID");
+    	nodeID = (IntToken) getVariable("nodeID");
     	
     	neighbours = new HashMap<Integer, Token>();
         heartbeatCount = new IntToken(0);
-        heartbeatCheckPeriod = ((DoubleToken) modelData.getVariable("heartbeatCheckPeriod")).doubleValue();
+        heartbeatCheckPeriod = ((DoubleToken) getVariable("heartbeatCheckPeriod")).doubleValue();
 
     }
 
@@ -143,20 +137,25 @@ public abstract class NodeProcessor extends TypedAtomicActor {
             receiveSensor();
         }
         if (triggerHeartBeat.getWidth() > 0 && triggerHeartBeat.hasToken(0)) {
-            modelData.clearToken(triggerHeartBeat);
+            clearToken(triggerHeartBeat);
             heartbeat();
         }
         if (triggerNeighbourCheck.getWidth() > 0 && triggerNeighbourCheck.hasToken(0)) {
-            modelData.clearToken(triggerNeighbourCheck);
+            clearToken(triggerNeighbourCheck);
             neighbourCheck();
         }
         if (triggerSensorRead.getWidth() > 0 && triggerSensorRead.hasToken(0)) {
-            modelData.clearToken(triggerSensorRead);
+            clearToken(triggerSensorRead);
             readSensor();
         }
         
     }
 
+    /**
+     * Handler for when message received from Comms.
+     * 
+     * @throws IllegalActionException
+     */
     protected void receiveCommunication() throws IllegalActionException {
     	if (fromComm.getWidth() > 0 && fromComm.hasToken(0)) {
             RecordToken messageToken = (RecordToken) fromComm.get(0);
@@ -176,6 +175,12 @@ public abstract class NodeProcessor extends TypedAtomicActor {
     	consumePower();
     }
     
+    /**
+     * Handler for when heartbeat message is received.
+     * 
+     * @param heartbeatMessage
+     * @throws IllegalActionException
+     */
     protected void handleHeartbeat(RecordToken heartbeatMessage) throws IllegalActionException {
         parentUpdate(heartbeatMessage);
         neighbourUpdate(heartbeatMessage);
@@ -191,14 +196,14 @@ public abstract class NodeProcessor extends TypedAtomicActor {
         int nodeID = ((IntToken) heartbeatMessage.get("nodeID")).intValue();
         int hopCount = ((IntToken) heartbeatMessage.get("hopCount")).intValue();
         
-        int nodeHopCount = ((IntToken) modelData.getVariable("hopCount")).intValue();
+        int nodeHopCount = ((IntToken) getVariable("hopCount")).intValue();
         
         if (hopCount < nodeHopCount) {
             IntToken parentToken = new IntToken(nodeID);
             IntToken newHopCount = new IntToken(hopCount + 1);
             
-            modelData.setVariable("parentNode", parentToken);
-            modelData.setVariable("hopCount", newHopCount);
+            setVariable("parentNode", parentToken);
+            setVariable("hopCount", newHopCount);
         }   
     }
     
@@ -255,13 +260,18 @@ public abstract class NodeProcessor extends TypedAtomicActor {
     	consumePower();
     }
 
+    /**
+     * Send heartbeat onto the network.
+     * 
+     * @throws IllegalActionException
+     */
     protected void heartbeat() throws IllegalActionException {
     	
     	Token[] heartbeatTokens = {
     		heartbeatCount,
-    		(IntToken) modelData.getVariable("hopCount"),
-    		(ArrayToken) modelData.getVariable("targetLocation"),
-    		(BooleanToken) modelData.getVariable("inMotion"),
+    		(IntToken) getVariable("hopCount"),
+    		(ArrayToken) getVariable("targetLocation"),
+    		(BooleanToken) getVariable("inMotion"),
     		nodeID
     	};
     	
@@ -290,64 +300,9 @@ public abstract class NodeProcessor extends TypedAtomicActor {
      * @throws IllegalActionException
      */
     protected void consumePower() throws IllegalActionException {
-    	DoubleToken consumptionRate = (DoubleToken) modelData.getVariable("processorPowerRate");
-    	consumption.send(0, consumptionRate);
+    	consumePower("processorPowerRate");
     }
 
-    // Types
-    protected static ArrayType typeLocation = new ArrayType(BaseType.DOUBLE, 2);
-    protected static String[] labelsDataMessage = {
-            "nodeID",
-            "sensorData",
-            "sensorTime"
-        };
-    protected static Type[] typesDataMessage = {
-            BaseType.INT,
-            BaseType.DOUBLE,
-            BaseType.DOUBLE
-        };
-    protected static RecordType typeDataMessage = new RecordType(labelsDataMessage, typesDataMessage);
-    protected static String[] labelsHeartbeat = {
-            "count",
-            "hopCount",
-            "location",
-            "motion",
-            "nodeID"
-        };
-    protected static Type[] typesHeartbeat = {
-            BaseType.INT,
-            BaseType.INT,
-            typeLocation,
-            BaseType.BOOLEAN,
-            BaseType.INT
-        };
-    protected static RecordType typeRecordHeartbeat = new RecordType(labelsHeartbeat, typesHeartbeat);
-    protected static String[] labelsCommUnion = {
-            "DataMessage",
-            "Heartbeat"
-        };
-    protected static Type[] typesCommUnion = {
-            typeDataMessage,
-            typeRecordHeartbeat
-        };
-    protected static UnionType typeUnionCommUnion = new UnionType(labelsCommUnion, typesCommUnion);
-    protected static String[] labelsComm = {
-            "messageType",
-            "messageData"
-        };
-    protected static Type[] typesComm = {
-            BaseType.INT,
-            typeUnionCommUnion
-        };
-    protected static RecordType typeRecordComm = new RecordType(labelsComm, typesComm);
-    protected static String[] labelsNeighbourState = {
-        	"updateTime",
-        	"alive"
-        };
-    protected static Type[] typesNeighbourState = {
-            BaseType.DOUBLE,
-            BaseType.BOOLEAN
-        };
-    protected static RecordType typeRecordNeighbourState = new RecordType(labelsNeighbourState, typesNeighbourState);
+    
 
 }

@@ -1,20 +1,17 @@
 package ajdurant.wsn.actor;
 
-import ajdurant.wsn.lib.ModelData;
-import ptolemy.actor.TypedAtomicActor;
+import ajdurant.wsn.lib.WSNActor;
 import ptolemy.actor.TypedIOPort;
 import ptolemy.data.ArrayToken;
 import ptolemy.data.BooleanToken;
 import ptolemy.data.DoubleToken;
 import ptolemy.data.Token;
 import ptolemy.data.expr.SingletonParameter;
-import ptolemy.data.type.ArrayType;
-import ptolemy.data.type.BaseType;
 import ptolemy.kernel.CompositeEntity;
 import ptolemy.kernel.util.IllegalActionException;
 import ptolemy.kernel.util.NameDuplicationException;
 
-public class MotionController extends TypedAtomicActor {
+public class MotionController extends WSNActor {
 
     public MotionController(CompositeEntity container, String name)
             throws IllegalActionException, NameDuplicationException {
@@ -27,12 +24,6 @@ public class MotionController extends TypedAtomicActor {
         nextLoc = new TypedIOPort(this, "nextLoc", false, true);
         nextLoc.setTypeEquals(typeLocation);
         new SingletonParameter(nextLoc, "_showName").setExpression("true");
-        
-        consumption = new TypedIOPort(this, "consumption", false, true);
-        consumption.setTypeEquals(BaseType.DOUBLE);
-        new SingletonParameter(consumption, "_showName").setExpression("true");
-        
-        modelData = new ModelData(container, "");
     }
 
     // Inputs
@@ -40,9 +31,6 @@ public class MotionController extends TypedAtomicActor {
     
     // Outputs
     public TypedIOPort nextLoc;
-    public TypedIOPort consumption;
-    
-    private ModelData modelData;
     
     @Override
     public void fire() throws IllegalActionException
@@ -50,10 +38,10 @@ public class MotionController extends TypedAtomicActor {
         super.fire();
         
         if (trigger.getWidth() > 0 && trigger.hasToken(0)) {
-            modelData.clearToken(trigger);
+            clearToken(trigger);
             
-            ArrayToken currentLocation = (ArrayToken) modelData.getVariable("currentLocation");
-            ArrayToken targetLocation = (ArrayToken) modelData.getVariable("targetLocation");
+            ArrayToken currentLocation = (ArrayToken) getVariable("currentLocation");
+            ArrayToken targetLocation = (ArrayToken) getVariable("targetLocation");
             
             DoubleToken currentX = (DoubleToken) currentLocation.getElement(0);
             DoubleToken currentY = (DoubleToken) currentLocation.getElement(1);
@@ -62,11 +50,11 @@ public class MotionController extends TypedAtomicActor {
             DoubleToken targetY = (DoubleToken) targetLocation.getElement(1);
             
             if(checkLocationChangeNeeded(currentX, currentY, targetX, targetY)) {
-                modelData.setVariable("inMotion", new BooleanToken(true));
+                setVariable("inMotion", new BooleanToken(true));
                 moveTowardTarget(currentX, currentY, targetX, targetY);
                 consumePower();
             } else {
-                modelData.setVariable("inMotion", new BooleanToken(false));
+                setVariable("inMotion", new BooleanToken(false));
             }
         }
         
@@ -102,9 +90,7 @@ public class MotionController extends TypedAtomicActor {
      * @throws IllegalActionException
      */
     protected void consumePower() throws IllegalActionException {
-        DoubleToken consumptionRate = (DoubleToken) modelData.getVariable("motionPowerRate");
-        consumption.send(0, consumptionRate);
+        consumePower("motionPowerRate");
     }
     
-    private static ArrayType typeLocation = new ArrayType(BaseType.DOUBLE, 2);
 }
