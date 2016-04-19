@@ -46,7 +46,7 @@ public class NodeProcessorRIM extends NodeProcessor {
      */
     @Override
     protected void neighbourCheck() throws IllegalActionException {
-    	
+
     	double currentTime = getDirector().getModelTime().getDoubleValue();
     	
     	neighbours.forEach((node, nodeData) -> {
@@ -57,9 +57,9 @@ public class NodeProcessorRIM extends NodeProcessor {
             boolean nodeInMotion = ((BooleanToken) nodeRecord.get("motion")).booleanValue();
             ArrayToken nodeLocation = (ArrayToken) nodeRecord.get("location");
     		
-            if ((currentTime >= nodeUpdateTime + heartbeatCheckPeriod) && nodeAlive) {
+            if ((currentTime >= nodeUpdateTime + heartbeatCheckPeriod)) {
                 // Higher ranked node has lost connectivity.
-
+                
                 if (nodeInMotion) {
                     // Node has moved away
                     if (alreadyMoved) {
@@ -71,7 +71,6 @@ public class NodeProcessorRIM extends NodeProcessor {
                     
                     if (!currentPosition.equals(newPosition)) {
                         try {
-                            setVariable("inMotion", new BooleanToken(true));
                             toMotion.send(0, newPosition);
                         } catch (IllegalActionException e) {
                             // TODO Auto-generated catch block
@@ -82,8 +81,7 @@ public class NodeProcessorRIM extends NodeProcessor {
                 } else {
                     // Node has probably died
                     try {
-                        nodeData = setNeighbourLive(nodeRecord, false);
-                        setVariable("inMotion", new BooleanToken(true));
+                        neighbours.replace(node, setNeighbourLive(nodeRecord, false));
                         toMotion.send(0, computePositionFromDeadNode(nodeLocation));
                     } catch (IllegalActionException e) {
                         // TODO Auto-generated catch block
