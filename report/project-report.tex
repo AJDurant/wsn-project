@@ -60,7 +60,7 @@ In order to consider self-healing in real-world applications of wireless sensor 
 
 % JAMES %
 % Condense the description in 2.1 and potentially move some of this text
-% into the general introduction, if you need the wordcount
+% into the general introduction, if you need the word count
 
 The possible applications for wireless sensor networks are diverse and far reaching. The small self-powered devices that can gather data from a wide area, to detect events and communicate information back to a base station either processed or for processing lend themselves to a large number of applications. Each of these applications utilise the WSN in different ways and thereby bring new challenges to the developer of the systems. Due to this the design of the network is highly dependent on the application domain. Just some of the fields WSNs have been used in are environmental monitoring, warfare, agriculture, surveillance, medical care, education and micro-surgery.
 
@@ -95,7 +95,7 @@ Networks with a high degree of connectivity are more resilient to node failures.
 % 2.2.1 - but does pre-planning risk placing nodes too thinly in the
 % event of failure? Trade off could be commented upon
 
-Due to the differences in applications a number of application specific methods have been proposed in addition to those previously mentioned \citep{Meguerdichian2001,Meguerdichian2001a,Meguerdichian2003}. All of these provide for different application requirements in different ways. However a single parametrised method that can be applied to many differing applications has been developed by \citet*{Derr2013}. This allows the specification of the number of nodes and the distance between the nodes which defines the desired coverage and connectivity respectively. The algorithm first constructs a triangle based mesh for the given area of interest, for example with NETGEN (Figure~\ref{fig:netgen}), however this creates more nodes than desired. To reduce the number of nodes \citeauthor*{Derr2013} create the mesh simplification algorithm INRCDTS which removes nodes and smooths the mesh until the required number of nodes from the desired network parameters is reached (Figure~\ref{fig:inrcdts}). To ensure that both coverage and connectivity requirements are met the algorithm assumes that the communication range ($R_C$) is greater than $\sqrt{3}$ of the sensing range ($R_S$) ie. $R_C \ge \sqrt{3} R_S$. Based upon this assumption the nodes spacing is determined by $\sqrt{3} R_S$ which ensures coverage and therefore connectivity for the network.
+Due to the differences in applications a number of application specific methods have been proposed in addition to those previously mentioned \citep{Meguerdichian2001,Meguerdichian2001a,Meguerdichian2003}. All of these provide for different application requirements in different ways. However a single parametrised method that can be applied to many differing applications has been developed by \citet*{Derr2013}. This allows the specification of the number of nodes and the distance between the nodes which defines the desired coverage and connectivity respectively. The algorithm first constructs a triangle based mesh for the given area of interest, for example with NETGEN (Figure~\ref{fig:netgen}), however this creates more nodes than desired. To reduce the number of nodes \citeauthor*{Derr2013} create the mesh simplification algorithm INRCDTS which removes nodes and smooths the mesh until the required number of nodes from the desired network parameters is reached (Figure~\ref{fig:inrcdts}). To ensure that both coverage and connectivity requirements are met the algorithm assumes that the communication range ($R_C$) is greater than $\sqrt{3}$ of the sensing range ($R_S$) i.e.\ $R_C \ge \sqrt{3} R_S$. Based upon this assumption the nodes spacing is determined by $\sqrt{3} R_S$ which ensures coverage and therefore connectivity for the network.
 
 \begin{figure}
  \centering
@@ -299,7 +299,7 @@ The motion module provides localisation and movement for the node. As localisati
 
 \subsection{Power}
 
-The power module takes an input from each of the other modules as they work and reduces its stored power level by their consumption over time until the energy level reaches 0. At this point the battery is depleted and it sends out a `Dead' signal. All of the modules have alive states and a single dead state that is the final state. At any point if a `Dead' signal is received the modules should transition immediately to the dead state which ceases all computation of that module. The power level and consumption rates of each component are customisable on each node. They are set in my tests using the Memsic IRIS node datasheet \citep{Memsic2011}.
+The power module takes an input from each of the other modules as they work and reduces its stored power level by their consumption over time until the energy level reaches 0. At this point the battery is depleted and it sends out a `Dead' signal. All of the modules have alive states and a single dead state that is the final state. At any point if a `Dead' signal is received the modules should transition immediately to the dead state which ceases all computation of that module. The power level and consumption rates of each component are customisable on each node. They are set in my tests using the Memsic IRIS node data-sheet \citep{Memsic2011}.
 
 \subsection{Processing}
 
@@ -330,9 +330,11 @@ The self-healing algorithms under test are implemented within the processing mod
 
 Wireless network recovery is initiated when a node discovers a neighbouring node is no longer communicating. This could be for a variety of reasons as discussed in Chapter~\ref{cha:LitReview}, how the recovery is dealt with depends upon the particular algorithm used, and it is the algorithms responsibility to recognise the reason for non-communication and react accordingly.
 
+To implement a recovery algorithm the periodically called neighbour check function is overridden.
+
 \subsection{Restoring connectivity through Inward Motion (RIM)}
 
-
+The RIM algorithm was developed by \citet*{Younis2010}. Using the pseudocode the algorithm was implemented to run once the neighbour check found a non-communicating node. The algorithm then reacts based upon whether the node seems to have failed or just moved away. Various geometric functions are required to compute the new location depending on how many other nodes are moving.
 
 \subsection{Simultaneous Failures Recovery Approach (SFRA)}
 
