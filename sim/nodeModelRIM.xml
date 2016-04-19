@@ -188,7 +188,7 @@
         <property name="_location" class="ptolemy.kernel.util.Location" value="[25.0, 210.0]">
         </property>
     </property>
-    <entity name="PowerLossChannel" class="ptolemy.domains.wireless.lib.PowerLossChannel">
+    <entity name="PowerLossChannel" class="ajdurant.wsn.lib.PowerLossChannelNoCache">
         <property name="defaultProperties" class="ptolemy.data.expr.Parameter" value="{range = txRange, power = Infinity}">
         </property>
         <property name="_location" class="ptolemy.kernel.util.Location" value="[170.0, 30.0]">
