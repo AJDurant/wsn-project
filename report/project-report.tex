@@ -39,9 +39,25 @@
 
 \section{Project Aims}
 
-This project aims to investigate self-healing in wireless sensor networks.
+This project aims to investigate self-healing in wireless sensor networks. Research will investigate the current developments in this field leading to a need for a common evaluation tool for approaches to self-healing.
+
+The goal of this project is to produce a wireless sensor network simulation platform as a reference architecture for evaluating self-healing algorithms. The applications of this range from academic investigation during the development of new algorithms or the improvement of existing algorithms, to practical evaluation of candidate systems prior to development and deployment. The platform will be able to simulate and visualise any algorithm implementation on a realistic network.
+
+The project does not aim to produce a novel self-healing algorithm, but during evaluation will suggest what features are critical for general and specific applications, and areas in which it would be useful to focus future research and algorithm development.
 
 \section{Report Structure}
+
+The body of this report consists of 5 chapters that each describe the tasks within the project.
+
+In chapter~\ref{cha:LitReview} the existing literature and work in self-healing wireless sensor networks is reviewed to gain an in-depth understanding of the current state of research, the problems being solved, and how those solutions are evaluated. Each of these topics are categorised in their own section.
+
+Analysis of the problem and the scope of the project is described in chapter~\ref{cha:Problem}, this chapter sets out the objectives that this project is aimed to achieve.
+
+The design and implementation of the project is detailed in chapter~\ref{cha:Design}, describing the decisions made and the reasoning for them, and the specifics of how the system has been built.
+
+Chapter~\ref{cha:Eval} evaluates the systems produced in chapter~\ref{cha:Design} against the metrics discussed from chapter~\ref{cha:LitReview}. The chapter also evaluates the platform itself.
+
+The report is concluded in chapter~\ref{cha:Conclusion} with a review of the results produced and the conclusions that can be made from them. The chapter returns to the objectives defined in chapter~\ref{cha:Problem} and reviews their status. The report is then finished with suggestions for future work in this area, and further development of the platform.
 
 \section{Statement of Ethics}
 
@@ -278,6 +294,7 @@ All most all algorithm evaluation in the literature is done by simulation. Whils
 %the behaviour of your more complex protocols such as SFRA
 
 \chapter{Problem Analysis}
+\label{cha:Problem}
 
 This chapter specifies what the project aims to achieve, and the requirements and objectives to be reached for the project to be considered a success.
 
@@ -316,6 +333,7 @@ Additionally the project will attempt to:
 \end{enumerate}
 
 \chapter{Design and Implementation}
+\label{cha:Design}
 
 \section{Platform Architecture}
 
@@ -377,8 +395,10 @@ Using the pseudocode the algorithm was implemented to run when the neighbour che
 \subsection{Simultaneous Failures Recovery Approach (SFRA)}
 
 \chapter{Evaluation}
+\label{cha:Eval}
 
 \chapter{Conclusions}
+\label{cha:Conclusion}
 
 Wireless sensor networks are used in a wide range of applications, and in recent times this is only expanding. Due to their nature of being small, low-power devices, and the common network connectivity being multi-hop routing, network drop-outs and partitioning of devices is a common problem that has been tackled in a variety of ways. There are two main approaches to network and device management for combating and fixing these issues, the distributed approach and the centralised approach.
 
