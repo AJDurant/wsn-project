@@ -70,3 +70,20 @@ execution time - allows performance measurement
 
 todo:
 Problem definition
+- based on what I can and will measure
+
+
+Scenarios for results
+- RIM with single node
+- RIM with multi-node
+- unreliable channel model
+- modify RIM with full protocol
+- SFRA, protocol differences
+
+^ relate back to scenarios seen in lit review
+what are the goals of each scenario, how does it reach them?
+
+
+critically assess the features of the algorithm and what parts are important / unimportant, why / why not implement them, and flaws in logic
+
+point out novel contributions
