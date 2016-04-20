@@ -94,6 +94,10 @@ Networks with a high degree of connectivity are more resilient to node failures.
 % JAMES
 % 2.2.1 - but does pre-planning risk placing nodes too thinly in the
 % event of failure? Trade off could be commented upon
+%
+% done
+
+Connectivity is important as simply achieving area coverage would result in nodes being placed too thinly in the event of failures, either requiring a large movement in the network or simply not being able to recover. The main goal of pre-planned centralised approaches is to create a deployment that is resilient without further intervention.
 
 Due to the differences in applications a number of application specific methods have been proposed in addition to those previously mentioned \citep{Meguerdichian2001,Meguerdichian2001a,Meguerdichian2003}. All of these provide for different application requirements in different ways. However a single parametrised method that can be applied to many differing applications has been developed by \citet*{Derr2013}. This allows the specification of the number of nodes and the distance between the nodes which defines the desired coverage and connectivity respectively. The algorithm first constructs a triangle based mesh for the given area of interest, for example with NETGEN (Figure~\ref{fig:netgen}), however this creates more nodes than desired. To reduce the number of nodes \citeauthor*{Derr2013} create the mesh simplification algorithm INRCDTS which removes nodes and smooths the mesh until the required number of nodes from the desired network parameters is reached (Figure~\ref{fig:inrcdts}). To ensure that both coverage and connectivity requirements are met the algorithm assumes that the communication range ($R_C$) is greater than $\sqrt{3}$ of the sensing range ($R_S$) i.e.\ $R_C \ge \sqrt{3} R_S$. Based upon this assumption the nodes spacing is determined by $\sqrt{3} R_S$ which ensures coverage and therefore connectivity for the network.
 
@@ -248,6 +252,7 @@ One challenge of discrete event simulation as provided in VisualSense is modelli
 % what is seen as most important to combat for self-healing
 
 
+
 % what are the key failure modes that are assumed - are they realistic, are there any missed?
 % - single node
 % - multi node
@@ -334,8 +339,7 @@ To implement a recovery algorithm the periodically called neighbour check functi
 
 \subsection{Restoring connectivity through Inward Motion (RIM)}
 
-The RIM algorithm was developed by \citet*{Younis2010}.
-% why did I choose to use it?
+The RIM algorithm was developed by \citet*{Younis2010}. It was chosen for implementation because of its simplicity and performance, the algorithm is clearly presented and seemingly performs well in low density networks with an even distribution of power consumption. This seemed worthwhile to put to the test, particularly as RIM has become a common comparison algorithm since its development.
 
 Using the pseudocode the algorithm was implemented to run when the neighbour check found a non-communicating node. The algorithm then reacts based upon whether the node seems to have failed or just moved away. Various geometric functions are required to compute the new location depending on how many other nodes are moving.
 
