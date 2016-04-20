@@ -279,10 +279,41 @@ All most all algorithm evaluation in the literature is done by simulation. Whils
 
 \chapter{Problem Analysis}
 
+This chapter specifies what the project aims to achieve, and the requirements and objectives to be reached for the project to be considered a success.
+
 \section{Problem Description}
 This project aims to practically and critically evaluate approaches to self-healing in wireless sensor networks. A reference platform for implementing and testing self-healing algorithms will be designed and implemented, this platform will allow comparisons to be made between different approaches within a single environment thereby providing a fair contrast between the algorithms themselves.
 
+An example algorithm will be presented and critical analysis of its design and the evaluation presented by its designers will be conducted. This will provide a structure for obtaining and presenting results from the simulation platform for further algorithm comparison. The scenarios presented will be based upon those found to be common in the literature.
+
 % Localisation assumption
+The scope of the platform is to accurately simulate communication and power use of the nodes as these are the primary factors affecting longevity of the network and recovering from failure. It is assumed that the nodes have an awareness of their own location, and that could be provided an a number of different ways that are outside the scope of this project.
+
+The project limits the choice of algorithms to those of a distributed nature as the architecture of centralised approaches are very different due to the problems each approach aims to solve. To compare the results of the scenarios produced from the different architectures would be an interesting topic, but is too large for this project.
+
+For the platform itself needs to be structured in such a way that it can be easily modified and reused, with the ability to plug-in a variety of self-healing algorithms without need for modification of the overall system. Because of this it should provide interfaces to all the available data of a node that can be made available. The structure of the platform should be such that individual parts can be re-implemented and swapped out to provide a more accurate or a faster running model depending on the needs of the system user.
+
+The implementation should be based upon real hardware, and systems found in the literature, however adaptations may be made to achieve the aims of this project.
+
+\section{Objectives}
+
+This section presents the key and optional objectives for the project. The key objectives should all be achieved to result in a usable research output from the project. And the optional objectives extend the research and provide additional confidence in the platform for use with other algorithms and in other scenarios.
+
+\subsection{Key Objectives}
+The project aims to:
+\begin{enumerate}
+\item develop a simulation platform for wireless sensor networks, providing wireless communication, power management / monitoring, and movement control for the nodes.
+\item implement a self-healing algorithm within the platform and run it in a failure scenario.
+\item gather metrics from the scenario simulation.
+\item use the metrics to evaluate both the platform and the algorithm and to compare the algorithm with its original results.
+\end{enumerate}
+
+\subsection{Optional Objectives}
+Additionally the project will attempt to:
+\begin{enumerate}
+\item run further scenarios such as multi-node failure and unreliable data channels.
+\item implement further algorithms and compare between those run on the platform.
+\end{enumerate}
 
 \chapter{Design and Implementation}
 
