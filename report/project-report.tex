@@ -9,7 +9,7 @@
 
 \documentclass[authoryearcitations]{UoYCSproject}
 \author{Andrew Durant}
-\title{Self-Healing in Wireless Sensor Networks}
+\title{Developing a platform for common evaluation of self-healing in wireless sensor networks}
 %\date{}
 \supervisor{James Harbin}
 \CSESE
@@ -19,7 +19,11 @@
 
 \excludes{}
 
-\abstract{Abstract}
+\abstract{Wireless sensor networks are used in a wide range of applications, and in recent times this is only expanding. Due to them being small, low-power devices, and the common network connectivity using multi-hop routing: network drop-outs and partitioning of devices is a common problem. According to \citet{Tong2009} self-healing by means of mobile nodes still remains a greatly unstudied area. However, more recently developments have been made in diverse ways.
+
+There are two main approaches to network and device management for combating and fixing these issues, the distributed approach and the centralised approach. However the application for a particular WSN determines the effectiveness of a particular algorithm or management paradigm. In certain use cases power usage is less likely to be an important contributing factor but speed of detection and recovery will be more pressing. Whereas in an environmental monitoring situation network nodes are more likely to be physically difficult to get to once deployed, and longevity of battery power is highly important.
+
+With these considerations, performance metrics given for particular algorithms may not give a fair comparison, as algorithms optimised for low power consumption have a very different purpose to those optimised for rapid recovery. Because of this a common platform for comparison between approaches to self-healing is desired.}
 
 \dedication{}
 
@@ -400,13 +404,6 @@ Using the pseudocode the algorithm was implemented to run when the neighbour che
 \chapter{Conclusions}
 \label{cha:Conclusion}
 
-Wireless sensor networks are used in a wide range of applications, and in recent times this is only expanding. Due to their nature of being small, low-power devices, and the common network connectivity being multi-hop routing, network drop-outs and partitioning of devices is a common problem that has been tackled in a variety of ways. There are two main approaches to network and device management for combating and fixing these issues, the distributed approach and the centralised approach.
-
-According to \citet{Tong2009} self-healing by means of mobile nodes still remains a greatly unstudied area.
-
-The effectiveness of these two approaches is debated, however the application for a particular WSN determines the effectiveness of a particular algorithm or management paradigm. Certain use cases, for example in industrial equipment monitoring, power usage is less likely to be an important contributing factor but speed of detection and recovery might be more pressing. In an environmental monitoring situation network nodes are more likely to be physically difficult to get to once deployed, and longevity of battery power is highly important.
-
-With these considerations, performance metrics for particular algorithms may not give a fair comparison, as algorithms optimised for low power consumption have a very different purpose to those optimised for rapid recovery. However the approaches and algorithms for communication in WSNs are still very different from traditional networking models because it is common for the network topology and availability to change often and quickly, the storage and network capacity is much lower, and wireless channels are prone to interference and drop-outs.
 
 
 \bibliography{project-report}
