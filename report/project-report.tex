@@ -37,8 +37,7 @@ With these considerations, performance metrics given for particular algorithms m
 \AtBeginDocument{%
   \let\l@algorithm\l@lstlisting
   \let\c@algorithm\c@lstlisting
-  \let\thealgorithm\thelstlisting
-  \renewcommand{\lstlistlistingname}{Algorithms and program code}%
+  \let\thealgorithm\thelstlisting%
 }
 \makeatother
 \makeatletter
@@ -66,6 +65,7 @@ With these considerations, performance metrics given for particular algorithms m
 \maketitle
 \listoffigures
 \listoftables
+\renewcommand{\lstlistlistingname}{List of Listings}
 \lstlistoflistings
 
 \chapter{Introduction}
@@ -478,6 +478,8 @@ Using the pseudocode the algorithm was implemented to run when the neighbour che
 Upon implementing RIM an interesting edge case was discovered which caused a node (\emph{A}) to move in oscillation until its energy is depleted. This occurs when a node becomes just our of range from two other nodes (\emph{B} and \emph{C}) that have previously moved and set \variable{I\_Already\_Reconnected} true. When the \emph{A} notifies its intention to move \emph{B} and \emph{C} do not respond in chained motion because of lines 8--10 in algorithm~\ref{alg:RIM}, therefore as \emph{A} moves away and loses connection with \emph{B} or \emph{C} it detects them as failed and moves back towards them. When \emph{B} and \emph{C} are either side of \emph{A} this will repeat as one comes into range the other will have become out or range and the cycle continues.
 
 \lstinputlisting[language=Java,firstlineandnumber=60,lastline=90,widthgobble=3,float,caption={Java implementation of RIM},label={lst:RIM}]{../sim/actor/NodeProcessorRIM.java}
+
+The implementation of RIM (algorithm~\ref{alg:RIM}) can be seen in listing~\ref{lst:RIM} which is run periodically for each neighbour of a node.
 
 %\subsection{Simultaneous Failures Recovery Approach (SFRA)}
 
