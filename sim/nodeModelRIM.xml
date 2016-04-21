@@ -12,7 +12,7 @@
         <property name="_location" class="ptolemy.kernel.util.Location" value="68.0, 32.0">
         </property>
     </property>
-    <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={1912, -8, 1936, 1056}, maximized=true}">
+    <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={-8, -8, 1936, 1056}, maximized=true}">
     </property>
     <property name="_vergilSize" class="ptolemy.actor.gui.SizeAttribute" value="[1708, 939]">
     </property>
@@ -254,7 +254,7 @@
             <property name="_location" class="ptolemy.kernel.util.Location" value="[245.0, 95.181640625]">
             </property>
         </property>
-        <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={1991, 14, 1526, 987}, maximized=false}">
+        <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={1985, 28, 1526, 987}, maximized=false}">
         </property>
         <property name="_vergilSize" class="ptolemy.actor.gui.SizeAttribute" value="[1298, 870]">
         </property>
@@ -418,7 +418,7 @@
             <property name="_vergilCenter" class="ptolemy.data.expr.ExpertParameter" value="{0.8267801336741059, -4.000000000000007}">
             </property>
         </property>
-        <property name="motionPowerRate" class="ptolemy.data.expr.Parameter" value="50.0">
+        <property name="motionPowerRate" class="ptolemy.data.expr.Parameter" value="2500.0">
             <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
             </property>
             <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
@@ -495,6 +495,25 @@
             </property>
         </property>
         <property name="_hideName" class="ptolemy.data.expr.SingletonParameter" value="true">
+        </property>
+        <property name="failed" class="ptolemy.data.expr.Parameter" value="false">
+            <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
+            </property>
+            <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
+                <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{0.0, 0.0, 1.0, 1.0}">
+                </property>
+            </property>
+            <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
+                <configure>
+      <svg>
+        <text x="20" style="font-size:14; font-family:SansSerif; fill:blue" y="20">-P-</text>
+      </svg>
+    </configure>
+            </property>
+            <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
+            </property>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="[30.0, 140.0]">
+            </property>
         </property>
         <port name="RX" class="ptolemy.domains.wireless.kernel.WirelessIOPort">
             <property name="input"/>
@@ -1574,14 +1593,14 @@
                     <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
                         <property name="confirmOverwrite" class="ptolemy.data.expr.Parameter" value="false">
                         </property>
-                        <property name="endOfLineCharacter" class="ptolemy.data.expr.Parameter" value="&quot;,\n&quot;">
+                        <property name="endOfLineCharacter" class="ptolemy.data.expr.Parameter" value="">
                         </property>
                         <doc>Write the value of a string token, one per line, to a text file.</doc>
                         <property name="_location" class="ptolemy.kernel.util.Location" value="[685.0, 95.0]">
                         </property>
                     </entity>
                     <entity name="log" class="ptolemy.actor.lib.Const">
-                        <property name="value" class="ptolemy.data.expr.Parameter" value="&quot;log&quot; + getContainer().getFullName() + &quot;.json&quot;">
+                        <property name="value" class="ptolemy.data.expr.Parameter" value="&quot;results/node&quot; + nodeID + &quot;.&quot; + getContainer().getName() + &quot;.json&quot;">
                         </property>
                         <doc>Create a constant sequence.</doc>
                         <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
@@ -2263,14 +2282,14 @@
                     <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
                         <property name="confirmOverwrite" class="ptolemy.data.expr.Parameter" value="false">
                         </property>
-                        <property name="endOfLineCharacter" class="ptolemy.data.expr.Parameter" value="&quot;,\n&quot;">
+                        <property name="endOfLineCharacter" class="ptolemy.data.expr.Parameter" value="">
                         </property>
                         <doc>Write the value of a string token, one per line, to a text file.</doc>
                         <property name="_location" class="ptolemy.kernel.util.Location" value="[685.0, 95.0]">
                         </property>
                     </entity>
                     <entity name="log" class="ptolemy.actor.lib.Const">
-                        <property name="value" class="ptolemy.data.expr.Parameter" value="&quot;log&quot; + getContainer().getFullName() + &quot;.json&quot;">
+                        <property name="value" class="ptolemy.data.expr.Parameter" value="&quot;results/node&quot; + nodeID + &quot;.&quot; + getContainer().getName() + &quot;.json&quot;">
                         </property>
                         <doc>Create a constant sequence.</doc>
                         <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
@@ -2514,15 +2533,158 @@
                 <property name="_location" class="ptolemy.kernel.util.Location" value="[585.0, 195.0]">
                 </property>
             </property>
+            <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={821, 292, 928, 617}, maximized=false}">
+            </property>
+            <property name="_vergilSize" class="ptolemy.actor.gui.SizeAttribute" value="[700, 500]">
+            </property>
+            <property name="_vergilZoomFactor" class="ptolemy.data.expr.ExpertParameter" value="1.0">
+            </property>
+            <property name="_vergilCenter" class="ptolemy.data.expr.ExpertParameter" value="{929.0, 423.265625}">
+            </property>
             <port name="nodeFailed" class="ptolemy.actor.TypedIOPort">
                 <property name="output"/>
                 <property name="_type" class="ptolemy.actor.TypeAttribute" value="boolean">
                 </property>
                 <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
                 </property>
-                <property name="_location" class="ptolemy.kernel.util.Location" value="[1135.0, 205.0]">
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[1170.0, 310.0]">
                 </property>
             </port>
+            <entity name="ArrowKeySensor" class="ptolemy.actor.lib.gui.ArrowKeySensor">
+                <doc>Create a JFrame for sensing up, left, right, and down arrow key presses and releases</doc>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[645.0, 380.0]">
+                </property>
+                <port name="upArrow" class="ptolemy.actor.TypedIOPort">
+                    <property name="output"/>
+                    <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                    </property>
+                </port>
+                <port name="leftArrow" class="ptolemy.actor.TypedIOPort">
+                    <property name="output"/>
+                    <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                    </property>
+                </port>
+                <port name="rightArrow" class="ptolemy.actor.TypedIOPort">
+                    <property name="output"/>
+                    <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                    </property>
+                </port>
+                <port name="downArrow" class="ptolemy.actor.TypedIOPort">
+                    <property name="output"/>
+                    <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                    </property>
+                </port>
+            </entity>
+            <entity name="BooleanSwitch" class="ptolemy.actor.lib.BooleanSwitch">
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[920.0, 300.0]">
+                </property>
+            </entity>
+            <entity name="Discard" class="ptolemy.actor.lib.Discard">
+                <property name="_hideName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[975.0, 580.0]">
+                </property>
+                <port name="input" class="ptolemy.actor.TypedIOPort">
+                    <property name="input"/>
+                    <property name="multiport"/>
+                    <property name="_cardinal" class="ptolemy.kernel.util.StringAttribute" value="NORTH">
+                    </property>
+                </port>
+            </entity>
+            <entity name="BooleanSwitch2" class="ptolemy.actor.lib.BooleanSwitch">
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[920.0, 400.0]">
+                </property>
+            </entity>
+            <entity name="Expression" class="ptolemy.actor.lib.Expression">
+                <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="input == 1 ? true : false">
+                </property>
+                <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+                    <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="expression">
+                    </property>
+                    <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+                    </property>
+                    <property name="displayHeight" class="ptolemy.data.expr.Parameter" value="10">
+                    </property>
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[795.0, 330.0]">
+                </property>
+                <port name="input" class="ptolemy.actor.TypedIOPort">
+                    <property name="input"/>
+                    <property name="defaultValue" class="ptolemy.data.expr.Parameter">
+                    </property>
+                    <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                    </property>
+                </port>
+            </entity>
+            <entity name="Expression2" class="ptolemy.actor.lib.Expression">
+                <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="input == 1 ? false : true">
+                </property>
+                <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+                    <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="expression">
+                    </property>
+                    <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+                    </property>
+                    <property name="displayHeight" class="ptolemy.data.expr.Parameter" value="10">
+                    </property>
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[790.0, 430.0]">
+                </property>
+                <port name="input" class="ptolemy.actor.TypedIOPort">
+                    <property name="input"/>
+                    <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                    </property>
+                </port>
+            </entity>
+            <entity name="SetVariable" class="ptolemy.actor.lib.SetVariable">
+                <property name="variableName" class="ptolemy.kernel.util.StringAttribute" value="failed">
+                </property>
+                <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+                    <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="variableName">
+                    </property>
+                    <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="40">
+                    </property>
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[1160.0, 360.0]">
+                </property>
+            </entity>
+            <relation name="relation" class="ptolemy.actor.TypedIORelation">
+                <vertex name="vertex1" value="[890.0, 330.0]">
+                </vertex>
+            </relation>
+            <relation name="relation3" class="ptolemy.actor.TypedIORelation">
+                <vertex name="vertex1" value="[1115.0, 310.0]">
+                </vertex>
+            </relation>
+            <relation name="relation5" class="ptolemy.actor.TypedIORelation">
+            </relation>
+            <relation name="relation4" class="ptolemy.actor.TypedIORelation">
+                <vertex name="vertex1" value="{890.0, 430.0}">
+                </vertex>
+            </relation>
+            <relation name="relation2" class="ptolemy.actor.TypedIORelation">
+            </relation>
+            <relation name="relation6" class="ptolemy.actor.TypedIORelation">
+            </relation>
+            <relation name="relation7" class="ptolemy.actor.TypedIORelation">
+            </relation>
+            <link port="nodeFailed" relation="relation3"/>
+            <link port="ArrowKeySensor.upArrow" relation="relation2"/>
+            <link port="ArrowKeySensor.downArrow" relation="relation6"/>
+            <link port="BooleanSwitch.input" relation="relation"/>
+            <link port="BooleanSwitch.control" relation="relation"/>
+            <link port="BooleanSwitch.trueOutput" relation="relation3"/>
+            <link port="BooleanSwitch.falseOutput" relation="relation5"/>
+            <link port="Discard.input" relation="relation5"/>
+            <link port="Discard.input" relation="relation7"/>
+            <link port="BooleanSwitch2.input" relation="relation4"/>
+            <link port="BooleanSwitch2.control" relation="relation4"/>
+            <link port="BooleanSwitch2.trueOutput" relation="relation7"/>
+            <link port="BooleanSwitch2.falseOutput" relation="relation3"/>
+            <link port="Expression.output" relation="relation"/>
+            <link port="Expression.input" relation="relation2"/>
+            <link port="Expression2.output" relation="relation4"/>
+            <link port="Expression2.input" relation="relation6"/>
+            <link port="SetVariable.input" relation="relation3"/>
         </entity>
         <entity name="Motion" class="ptolemy.domains.modal.modal.ModalModel">
             <property name="_tableauFactory" class="ptolemy.vergil.modal.modal.ModalTableauFactory">
@@ -2747,7 +2909,7 @@
                     <property name="_location" class="ptolemy.kernel.util.Location" value="[135.0, 25.0]">
                     </property>
                 </property>
-                <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={638, 60, 1181, 715}, maximized=false}">
+                <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={624, 149, 1181, 715}, maximized=false}">
                 </property>
                 <property name="_vergilSize" class="ptolemy.actor.gui.SizeAttribute" value="[953, 598]">
                 </property>
@@ -2780,7 +2942,7 @@
                     <property name="output"/>
                     <property name="defaultValue" class="ptolemy.data.expr.Parameter" value="">
                     </property>
-                    <property name="_location" class="ptolemy.kernel.util.Location" value="[465.0, 265.0]">
+                    <property name="_location" class="ptolemy.kernel.util.Location" value="[465.0, 235.0]">
                     </property>
                 </port>
                 <port name="locFetch" class="ptolemy.domains.modal.modal.RefinementPort">
@@ -2801,7 +2963,7 @@
                     <property name="output"/>
                     <property name="defaultValue" class="ptolemy.data.expr.Parameter" value="">
                     </property>
-                    <property name="_location" class="ptolemy.kernel.util.Location" value="[465.0, 225.0]">
+                    <property name="_location" class="ptolemy.kernel.util.Location" value="[465.0, 270.0]">
                     </property>
                 </port>
                 <entity name="DiscreteClock" class="ptolemy.actor.lib.DiscreteClock">
@@ -2859,6 +3021,170 @@
                     <property name="_location" class="ptolemy.kernel.util.Location" value="[280.0, 255.0]">
                     </property>
                 </entity>
+                <entity name="MotionLogger" class="ptolemy.actor.TypedCompositeActor">
+                    <property name="_location" class="ptolemy.kernel.util.Location" value="[380.0, 330.0]">
+                    </property>
+                    <property name="DE Director" class="ptolemy.domains.de.kernel.DEDirector">
+                        <property name="_location" class="ptolemy.kernel.util.Location" value="[55.0, 30.0]">
+                        </property>
+                    </property>
+                    <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={692, 340, 1132, 617}, maximized=false}">
+                    </property>
+                    <property name="_vergilSize" class="ptolemy.actor.gui.SizeAttribute" value="[904, 500]">
+                    </property>
+                    <property name="_vergilZoomFactor" class="ptolemy.data.expr.ExpertParameter" value="1.0">
+                    </property>
+                    <property name="_vergilCenter" class="ptolemy.data.expr.ExpertParameter" value="{444.0, 242.265625}">
+                    </property>
+                    <property name="_icon" class="ptolemy.vergil.icon.EditorIcon">
+                        <property name="rectangle" class="ptolemy.vergil.kernel.attributes.RectangleAttribute">
+                            <property name="_location" class="ptolemy.kernel.util.Location" value="0.0, 0.5">
+                            </property>
+                            <property name="lineColor" class="ptolemy.actor.gui.ColorAttribute" value="{0.0,0.0,0.0,0.0}">
+                            </property>
+                            <property name="width" class="ptolemy.data.expr.Parameter" value="30.0">
+                            </property>
+                            <property name="height" class="ptolemy.data.expr.Parameter" value="27.0">
+                            </property>
+                            <property name="centered" class="ptolemy.data.expr.Parameter" value="true">
+                            </property>
+                            <property name="fillColor" class="ptolemy.actor.gui.ColorAttribute" value="{1.0, 1.0, 1.0, 1.0}">
+                            </property>
+                            <property name="_renderFirst" class="ptolemy.kernel.util.SingletonAttribute">
+                            </property>
+                        </property>
+                        <property name="ellipse" class="ptolemy.vergil.kernel.attributes.EllipseAttribute">
+                            <property name="_location" class="ptolemy.kernel.util.Location" value="[0.0, -14.0]">
+                            </property>
+                            <property name="width" class="ptolemy.data.expr.Parameter" value="30.16216216216217">
+                            </property>
+                            <property name="height" class="ptolemy.data.expr.Parameter" value="11.0">
+                            </property>
+                            <property name="centered" class="ptolemy.data.expr.Parameter" value="true">
+                            </property>
+                            <property name="fillColor" class="ptolemy.actor.gui.ColorAttribute" value="{1.0, 1.0, 1.0, 1.0}">
+                            </property>
+                        </property>
+                        <property name="arc" class="ptolemy.vergil.kernel.attributes.ArcAttribute">
+                            <property name="_location" class="ptolemy.kernel.util.Location" value="[0.0, 16.0]">
+                            </property>
+                            <property name="width" class="ptolemy.data.expr.Parameter" value="30.0">
+                            </property>
+                            <property name="height" class="ptolemy.data.expr.Parameter" value="14.0">
+                            </property>
+                            <property name="centered" class="ptolemy.data.expr.Parameter" value="true">
+                            </property>
+                            <property name="fillColor" class="ptolemy.actor.gui.ColorAttribute" value="{1.0, 1.0, 1.0, 1.0}">
+                            </property>
+                            <property name="type" class="ptolemy.data.expr.StringParameter" value="open">
+                            </property>
+                            <property name="start" class="ptolemy.data.expr.Parameter" value="180.0">
+                            </property>
+                            <property name="extent" class="ptolemy.data.expr.Parameter" value="180.0">
+                            </property>
+                        </property>
+                        <property name="line" class="ptolemy.vergil.kernel.attributes.LineAttribute">
+                            <property name="_location" class="ptolemy.kernel.util.Location" value="[-15.0, -13.0]">
+                            </property>
+                            <property name="x" class="ptolemy.data.expr.Parameter" value="0.0">
+                            </property>
+                            <property name="y" class="ptolemy.data.expr.Parameter" value="25.0">
+                            </property>
+                        </property>
+                        <property name="line2" class="ptolemy.vergil.kernel.attributes.LineAttribute">
+                            <property name="_location" class="ptolemy.kernel.util.Location" value="[15.0, -13.0]">
+                            </property>
+                            <property name="x" class="ptolemy.data.expr.Parameter" value="0.0">
+                            </property>
+                            <property name="y" class="ptolemy.data.expr.Parameter" value="25.0">
+                            </property>
+                        </property>
+                        <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={496, 231, 928, 617}, maximized=false}">
+                        </property>
+                        <property name="_vergilSize" class="ptolemy.actor.gui.SizeAttribute" value="[700, 500]">
+                        </property>
+                        <property name="_vergilZoomFactor" class="ptolemy.data.expr.ExpertParameter" value="9.765625">
+                        </property>
+                        <property name="_vergilCenter" class="ptolemy.data.expr.ExpertParameter" value="{0.0, 0.0}">
+                        </property>
+                    </property>
+                    <port name="dataIn" class="ptolemy.actor.TypedIOPort">
+                        <property name="input"/>
+                        <property name="_location" class="ptolemy.kernel.util.Location" value="[40.0, 75.0]">
+                        </property>
+                    </port>
+                    <entity name="CurrentTime" class="ptolemy.actor.lib.CurrentTime">
+                        <doc>Output the current time.</doc>
+                        <property name="_location" class="ptolemy.kernel.util.Location" value="[205.0, 145.0]">
+                        </property>
+                    </entity>
+                    <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
+                        <property name="confirmOverwrite" class="ptolemy.data.expr.Parameter" value="false">
+                        </property>
+                        <property name="endOfLineCharacter" class="ptolemy.data.expr.Parameter" value="">
+                        </property>
+                        <doc>Write the value of a string token, one per line, to a text file.</doc>
+                        <property name="_location" class="ptolemy.kernel.util.Location" value="{685.0, 95.0}">
+                        </property>
+                    </entity>
+                    <entity name="log" class="ptolemy.actor.lib.Const">
+                        <property name="value" class="ptolemy.data.expr.Parameter" value="&quot;results/node&quot; + nodeID + &quot;.&quot; + getContainer().getName() + &quot;.json&quot;">
+                        </property>
+                        <doc>Create a constant sequence.</doc>
+                        <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+                            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="value">
+                            </property>
+                            <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+                            </property>
+                        </property>
+                        <property name="_location" class="ptolemy.kernel.util.Location" value="[570.0, 150.0]">
+                        </property>
+                    </entity>
+                    <entity name="TokenToJSON" class="ajdurant.wsn.lib.TokenToJSON">
+                        <property name="_location" class="ptolemy.kernel.util.Location" value="[460.0, 85.0]">
+                        </property>
+                    </entity>
+                    <entity name="RecordAssembler" class="ptolemy.actor.lib.RecordAssembler">
+                        <property name="_location" class="ptolemy.kernel.util.Location" value="[290.0, 65.0]">
+                        </property>
+                        <port name="time" class="ptolemy.actor.TypedIOPort">
+                            <property name="input"/>
+                            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                            </property>
+                        </port>
+                        <port name="data" class="ptolemy.actor.TypedIOPort">
+                            <property name="input"/>
+                            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                            </property>
+                        </port>
+                    </entity>
+                    <relation name="relation" class="ptolemy.actor.TypedIORelation">
+                        <vertex name="vertex1" value="[125.0, 75.0]">
+                        </vertex>
+                    </relation>
+                    <relation name="relation3" class="ptolemy.actor.TypedIORelation">
+                        <vertex name="vertex1" value="[390.0, 85.0]">
+                        </vertex>
+                    </relation>
+                    <relation name="relation6" class="ptolemy.actor.TypedIORelation">
+                    </relation>
+                    <relation name="relation5" class="ptolemy.actor.TypedIORelation">
+                    </relation>
+                    <relation name="relation2" class="ptolemy.actor.TypedIORelation">
+                    </relation>
+                    <link port="dataIn" relation="relation"/>
+                    <link port="CurrentTime.output" relation="relation2"/>
+                    <link port="CurrentTime.trigger" relation="relation"/>
+                    <link port="LineWriter.input" relation="relation5"/>
+                    <link port="LineWriter.fileName" relation="relation6"/>
+                    <link port="log.output" relation="relation6"/>
+                    <link port="log.trigger" relation="relation3"/>
+                    <link port="TokenToJSON.input" relation="relation3"/>
+                    <link port="TokenToJSON.output" relation="relation5"/>
+                    <link port="RecordAssembler.output" relation="relation3"/>
+                    <link port="RecordAssembler.time" relation="relation2"/>
+                    <link port="RecordAssembler.data" relation="relation"/>
+                </entity>
                 <relation name="relation" class="ptolemy.actor.TypedIORelation">
                 </relation>
                 <relation name="relation2" class="ptolemy.actor.TypedIORelation">
@@ -2870,14 +3196,16 @@
                     </vertex>
                 </relation>
                 <relation name="relation3" class="ptolemy.actor.TypedIORelation">
-                    <vertex name="vertex1" value="[435.0, 225.0]">
+                    <vertex name="vertex1" value="[445.0, 255.0]">
                     </vertex>
                 </relation>
                 <relation name="relation5" class="ptolemy.actor.TypedIORelation">
                 </relation>
                 <relation name="relation4" class="ptolemy.actor.TypedIORelation">
-                    <vertex name="vertex1" value="[430.0, 265.0]">
+                    <vertex name="vertex1" value="[430.0, 245.0]">
                     </vertex>
+                </relation>
+                <relation name="relation7" class="ptolemy.actor.TypedIORelation">
                 </relation>
                 <link port="fromProc" relation="relation6"/>
                 <link port="consumption" relation="relation4"/>
@@ -2893,6 +3221,8 @@
                 <link port="MotionController.consumption" relation="relation4"/>
                 <link port="MotionController.trigger" relation="relation13"/>
                 <link port="MotionController.nextLoc" relation="relation3"/>
+                <link port="MotionController.logger" relation="relation7"/>
+                <link port="MotionLogger.dataIn" relation="relation7"/>
             </entity>
             <relation name="deadRelation" class="ptolemy.actor.TypedIORelation">
                 <property name="width" class="ptolemy.data.expr.Parameter" value="Auto">
@@ -3068,14 +3398,14 @@
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
                 <property name="confirmOverwrite" class="ptolemy.data.expr.Parameter" value="false">
                 </property>
-                <property name="endOfLineCharacter" class="ptolemy.data.expr.Parameter" value="&quot;,\n&quot;">
+                <property name="endOfLineCharacter" class="ptolemy.data.expr.Parameter" value="">
                 </property>
                 <doc>Write the value of a string token, one per line, to a text file.</doc>
                 <property name="_location" class="ptolemy.kernel.util.Location" value="[685.0, 95.0]">
                 </property>
             </entity>
             <entity name="log" class="ptolemy.actor.lib.Const">
-                <property name="value" class="ptolemy.data.expr.Parameter" value="&quot;log&quot; + getContainer().getFullName() + &quot;.json&quot;">
+                <property name="value" class="ptolemy.data.expr.Parameter" value="&quot;results/node&quot; + nodeID + &quot;.&quot; + getContainer().getName() + &quot;.json&quot;">
                 </property>
                 <doc>Create a constant sequence.</doc>
                 <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
@@ -3232,14 +3562,14 @@
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
                 <property name="confirmOverwrite" class="ptolemy.data.expr.Parameter" value="false">
                 </property>
-                <property name="endOfLineCharacter" class="ptolemy.data.expr.Parameter" value="&quot;,\n&quot;">
+                <property name="endOfLineCharacter" class="ptolemy.data.expr.Parameter" value="">
                 </property>
                 <doc>Write the value of a string token, one per line, to a text file.</doc>
                 <property name="_location" class="ptolemy.kernel.util.Location" value="[685.0, 95.0]">
                 </property>
             </entity>
             <entity name="log" class="ptolemy.actor.lib.Const">
-                <property name="value" class="ptolemy.data.expr.Parameter" value="&quot;log&quot; + getContainer().getFullName() + &quot;.json&quot;">
+                <property name="value" class="ptolemy.data.expr.Parameter" value="&quot;results/node&quot; + nodeID + &quot;.&quot; + getContainer().getName() + &quot;.json&quot;">
                 </property>
                 <doc>Create a constant sequence.</doc>
                 <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
@@ -3396,14 +3726,14 @@
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
                 <property name="confirmOverwrite" class="ptolemy.data.expr.Parameter" value="false">
                 </property>
-                <property name="endOfLineCharacter" class="ptolemy.data.expr.Parameter" value="&quot;,\n&quot;">
+                <property name="endOfLineCharacter" class="ptolemy.data.expr.Parameter" value="">
                 </property>
                 <doc>Write the value of a string token, one per line, to a text file.</doc>
                 <property name="_location" class="ptolemy.kernel.util.Location" value="{685.0, 95.0}">
                 </property>
             </entity>
             <entity name="log" class="ptolemy.actor.lib.Const">
-                <property name="value" class="ptolemy.data.expr.Parameter" value="&quot;log&quot; + getContainer().getFullName() + &quot;.json&quot;">
+                <property name="value" class="ptolemy.data.expr.Parameter" value="&quot;results/node&quot; + nodeID + &quot;.&quot; + getContainer().getName() + &quot;.json&quot;">
                 </property>
                 <doc>Create a constant sequence.</doc>
                 <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
@@ -3560,14 +3890,14 @@
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
                 <property name="confirmOverwrite" class="ptolemy.data.expr.Parameter" value="false">
                 </property>
-                <property name="endOfLineCharacter" class="ptolemy.data.expr.Parameter" value="&quot;,\n&quot;">
+                <property name="endOfLineCharacter" class="ptolemy.data.expr.Parameter" value="">
                 </property>
                 <doc>Write the value of a string token, one per line, to a text file.</doc>
                 <property name="_location" class="ptolemy.kernel.util.Location" value="[685.0, 95.0]">
                 </property>
             </entity>
             <entity name="log" class="ptolemy.actor.lib.Const">
-                <property name="value" class="ptolemy.data.expr.Parameter" value="&quot;log&quot; + getContainer().getFullName() + &quot;.json&quot;">
+                <property name="value" class="ptolemy.data.expr.Parameter" value="&quot;results/node&quot; + nodeID + &quot;.&quot; + getContainer().getName() + &quot;.json&quot;">
                 </property>
                 <doc>Create a constant sequence.</doc>
                 <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
@@ -3744,7 +4074,7 @@
         </property>
     </entity>
     <entity name="InstanceOfNode" class="Node">
-        <property name="_location" class="ptolemy.kernel.util.Location" value="{908.0, 141.0}">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[860.0, 165.0]">
         </property>
         <property name="nodeID" class="ptolemy.data.expr.Parameter" value="1">
         </property>
@@ -3754,15 +4084,15 @@
         </property>
         <property name="initialHopCount" class="ptolemy.data.expr.Parameter" value="0">
         </property>
-        <property name="currentLocation" class="ptolemy.data.expr.Parameter" value="{908.0, 141.0}">
+        <property name="currentLocation" class="ptolemy.data.expr.Parameter" value="{986.0, 332.0}">
         </property>
-        <property name="targetLocation" class="ptolemy.data.expr.Parameter" value="{908.0, 141.0}">
+        <property name="targetLocation" class="ptolemy.data.expr.Parameter" value="{986.9473867262756, 332.9298425276407}">
         </property>
         <property name="inMotion" class="ptolemy.data.expr.Parameter" value="false">
         </property>
         <entity name="Power" class="ptolemy.domains.modal.modal.ModalModel">
             <entity name="_Controller" class="ptolemy.domains.modal.modal.ModalController">
-                <property name="powerLevel" class="ptolemy.data.expr.Parameter" value="2.921787E6">
+                <property name="powerLevel" class="ptolemy.data.expr.Parameter" value="2.206333E6">
                 </property>
             </entity>
         </entity>
@@ -3770,7 +4100,7 @@
             <entity name="processing" class="ptolemy.domains.modal.modal.Refinement">
                 <entity name="fromCommLogger" class="ptolemy.actor.TypedCompositeActor">
                     <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode.Processor.processing.fromCommLogger.json">
+                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node1.fromCommLogger.json">
                         </property>
                     </entity>
                 </entity>
@@ -3780,7 +4110,7 @@
             <entity name="communicating" class="ptolemy.domains.modal.modal.Refinement">
                 <entity name="fromProcLogger" class="ptolemy.actor.TypedCompositeActor">
                     <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode.Communication.communicating.fromProcLogger.json">
+                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node1.fromProcLogger.json">
                         </property>
                     </entity>
                 </entity>
@@ -3798,32 +4128,42 @@
 <title>PowerLevel</title>
 <xLabel></xLabel>
 <yLabel></yLabel>
-<xRange min="0.0" max="2852.0"/>
-<yRange min="2921795.0" max="3024000.0"/>
+<xRange min="0.0" max="14326.0"/>
+<yRange min="2206358.0" max="3024000.0"/>
 </plot>?>
             </configure>
         </entity>
+        <entity name="Motion" class="ptolemy.domains.modal.modal.ModalModel">
+            <entity name="motion" class="ptolemy.domains.modal.modal.Refinement">
+                <entity name="MotionLogger" class="ptolemy.actor.TypedCompositeActor">
+                    <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
+                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node1.MotionLogger.json">
+                        </property>
+                    </entity>
+                </entity>
+            </entity>
+        </entity>
         <entity name="RXLogger" class="ptolemy.actor.TypedCompositeActor">
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode.RXLogger.json">
+                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node1.RXLogger.json">
                 </property>
             </entity>
         </entity>
         <entity name="TXLogger" class="ptolemy.actor.TypedCompositeActor">
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode.TXLogger.json">
+                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node1.TXLogger.json">
                 </property>
             </entity>
         </entity>
         <entity name="SensorLogger" class="ptolemy.actor.TypedCompositeActor">
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode.SensorLogger.json">
+                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node1.SensorLogger.json">
                 </property>
             </entity>
         </entity>
         <entity name="PowerLogger" class="ptolemy.actor.TypedCompositeActor">
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode.PowerLogger.json">
+                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node1.PowerLogger.json">
                 </property>
             </entity>
         </entity>
@@ -3841,7 +4181,7 @@
         </property>
         <entity name="Power" class="ptolemy.domains.modal.modal.ModalModel">
             <entity name="_Controller" class="ptolemy.domains.modal.modal.ModalController">
-                <property name="powerLevel" class="ptolemy.data.expr.Parameter" value="2.894507E6">
+                <property name="powerLevel" class="ptolemy.data.expr.Parameter" value="2.949437E6">
                 </property>
             </entity>
         </entity>
@@ -3849,7 +4189,7 @@
             <entity name="processing" class="ptolemy.domains.modal.modal.Refinement">
                 <entity name="fromCommLogger" class="ptolemy.actor.TypedCompositeActor">
                     <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode2.Processor.processing.fromCommLogger.json">
+                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node2.fromCommLogger.json">
                         </property>
                     </entity>
                 </entity>
@@ -3859,7 +4199,7 @@
             <entity name="communicating" class="ptolemy.domains.modal.modal.Refinement">
                 <entity name="fromProcLogger" class="ptolemy.actor.TypedCompositeActor">
                     <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode2.Communication.communicating.fromProcLogger.json">
+                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node2.fromProcLogger.json">
                         </property>
                     </entity>
                 </entity>
@@ -3877,52 +4217,54 @@
 <title>PowerLevel</title>
 <xLabel></xLabel>
 <yLabel></yLabel>
-<xRange min="0.0" max="2852.0"/>
-<yRange min="2894515.0" max="3024000.0"/>
+<xRange min="0.0" max="1640.0"/>
+<yRange min="2949462.0" max="3024000.0"/>
 </plot>?>
             </configure>
         </entity>
         <entity name="RXLogger" class="ptolemy.actor.TypedCompositeActor">
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode2.RXLogger.json">
+                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node2.RXLogger.json">
                 </property>
             </entity>
         </entity>
         <entity name="TXLogger" class="ptolemy.actor.TypedCompositeActor">
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode2.TXLogger.json">
+                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node2.TXLogger.json">
                 </property>
             </entity>
         </entity>
         <entity name="SensorLogger" class="ptolemy.actor.TypedCompositeActor">
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode2.SensorLogger.json">
+                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node2.SensorLogger.json">
                 </property>
             </entity>
         </entity>
         <entity name="PowerLogger" class="ptolemy.actor.TypedCompositeActor">
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode2.PowerLogger.json">
+                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node2.PowerLogger.json">
                 </property>
             </entity>
         </entity>
     </entity>
     <entity name="InstanceOfNode3" class="Node">
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[1180.0, 510.0]">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[1175.0, 470.0]">
         </property>
         <property name="nodeID" class="ptolemy.data.expr.Parameter" value="3">
         </property>
-        <property name="parentNode" class="ptolemy.data.expr.Parameter" value="2">
+        <property name="parentNode" class="ptolemy.data.expr.Parameter" value="1">
         </property>
-        <property name="hopCount" class="ptolemy.data.expr.Parameter" value="2">
+        <property name="hopCount" class="ptolemy.data.expr.Parameter" value="1">
         </property>
-        <property name="currentLocation" class="ptolemy.data.expr.Parameter" value="{1180.0, 510.0}">
+        <property name="currentLocation" class="ptolemy.data.expr.Parameter" value="{1094.0, 438.0}">
         </property>
-        <property name="targetLocation" class="ptolemy.data.expr.Parameter" value="{1180.0, 510.0}">
+        <property name="targetLocation" class="ptolemy.data.expr.Parameter" value="{1093.7287682484864, 437.919007185312}">
+        </property>
+        <property name="inMotion" class="ptolemy.data.expr.Parameter" value="false">
         </property>
         <entity name="Power" class="ptolemy.domains.modal.modal.ModalModel">
             <entity name="_Controller" class="ptolemy.domains.modal.modal.ModalController">
-                <property name="powerLevel" class="ptolemy.data.expr.Parameter" value="2.900471E6">
+                <property name="powerLevel" class="ptolemy.data.expr.Parameter" value="2.580003E6">
                 </property>
             </entity>
         </entity>
@@ -3930,7 +4272,7 @@
             <entity name="processing" class="ptolemy.domains.modal.modal.Refinement">
                 <entity name="fromCommLogger" class="ptolemy.actor.TypedCompositeActor">
                     <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode3.Processor.processing.fromCommLogger.json">
+                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node3.fromCommLogger.json">
                         </property>
                     </entity>
                 </entity>
@@ -3940,7 +4282,7 @@
             <entity name="communicating" class="ptolemy.domains.modal.modal.Refinement">
                 <entity name="fromProcLogger" class="ptolemy.actor.TypedCompositeActor">
                     <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode3.Communication.communicating.fromProcLogger.json">
+                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node3.fromProcLogger.json">
                         </property>
                     </entity>
                 </entity>
@@ -3958,52 +4300,64 @@
 <title>PowerLevel</title>
 <xLabel></xLabel>
 <yLabel></yLabel>
-<xRange min="0.0" max="2852.0"/>
-<yRange min="2900479.0" max="3024000.0"/>
+<xRange min="0.0" max="5596.0"/>
+<yRange min="2580028.0" max="3024000.0"/>
 </plot>?>
             </configure>
         </entity>
+        <entity name="Motion" class="ptolemy.domains.modal.modal.ModalModel">
+            <entity name="motion" class="ptolemy.domains.modal.modal.Refinement">
+                <entity name="MotionLogger" class="ptolemy.actor.TypedCompositeActor">
+                    <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
+                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node3.MotionLogger.json">
+                        </property>
+                    </entity>
+                </entity>
+            </entity>
+        </entity>
         <entity name="RXLogger" class="ptolemy.actor.TypedCompositeActor">
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode3.RXLogger.json">
+                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node3.RXLogger.json">
                 </property>
             </entity>
         </entity>
         <entity name="TXLogger" class="ptolemy.actor.TypedCompositeActor">
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode3.TXLogger.json">
+                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node3.TXLogger.json">
                 </property>
             </entity>
         </entity>
         <entity name="SensorLogger" class="ptolemy.actor.TypedCompositeActor">
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode3.SensorLogger.json">
+                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node3.SensorLogger.json">
                 </property>
             </entity>
         </entity>
         <entity name="PowerLogger" class="ptolemy.actor.TypedCompositeActor">
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode3.PowerLogger.json">
+                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node3.PowerLogger.json">
                 </property>
             </entity>
         </entity>
     </entity>
     <entity name="InstanceOfNode4" class="Node">
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[1395.0, 400.0]">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[1410.0, 380.0]">
         </property>
         <property name="nodeID" class="ptolemy.data.expr.Parameter" value="4">
         </property>
-        <property name="parentNode" class="ptolemy.data.expr.Parameter" value="3">
+        <property name="parentNode" class="ptolemy.data.expr.Parameter" value="1">
         </property>
-        <property name="hopCount" class="ptolemy.data.expr.Parameter" value="3">
+        <property name="hopCount" class="ptolemy.data.expr.Parameter" value="1">
         </property>
-        <property name="currentLocation" class="ptolemy.data.expr.Parameter" value="{1395.0, 400.0}">
+        <property name="currentLocation" class="ptolemy.data.expr.Parameter" value="{1244.0, 436.0}">
         </property>
-        <property name="targetLocation" class="ptolemy.data.expr.Parameter" value="{1395.0, 400.0}">
+        <property name="targetLocation" class="ptolemy.data.expr.Parameter" value="{1243.9866684441813, 436.0001777540776}">
+        </property>
+        <property name="inMotion" class="ptolemy.data.expr.Parameter" value="false">
         </property>
         <entity name="Power" class="ptolemy.domains.modal.modal.ModalModel">
             <entity name="_Controller" class="ptolemy.domains.modal.modal.ModalController">
-                <property name="powerLevel" class="ptolemy.data.expr.Parameter" value="2.906435E6">
+                <property name="powerLevel" class="ptolemy.data.expr.Parameter" value="2.053034E6">
                 </property>
             </entity>
         </entity>
@@ -4011,7 +4365,7 @@
             <entity name="processing" class="ptolemy.domains.modal.modal.Refinement">
                 <entity name="fromCommLogger" class="ptolemy.actor.TypedCompositeActor">
                     <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode4.Processor.processing.fromCommLogger.json">
+                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node4.fromCommLogger.json">
                         </property>
                     </entity>
                 </entity>
@@ -4021,7 +4375,7 @@
             <entity name="communicating" class="ptolemy.domains.modal.modal.Refinement">
                 <entity name="fromProcLogger" class="ptolemy.actor.TypedCompositeActor">
                     <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode4.Communication.communicating.fromProcLogger.json">
+                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node4.fromProcLogger.json">
                         </property>
                     </entity>
                 </entity>
@@ -4039,52 +4393,64 @@
 <title>PowerLevel</title>
 <xLabel></xLabel>
 <yLabel></yLabel>
-<xRange min="0.0" max="2852.0"/>
-<yRange min="2906443.0" max="3024000.0"/>
+<xRange min="0.0" max="14326.0"/>
+<yRange min="2053059.0" max="3024000.0"/>
 </plot>?>
             </configure>
         </entity>
+        <entity name="Motion" class="ptolemy.domains.modal.modal.ModalModel">
+            <entity name="motion" class="ptolemy.domains.modal.modal.Refinement">
+                <entity name="MotionLogger" class="ptolemy.actor.TypedCompositeActor">
+                    <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
+                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node4.MotionLogger.json">
+                        </property>
+                    </entity>
+                </entity>
+            </entity>
+        </entity>
         <entity name="RXLogger" class="ptolemy.actor.TypedCompositeActor">
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode4.RXLogger.json">
+                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node4.RXLogger.json">
                 </property>
             </entity>
         </entity>
         <entity name="TXLogger" class="ptolemy.actor.TypedCompositeActor">
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode4.TXLogger.json">
+                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node4.TXLogger.json">
                 </property>
             </entity>
         </entity>
         <entity name="SensorLogger" class="ptolemy.actor.TypedCompositeActor">
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode4.SensorLogger.json">
+                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node4.SensorLogger.json">
                 </property>
             </entity>
         </entity>
         <entity name="PowerLogger" class="ptolemy.actor.TypedCompositeActor">
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode4.PowerLogger.json">
+                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node4.PowerLogger.json">
                 </property>
             </entity>
         </entity>
     </entity>
     <entity name="InstanceOfNode5" class="Node">
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[1575.0, 280.0]">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[1590.0, 250.0]">
         </property>
         <property name="nodeID" class="ptolemy.data.expr.Parameter" value="5">
         </property>
         <property name="parentNode" class="ptolemy.data.expr.Parameter" value="4">
         </property>
-        <property name="hopCount" class="ptolemy.data.expr.Parameter" value="4">
+        <property name="hopCount" class="ptolemy.data.expr.Parameter" value="2">
         </property>
-        <property name="currentLocation" class="ptolemy.data.expr.Parameter" value="{1575.0, 280.0}">
+        <property name="currentLocation" class="ptolemy.data.expr.Parameter" value="{1526.0, 334.0}">
         </property>
-        <property name="targetLocation" class="ptolemy.data.expr.Parameter" value="{1575.0, 280.0}">
+        <property name="targetLocation" class="ptolemy.data.expr.Parameter" value="{1525.8012305173688, 333.91485339131}">
+        </property>
+        <property name="inMotion" class="ptolemy.data.expr.Parameter" value="false">
         </property>
         <entity name="Power" class="ptolemy.domains.modal.modal.ModalModel">
             <entity name="_Controller" class="ptolemy.domains.modal.modal.ModalController">
-                <property name="powerLevel" class="ptolemy.data.expr.Parameter" value="2.94566E6">
+                <property name="powerLevel" class="ptolemy.data.expr.Parameter" value="2.433284E6">
                 </property>
             </entity>
         </entity>
@@ -4092,7 +4458,7 @@
             <entity name="processing" class="ptolemy.domains.modal.modal.Refinement">
                 <entity name="fromCommLogger" class="ptolemy.actor.TypedCompositeActor">
                     <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode5.Processor.processing.fromCommLogger.json">
+                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node5.fromCommLogger.json">
                         </property>
                     </entity>
                 </entity>
@@ -4102,7 +4468,7 @@
             <entity name="communicating" class="ptolemy.domains.modal.modal.Refinement">
                 <entity name="fromProcLogger" class="ptolemy.actor.TypedCompositeActor">
                     <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode5.Communication.communicating.fromProcLogger.json">
+                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node5.fromProcLogger.json">
                         </property>
                     </entity>
                 </entity>
@@ -4120,32 +4486,42 @@
 <title>PowerLevel</title>
 <xLabel></xLabel>
 <yLabel></yLabel>
-<xRange min="0.0" max="2852.0"/>
-<yRange min="2945668.0" max="3024000.0"/>
+<xRange min="0.0" max="14326.0"/>
+<yRange min="2433309.0" max="3024000.0"/>
 </plot>?>
             </configure>
         </entity>
+        <entity name="Motion" class="ptolemy.domains.modal.modal.ModalModel">
+            <entity name="motion" class="ptolemy.domains.modal.modal.Refinement">
+                <entity name="MotionLogger" class="ptolemy.actor.TypedCompositeActor">
+                    <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
+                        <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node5.MotionLogger.json">
+                        </property>
+                    </entity>
+                </entity>
+            </entity>
+        </entity>
         <entity name="RXLogger" class="ptolemy.actor.TypedCompositeActor">
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode5.RXLogger.json">
+                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node5.RXLogger.json">
                 </property>
             </entity>
         </entity>
         <entity name="TXLogger" class="ptolemy.actor.TypedCompositeActor">
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode5.TXLogger.json">
+                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node5.TXLogger.json">
                 </property>
             </entity>
         </entity>
         <entity name="SensorLogger" class="ptolemy.actor.TypedCompositeActor">
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode5.SensorLogger.json">
+                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node5.SensorLogger.json">
                 </property>
             </entity>
         </entity>
         <entity name="PowerLogger" class="ptolemy.actor.TypedCompositeActor">
             <entity name="LineWriter" class="ptolemy.actor.lib.io.LineWriter">
-                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="log.nodeModelRIM.InstanceOfNode5.PowerLogger.json">
+                <property name="fileName" class="ptolemy.actor.parameters.FilePortParameter" value="results/node5.PowerLogger.json">
                 </property>
             </entity>
         </entity>

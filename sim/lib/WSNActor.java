@@ -74,13 +74,17 @@ public abstract class WSNActor extends ModelDataActor {
     protected static String[] labelsHeartbeat = {
             "count",
             "hopCount",
-            "location",
+            "aliveNeighbours",
+            "currentLocation",
+            "targetLocation",
             "motion",
             "nodeID"
         };
     protected static Type[] typesHeartbeat = {
             BaseType.INT,
             BaseType.INT,
+            BaseType.INT,
+            typeLocation,
             typeLocation,
             BaseType.BOOLEAN,
             BaseType.INT

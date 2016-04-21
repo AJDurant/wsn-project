@@ -270,6 +270,8 @@ public abstract class NodeProcessor extends WSNActor {
     	Token[] heartbeatTokens = {
     		heartbeatCount,
     		(IntToken) getVariable("hopCount"),
+    		(IntToken) new IntToken(getAliveNeighboursCount()),
+    		(ArrayToken) getVariable("currentLocation"),
     		(ArrayToken) getVariable("targetLocation"),
     		(BooleanToken) getVariable("inMotion"),
     		nodeID
@@ -301,6 +303,18 @@ public abstract class NodeProcessor extends WSNActor {
      */
     protected void consumePower() throws IllegalActionException {
     	consumePower("processorPowerRate");
+    }
+    
+    protected int getAliveNeighboursCount() {
+        int count = 0;
+        for (Token nodeRecord : neighbours.values()) {
+            boolean nodeAlive = ((BooleanToken) ((RecordToken)nodeRecord).get("alive")).booleanValue();
+            if (nodeAlive) {
+                count++;
+            }
+        }
+        
+        return count;
     }
 
     

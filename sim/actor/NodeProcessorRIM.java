@@ -55,7 +55,7 @@ public class NodeProcessorRIM extends NodeProcessor {
             double nodeUpdateTime = ((DoubleToken) nodeRecord.get("updateTime")).doubleValue();
             boolean nodeAlive = ((BooleanToken) nodeRecord.get("alive")).booleanValue();
             boolean nodeInMotion = ((BooleanToken) nodeRecord.get("motion")).booleanValue();
-            ArrayToken nodeLocation = (ArrayToken) nodeRecord.get("location");
+            ArrayToken nodeLocation = (ArrayToken) nodeRecord.get("currentLocation");
 
             if ((currentTime >= nodeUpdateTime + heartbeatCheckPeriod)) {
                 // Higher ranked node has lost connectivity.
@@ -137,7 +137,7 @@ public class NodeProcessorRIM extends NodeProcessor {
 
             int nodeRank = ((IntToken) nodeRecord.get("nodeID")).intValue();
             boolean nodeInMotion = ((BooleanToken) nodeRecord.get("motion")).booleanValue();
-            ArrayToken nodeLocation = (ArrayToken) nodeRecord.get("location");
+            ArrayToken nodeLocation = (ArrayToken) nodeRecord.get("targetLocation");
 
             if (nodeInMotion) {
                 if (nodeRank < minRank) {
