@@ -145,3 +145,6 @@ pythontex-files-*/
 # endfloat
 *.ttt
 *.fff
+
+# Project stuff
+sim/results/
