@@ -4,17 +4,18 @@
 
 % For code listings
 \usepackage{listings}
-\lstloadlanguages{[LaTeX]TeX}
 \lstset{%
-  language=[LaTeX]TeX,%
+  basicstyle=\ttfamily,%
   keywordstyle={\sffamily\bfseries\upshape},%
   identifierstyle={\sffamily\mdseries\upshape},%
   commentstyle={\upshape},%
-  columns={fullflexible},%
+  columns={flexible},%
   captionpos={b},%
   showspaces={false},%
-  gobble={2},%
-  frame=single
+  breaklines=true,%
+  numbers=left,%
+  frame=single,%
+  tabsize=3
 }
 
 % A command to record where the LaTeX source files live and a command
@@ -42,3 +43,9 @@
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage{subcaption}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% Markup commands
+\newcommand{\variable}[1]{\emph{#1}}

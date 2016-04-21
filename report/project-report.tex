@@ -31,11 +31,41 @@ With these considerations, performance metrics given for particular algorithms m
 
 % More definitions & declarations in project-report.ldf
 
+\makeatletter
+\def\ext@algorithm{lol}% algorithm captions will be written to the .lol file
+% share the list making commands and redefine the heading
+\AtBeginDocument{%
+  \let\l@algorithm\l@lstlisting
+  \let\c@algorithm\c@lstlisting
+  \let\thealgorithm\thelstlisting
+  \renewcommand{\lstlistlistingname}{Algorithms and program code}%
+}
+\makeatother
+\makeatletter
+\newlength{\singlespace}
+\newlength{\gobble}
+\newlength{\numbersep}
+% The width of a single space.
+\settowidth{\singlespace}{\lst@basicstyle \ }
+\setlength{\singlespace}{-\singlespace}
+
+\lst@Key{firstlineandnumber}\relax{\def\lst@firstline{#1\relax}\def\lst@firstnumber{#1\relax}}
+\lst@Key{widthgobble}{0}{%
+    \setlength{\gobble}{0.9\singlespace}% reindent a bit
+    \setlength{\gobble}{\lst@tabsize\gobble}% multiply by tabsize
+    \setlength{\gobble}{#1\gobble}% multiply by number of tabs
+    \def\lst@xleftmargin{\gobble}% move left margin left
+    \def\lst@framexleftmargin{\gobble}% move left frameborder left
+    \setlength{\numbersep}{\gobble}%
+    \addtolength{\numbersep}{10pt}%
+    \def\lst@numbersep{\numbersep}% distance between numbers and left frameborder
+}
+\makeatother
+
 \begin{document}
 \maketitle
 \listoffigures
 \listoftables
-\renewcommand*{\lstlistlistingname}{List of Listings}
 \lstlistoflistings
 
 \chapter{Introduction}
@@ -396,7 +426,64 @@ The RIM algorithm was developed by \citet*{Younis2010}. It was chosen for implem
 
 Using the pseudocode the algorithm was implemented to run when the neighbour check found a non-communicating node. The algorithm then reacts based upon whether the node seems to have failed or just moved away. Various geometric functions are required to compute the new location depending on how many other nodes are moving.
 
-\subsection{Simultaneous Failures Recovery Approach (SFRA)}
+\begin{algorithm}
+\begin{algorithmic}[1]
+\If{a sensor node $J$ detects a failure of its neighbour $F$}
+    \State{\Call{Notify\_Movement}{$J$}}
+    \State{$J$ moves towards $F$ until becoming a distance $r/2$ away}
+    \If{$J$ is unable to reach any other 1-hop neighbour of $F$}
+        \State{$J$ returns to its original location ($F$ is a boundary node) and sends a do-not-move message to its neighbours.}
+    \EndIf
+\ElsIf{$J$ receives (a) notification message(s) from $F$}
+    \If{$I\_Already\_Reconnected$} \label{rim:noChain}
+        \State{Done;}
+    \EndIf
+    \State{$NewPosition \gets$ \Call{Compute\_newPosition}{$J$}}
+    \If{$NewPosition \neq CurrentPosition$}
+        \State{\Call{Notify\_Movement}{$J$}}
+        \State{$J$ moves to $NewPosition$}
+    \EndIf
+\ElsIf{$J$ receives a ``do-not-move'' message from $F$}
+    \State{$J$ does not move towards $F$ (no cascade movement)}
+\EndIf
+\State{$I\_Already\_Reconnected \gets TRUE$}
+
+\Function{Compute\_newPosition}{$J$}
+\State{$NUM\_PriorNBR \gets$ Number of notification messages that $J$ has received with the lowest rank}
+\If{$J$ stays connected with all $PriorNBR$ with least rank}
+    \State{\Return{$CurrentPosition$}}
+\EndIf
+\State{$Location\_Senders[] \gets$ New location(s) of (a) sender(s) from which $J$ have received (a) notification message(s)}
+\If{$NUM\_PriorNBR = 1$}
+    \State{\Return{a point $r$ unit(s) away from $Location\_Sender[0]$ on the direct path to $Location\_Sender[0]$}}
+\Else
+    \State{Define a circle of radius $r$ around each of $Location\_Sender[]$}
+    \If{$NUM\_PriorNBR = 2$}
+        \State{\Return{the closest point between two intersection points}}
+    \ElsIf{$NUM\_PriorNBR > 3$}
+        \State{\Return{the closest point among intersection points which is located inside all other circles}}
+    \EndIf
+\EndIf
+\EndFunction
+
+\Function{Notify\_Movement}{$J$}
+\State{Send a message with a rank value increased by 1 to inform all neighbours of $J$ about its motion and its new position.}
+\EndFunction
+
+\end{algorithmic}
+\caption{Pseudocode for the RIM algorithm}
+\label{alg:RIM}
+\end{algorithm}
+
+Upon implementing RIM an interesting edge case was discovered which caused a node (\emph{A}) to move in oscillation until its energy is depleted. This occurs when a node becomes just our of range from two other nodes (\emph{B} and \emph{C}) that have previously moved and set \variable{I\_Already\_Reconnected} true. When the \emph{A} notifies its intention to move \emph{B} and \emph{C} do not respond in chained motion because of lines 8--10 in algorithm~\ref{alg:RIM}, therefore as \emph{A} moves away and loses connection with \emph{B} or \emph{C} it detects them as failed and moves back towards them. When \emph{B} and \emph{C} are either side of \emph{A} this will repeat as one comes into range the other will have become out or range and the cycle continues.
+
+\lstinputlisting[language=Java,firstlineandnumber=60,lastline=90,widthgobble=3,float,caption={Java implementation of RIM},label={lst:RIM}]{../sim/actor/NodeProcessorRIM.java}
+
+%\subsection{Simultaneous Failures Recovery Approach (SFRA)}
+
+\section{Simulation Scenarios}
+
+\subsection{Single Node Failure}
 
 \chapter{Evaluation}
 \label{cha:Eval}
