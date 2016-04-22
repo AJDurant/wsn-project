@@ -3,10 +3,12 @@ addpath('D:/Octave/Toolboxes/jsonlab-1.2/');
 powerFiles = dir('*PowerLogger.json');
 motionFiles = dir('*MotionLogger.json');
 txFiles = dir('*TXLogger.json');
+commFiles = dir('*fromCommLogger.json');
 
 powerData = {};
 motionData = {};
 txData = {};
+commData = {};
 
 for file = powerFiles'
     data = loadjson(file.name);
@@ -21,6 +23,11 @@ end;
 for file = txFiles'
     data = loadjson(file.name);
     txData = [txData, {data}];
+end;
+
+for file = commFiles'
+    data = loadjson(file.name);
+    commData = [commData, {data}];
 end;
 
 % Calculate power stats
@@ -53,6 +60,8 @@ messagesSent =  [];
 hopAvgs = [];
 neighbourAvgs = [];
 
+dataMessageCountTX = 0;
+
 for node = txData
     messages = columns(node{1});
     messagesSent = [messagesSent, messages];
@@ -68,6 +77,12 @@ for node = txData
 
             neighbour = element{1}.data.payload.messageData.Heartbeat.aliveNeighbours;
             neighbours = [neighbours, neighbour];
+        elseif (isfield(element{1}.data.payload.messageData, 'DataMessage'))
+            id = element{1}.data.payload.messageData.DataMessage.nodeID;
+            src = element{1}.data.src;
+            if (id != 1 && id == src)
+                dataMessageCountTX++;
+            end
         end
     end
 
@@ -81,6 +96,19 @@ averageMessagesSent = mean(messagesSent);
 averageHopCount = mean(hopAvgs);
 averageNeighbours = mean(neighbourAvgs);
 
+% Calculate RX stats
+dataMessageCountRX = 0;
+
+for element = commData{1}
+    if (isfield(element{1}.data.messageData, 'DataMessage'));
+        dataMessageCountRX++;
+    end
+end
+
+dataMessagePercentage = dataMessageCountRX/dataMessageCountTX * 100;
+
 bar([messagesSent', powerAvgs']);
 figure;
 bar([hopAvgs', neighbourAvgs']);
+figure;
+bar([dataMessageCountTX, dataMessageCountRX]);
