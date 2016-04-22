@@ -511,6 +511,14 @@ Number of deployed nodes & Minimum range deemed suitable & Mean connected nodes 
 
 The minimum range deemed suitable for this area for the number of deployed nodes is presented in table~\ref{tab:noderange}. As can be seen, these values are much larger parameters than most of the simulations run by \citeauthor*{Younis2010}. It would seem that their random deployments are either non-random enough to create a connected network, or their results for low density networks are incredibly sparse. To test this scenario on my platform the values from table~\ref{tab:noderange} were used as the network parameters.
 
+\subsection{Multi Node Failure}
+
+\subsection{Further Scenarios}
+
+There are several other scenarios that could be developed for the platform. One particularly useful scenario is using an unreliable communication channel. Doing so would produce a more realistic transmission model and show the resilience to real-world problems in communication for the algorithm under test. All kinds of outside actors can affect radio transmission, interference from other sources or even from within the network itself is a major issue in all forms wireless communication. As discussed in the literature, the radio pattern for transmission and reception vary greatly from the ideal fixed radius circle used in the previous scenarios, modelling this degradation would be another challenge, but a worthwhile development to improve the simulation platform.
+
+The wireless channel model in PtolemyII provides power loss modelling and probabilistic transmission loss alongside the limited range properties which have been used. And within VisualSense collision detection is possible by providing a message size / transmission time per transmission. Using these to extend the communications module of the nodes could greatly increase the resemblance to real world environments and allow testing in harsh settings during the development of a self-healing algorithm.
+
 \chapter{Evaluation}
 \label{cha:Eval}
 
@@ -518,6 +526,7 @@ Each scenario is run on each of the different sized networks and repeated to pro
 
 \section{Single Node Failure}
 
+\section{Multi Node Failure}
 
 \chapter{Conclusions}
 \label{cha:Conclusion}
