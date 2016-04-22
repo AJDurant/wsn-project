@@ -19,6 +19,8 @@ import ptolemy.kernel.util.NameDuplicationException;
 import ptolemy.kernel.util.Workspace;
 
 public abstract class NodeProcessor extends WSNActor {
+    
+    public static int numOfNodes = 0;
 
     // Inputs
     public TypedIOPort fromComm;
@@ -38,7 +40,7 @@ public abstract class NodeProcessor extends WSNActor {
     protected double heartbeatCheckPeriod;
     
     // Internals
-    private IntToken nodeID;
+    protected IntToken nodeID;
     private IntToken heartbeatCount;
     protected HashMap<Integer, Token> neighbours;
 
@@ -93,6 +95,8 @@ public abstract class NodeProcessor extends WSNActor {
         emptyType = (IntToken) getVariable("emptyType");
         heartbeatType = (IntToken) getVariable("heartbeatType");
         dataType = (IntToken) getVariable("dataType");
+        
+        nodeID =  new IntToken(numOfNodes);
     }
     
     /**
@@ -102,7 +106,16 @@ public abstract class NodeProcessor extends WSNActor {
     public void initialize() throws IllegalActionException {
     	super.initialize();
     	
-    	nodeID = (IntToken) getVariable("nodeID");
+    	setVariable("nodeID", nodeID);
+    	setVariable("failed", new BooleanToken(false));
+    	
+    	if (nodeID.equals(getVariable("rootNode"))) {
+    	    setVariable("hopCount", new IntToken(0));
+            setVariable("parentNode", nodeID);
+    	} else {
+        	setVariable("hopCount", getVariable("initialHopCount"));
+        	setVariable("parentNode", getVariable("initialParentNode"));
+    	}
     	
     	neighbours = new HashMap<Integer, Token>();
         heartbeatCount = new IntToken(0);
@@ -122,6 +135,9 @@ public abstract class NodeProcessor extends WSNActor {
     
         // Set the type constraints.
         newObject.toComm.setTypeSameAs(newObject.fromComm);
+        
+        NodeProcessor.numOfNodes++;
+        newObject.nodeID = new IntToken(numOfNodes);
     
         return newObject;
     }

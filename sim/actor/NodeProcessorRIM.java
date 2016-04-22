@@ -69,21 +69,20 @@ public class NodeProcessorRIM extends NodeProcessor {
                     ArrayToken newPosition = computeNewPosition();
                     ArrayToken currentPosition = (ArrayToken) getVariable("currentLocation");
 
-                    if (!currentPosition.equals(newPosition)) {
-                        try {
+                    try {
+                        if (!currentPosition.isCloseTo(newPosition, 1.0).booleanValue()) {
                             toMotion.send(0, newPosition);
-                        } catch (IllegalActionException e) {
-                            e.printStackTrace();
                         }
+                    } catch (IllegalActionException e) {
+                        throw new RuntimeException(e);
                     }
-
                 } else {
                     // Node has probably died
                     try {
                         neighbours.replace(node, setNeighbourLive(nodeRecord, false));
                         toMotion.send(0, computePositionFromDeadNode(nodeLocation));
                     } catch (IllegalActionException e) {
-                        e.printStackTrace();
+                        throw new RuntimeException(e);
                     }
                 }
                 alreadyMoved = true;
@@ -93,7 +92,7 @@ public class NodeProcessorRIM extends NodeProcessor {
 
     private RecordToken setNeighbourLive(RecordToken nodeData, boolean alive) throws IllegalActionException {
         RecordToken aliveToken;
-        aliveToken = new RecordToken(new String[] { "alive" }, new Token[] { new BooleanToken(false) });
+        aliveToken = new RecordToken(new String[] { "alive" }, new Token[] { new BooleanToken(alive) });
         return RecordToken.merge(aliveToken, (RecordToken) nodeData);
     }
 
