@@ -477,7 +477,7 @@ Using the pseudocode the algorithm was implemented to run when the neighbour che
 
 Upon implementing RIM an interesting edge case was discovered which caused a node (\emph{A}) to move in oscillation until its energy is depleted. This occurs when a node becomes just our of range from two other nodes (\emph{B} and \emph{C}) that have previously moved and set \variable{I\_Already\_Reconnected} true. When the \emph{A} notifies its intention to move \emph{B} and \emph{C} do not respond in chained motion because of lines 8--10 in algorithm~\ref{alg:RIM}, therefore as \emph{A} moves away and loses connection with \emph{B} or \emph{C} it detects them as failed and moves back towards them. When \emph{B} and \emph{C} are either side of \emph{A} this will repeat as one comes into range the other will have become out or range and the cycle continues.
 
-\lstinputlisting[language=Java,firstlineandnumber=60,lastline=90,widthgobble=3,float,caption={Java implementation of RIM},label={lst:RIM}]{../sim/actor/NodeProcessorRIM.java}
+\lstinputlisting[language=Java,firstlineandnumber=60,lastline=89,widthgobble=3,float,caption={Java implementation of RIM},label={lst:RIM}]{../sim/actor/NodeProcessorRIM.java}
 
 The implementation of RIM (algorithm~\ref{alg:RIM}) can be seen in listing~\ref{lst:RIM} which is run periodically for each neighbour of a node.
 
@@ -485,10 +485,39 @@ The implementation of RIM (algorithm~\ref{alg:RIM}) can be seen in listing~\ref{
 
 \section{Simulation Scenarios}
 
+To test the algorithms and the platform a variety of scenarios are constructed for the network to run in. These scenarios, their goals, and the reasoning for their use are presented in this section.
+
 \subsection{Single Node Failure}
+
+The single node failure is a common and simple scenario to perform. Whether due to energy depletion, hardware failure, obstruction to transmission, or a software fault and individual node could fail at any time for many reasons. As seen in the literature, this was the first problem scenario self-healing algorithms were designed to solve, therefore it is the base test as to whether or not they are functional and can be classed as self-healing.
+
+The goal of this scenario is to retain / restore connectivity across the network after a single node has failed. For this scenario the simulation was set up with a number of nodes randomly distributed within a 1000x1000 unit area. Once running a node is randomly selected to fail, where it changes to a non-responsive state no longer sending or receiving messages. RIM is designed with this specific scenario in mind and results are presented with varying communication ranges and numbers of deployed nodes. However when re-creating these experiments it was discovered that the random placement combined with lower range or a lower deployment results in a highly partitioned network: a high number non-connected nodes / clusters than cannot route to the root node.
+
+\begin{table}[]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|l|l|l|}
+\hline
+Number of deployed nodes & Minimum range deemed suitable & Mean connected nodes & Std. Deviation \\ \hline
+25                       & 250                           & 24                   & 1.54           \\ \hline
+50                       & 200                           & 47.8                 & 3.34           \\ \hline
+100                      & 150                           & 99                   & 1              \\ \hline
+200                      & 100                           & 196.8                & 3.4            \\ \hline
+\end{tabular}%
+}
+\caption{Minimum ranges for number of randomly deployed nodes in a 1000x1000 unit area.}
+\label{tab:noderange}
+\end{table}
+
+The minimum range deemed suitable for this area for the number of deployed nodes is presented in table~\ref{tab:noderange}. As can be seen, these values are much larger parameters than most of the simulations run by \citeauthor*{Younis2010}. It would seem that their random deployments are either non-random enough to create a connected network, or their results for low density networks are incredibly sparse. To test this scenario on my platform the values from table~\ref{tab:noderange} were used as the network parameters.
 
 \chapter{Evaluation}
 \label{cha:Eval}
+
+Each scenario is run on each of the different sized networks and repeated to produce an average response for that network set-up.
+
+\section{Single Node Failure}
+
 
 \chapter{Conclusions}
 \label{cha:Conclusion}
