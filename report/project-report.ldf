@@ -44,8 +44,41 @@
 \usepackage{caption}
 \usepackage{subcaption}
 
+% Booktabs
+
+\usepackage{booktabs}
+
+% ALGORITHMS
+
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+
+\def\ext@algorithm{lol}% algorithm captions will be written to the .lol file
+% share the list making commands and redefine the heading
+\AtBeginDocument{%
+  \let\l@algorithm\l@lstlisting
+  \let\c@algorithm\c@lstlisting
+  \let\thealgorithm\thelstlisting%
+}
+
+\newlength{\singlespace}
+\newlength{\gobble}
+\newlength{\numbersep}
+% The width of a single space.
+\settowidth{\singlespace}{\lst@basicstyle \ }
+\setlength{\singlespace}{-\singlespace}
+
+\lst@Key{firstlineandnumber}\relax{\def\lst@firstline{#1\relax}\def\lst@firstnumber{#1\relax}}
+\lst@Key{widthgobble}{0}{%
+    \setlength{\gobble}{0.9\singlespace}% reindent a bit
+    \setlength{\gobble}{\lst@tabsize\gobble}% multiply by tabsize
+    \setlength{\gobble}{#1\gobble}% multiply by number of tabs
+    \def\lst@xleftmargin{\gobble}% move left margin left
+    \def\lst@framexleftmargin{\gobble}% move left frameborder left
+    \setlength{\numbersep}{\gobble}%
+    \addtolength{\numbersep}{10pt}%
+    \def\lst@numbersep{\numbersep}% distance between numbers and left frameborder
+}
 
 % Markup commands
 \newcommand{\variable}[1]{\emph{#1}}

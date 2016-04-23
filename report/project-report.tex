@@ -31,35 +31,7 @@ With these considerations, performance metrics given for particular algorithms m
 
 % More definitions & declarations in project-report.ldf
 
-\makeatletter
-\def\ext@algorithm{lol}% algorithm captions will be written to the .lol file
-% share the list making commands and redefine the heading
-\AtBeginDocument{%
-  \let\l@algorithm\l@lstlisting
-  \let\c@algorithm\c@lstlisting
-  \let\thealgorithm\thelstlisting%
-}
-\makeatother
-\makeatletter
-\newlength{\singlespace}
-\newlength{\gobble}
-\newlength{\numbersep}
-% The width of a single space.
-\settowidth{\singlespace}{\lst@basicstyle \ }
-\setlength{\singlespace}{-\singlespace}
-
-\lst@Key{firstlineandnumber}\relax{\def\lst@firstline{#1\relax}\def\lst@firstnumber{#1\relax}}
-\lst@Key{widthgobble}{0}{%
-    \setlength{\gobble}{0.9\singlespace}% reindent a bit
-    \setlength{\gobble}{\lst@tabsize\gobble}% multiply by tabsize
-    \setlength{\gobble}{#1\gobble}% multiply by number of tabs
-    \def\lst@xleftmargin{\gobble}% move left margin left
-    \def\lst@framexleftmargin{\gobble}% move left frameborder left
-    \setlength{\numbersep}{\gobble}%
-    \addtolength{\numbersep}{10pt}%
-    \def\lst@numbersep{\numbersep}% distance between numbers and left frameborder
-}
-\makeatother
+\pagenumbering{roman}
 
 \begin{document}
 \maketitle
@@ -70,6 +42,7 @@ With these considerations, performance metrics given for particular algorithms m
 
 \chapter{Introduction}
 \label{cha:Introduction}
+\pagenumbering{arabic}
 
 \section{Project Aims}
 
@@ -387,7 +360,21 @@ The motion module provides localisation and movement for the node. As localisati
 
 \subsection{Power}
 
-The power module takes an input from each of the other modules as they work and reduces its stored power level by their consumption over time until the energy level reaches 0. At this point the battery is depleted and it sends out a `Dead' signal. All of the modules have alive states and a single dead state that is the final state. At any point if a `Dead' signal is received the modules should transition immediately to the dead state which ceases all computation of that module. The power level and consumption rates of each component are customisable on each node. They are set in my tests using the Memsic IRIS node data-sheet \citep{Memsic2011}.
+The power module takes an input from each of the other modules as they work and reduces its stored power level by their consumption over time until the energy level reaches 0. At this point the battery is depleted and it sends out a `Dead' signal. All of the modules have alive states and a single dead state that is the final state. At any point if a `Dead' signal is received the modules should transition immediately to the dead state which ceases all computation of that module. The power level and consumption rates of each component are customisable on each node. They are set in my tests using the Memsic IRIS node data-sheet \citep{Memsic2011}. These consumption rates are shown in table~\ref{tab:powerRates}.
+
+\begin{table}[]
+\centering
+\begin{tabular}{@{}lr@{}}
+\toprule
+Node Module     & Power Consumption Rate (mA) \\ \midrule
+Communication   & 17                          \\
+Sensing         & 16                          \\
+Processing data & 8                           \\
+Motion          & 2500                        \\ \bottomrule
+\end{tabular}
+\caption{Power consumption rates of the various node modules}
+\label{tab:powerRates}
+\end{table}
 
 \subsection{Processing}
 
@@ -475,7 +462,7 @@ Using the pseudocode the algorithm was implemented to run when the neighbour che
 \label{alg:RIM}
 \end{algorithm}
 
-Upon implementing RIM an interesting edge case was discovered which caused a node (\emph{A}) to move in oscillation until its energy is depleted. This occurs when a node becomes just our of range from two other nodes (\emph{B} and \emph{C}) that have previously moved and set \variable{I\_Already\_Reconnected} true. When the \emph{A} notifies its intention to move \emph{B} and \emph{C} do not respond in chained motion because of lines 8--10 in algorithm~\ref{alg:RIM}, therefore as \emph{A} moves away and loses connection with \emph{B} or \emph{C} it detects them as failed and moves back towards them. When \emph{B} and \emph{C} are either side of \emph{A} this will repeat as one comes into range the other will have become out or range and the cycle continues.
+% why did I implement it as I did, what features / changes
 
 \lstinputlisting[language=Java,firstlineandnumber=60,lastline=89,widthgobble=3,float,caption={Java implementation of RIM},label={lst:RIM}]{../sim/actor/NodeProcessorRIM.java}
 
@@ -484,6 +471,7 @@ The implementation of RIM (algorithm~\ref{alg:RIM}) can be seen in listing~\ref{
 %\subsection{Simultaneous Failures Recovery Approach (SFRA)}
 
 \section{Simulation Scenarios}
+\label{sec:scenarios}
 
 To test the algorithms and the platform a variety of scenarios are constructed for the network to run in. These scenarios, their goals, and the reasoning for their use are presented in this section.
 
@@ -496,20 +484,20 @@ The goal of this scenario is to retain / restore connectivity across the network
 \begin{table}[]
 \centering
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{|l|l|l|l|}
-\hline
-Number of deployed nodes & Minimum range deemed suitable & Mean connected nodes & Std. Deviation \\ \hline
-25                       & 250                           & 24                   & 1.54           \\ \hline
-50                       & 200                           & 47.8                 & 3.34           \\ \hline
-100                      & 150                           & 99                   & 1              \\ \hline
-200                      & 100                           & 196.8                & 3.4            \\ \hline
+\begin{tabular}{@{}rrrr@{}}
+\toprule
+Deployed nodes & Minimum range & Mean connected nodes & Std. Deviation \\ \midrule
+25             & 250           & 24                   & 1.54           \\
+50             & 200           & 47.8                 & 3.34           \\
+100            & 150           & 99                   & 1              \\
+200            & 100           & 196.8                & 3.4            \\ \bottomrule
 \end{tabular}%
 }
 \caption{Minimum ranges for number of randomly deployed nodes in a 1000x1000 unit area.}
-\label{tab:noderange}
+\label{tab:nodeRange}
 \end{table}
 
-The minimum range deemed suitable for this area for the number of deployed nodes is presented in table~\ref{tab:noderange}. As can be seen, these values are much larger parameters than most of the simulations run by \citeauthor*{Younis2010}. It would seem that their random deployments are either non-random enough to create a connected network, or their results for low density networks are incredibly sparse. To test this scenario on my platform the values from table~\ref{tab:noderange} were used as the network parameters.
+The minimum range deemed suitable for this area for the number of deployed nodes is presented in table~\ref{tab:nodeRange}. As can be seen, these values are much larger parameters than most of the simulations run by \citeauthor*{Younis2010}. It would seem that their random deployments are either non-random enough to create a connected network, or their results for low density networks are incredibly sparse. To test this scenario on my platform the values from table~\ref{tab:nodeRange} were used as the network parameters.
 
 \subsection{Multi Node Failure}
 
@@ -522,9 +510,53 @@ The wireless channel model in PtolemyII provides power loss modelling and probab
 \chapter{Evaluation}
 \label{cha:Eval}
 
-Each scenario is run on each of the different sized networks and repeated to produce an average response for that network set-up.
+In this chapter the scenarios developed in section~\ref{sec:scenarios} are evaluated using a variety of metrics to give a quality assessment of the algorithms and to compare them against the original results presented in the literature. This assessment then provides an evaluation of the platform itself and its performance and accuracy can be discussed.
+
+Each scenario is run on each of the different sized networks and repeated to produce an average response for that network set-up. The simulation was run for a fixed amount of time with a random deployment of nodes and random scenario events, this ensured a fair representation between runs, each run was repeated to give a representative sample of the scenario and check for consistency in the simulation.
+
+\section{Evaluation Metrics}
+
+In the literature review a number of metrics were discussed, here the chosen metrics for the system are described and the reasoning for their choice is explained.
+
+As previously shown, the predominant measure of performance for any wireless sensor network is the energy consumption. One of the main features of wireless sensor networks is their low power demand, so any features introduced that increase this unnecessarily are rejected in development. As with any architecture design the benefits must be weighed against the cost, and energy consumption is a major cost. High energy consumption reduces the lifetime of the network and the amount of data that is able to be collected, and increases the monetary cost of developing and running the network though larger capacity batteries or other changes that must be made due to nodes requiring more power.
+
+Therefore energy consumption is a major concern for developers of self-healing wireless sensor networks. It may be the case that not implementing self-healing would produce a cheaper and longer lasting network, even if nodes need re-deploying manually, due to the cost of the additional power use. Of course the aim in developing such a system is to increase the lifetime of the network and reduce the need for costly re-deployments, but this can only be achieved by keeping the energy consumption down, and potentially reducing it below that of a non-healing network. Both the total consumption and the average consumption can be measured to show if particular nodes are having a particularly high draw, which will often be the case with nodes that have moved compared to those which have not.
+
+The main energy draw in the system is moving the node and any time taken in doing so will likely prevent sensor reading from taking place or data will be lost whilst a node is out of range until it reconnects. Therefore the distance travelled is a useful metric is observing why the energy consumption might be so high. The total distance travelled shows this across the whole network, and the mean distance travelled shows the spread of node travelling around the environment. The goal of this metric is to reduce the amount of motion to only what is required, removing any unnecessary movement. Involving a large number of nodes in recovery (which can be seen using the number of nodes that have moved as a metric) will have different consequences to having few travelling longer distances. Again these differences must be weighed up by system designers and a balance provided between them to achieve an optimal solution.
+
+The degree of connectivity can be measured by the number of neighbours each node is connected to, the mean of these values provides an overall measure for the scenario. This provides a guideline for the density of the network, which affects how many nodes are likely to move when a failure occurs. However a high connectivity should allow re-routing of the network without the need for movement. A good approach to self-healing should combine both routing and movement for the optimal result.
+
+The platform architecture is designed to deliver application messages to the root node. By measuring the number of these transmitted into the network and those received by the root a percentage of successful messages transmission can be made. This gives a value of robustness to the recovery. Ideally all messages should reach the root, and if nodes fail the network should be restored full so there is no partitioning from the root. However this can be affected by all kinds of other factors, the unreliable channels of wireless transmission will automatically reduce this, but despite the external factor this metric can still provide useful information about the success of self-healing.
+
+Finally the mean hop count from the root node gives an idea of the topology of the network, if this is high then the topology will be in its worst case of a long individual line with only one route to the root node. With random deployment this is unlikely to occur.
 
 \section{Single Node Failure}
+
+Running the single node failure scenario with 25 nodes produces relatively consistent results (shown in figure~\ref{fig:singlefail_25node}). RIM is able to restore connectivity and reach a stable state in the network quickly.
+
+\begin{figure}
+ \centering
+    \includegraphics[width=\textwidth]{figures/singlefail_25node.png}
+    \caption{Results from three runs of a 25 node network with RIM.}
+    \label{fig:singlefail_25node}
+\end{figure}
+
+Even following the guideline parameters discussed previously run 1 had a partitioned network from the random placement and hence has a low percentage of data messages received back at the root node. The travel distance and number of nodes moved stay consistent between runs, as these are dependent upon the density of the network which can be seen by comparing to the results of 50 and 100 node networks. This is all consistent with the results produced by \citeauthor*{Younis2010}.
+
+Graphical visualisation of the simulation however shows some interesting behaviour. Certain arrangements of nodes when a failure occurs can lead to oscillations in location rapidly depleting the energy as the node moves back and forth. This does not seem specific to the implementation of RIM presented here, but is inherent to the algorithm (algorithm~\ref{alg:RIM}). This occurs when a node (\emph{A}) becomes just out of range from two other nodes (\emph{B} and \emph{C}) that have previously moved and set \variable{I\_Already\_Reconnected} true. When the \emph{A} notifies its intention to move \emph{B} and \emph{C} do not respond in chained motion because of lines 8--10 in algorithm~\ref{alg:RIM}, therefore as \emph{A} moves away and loses connection with \emph{B} or \emph{C} it detects them as failed and moves back towards them. When \emph{B} and \emph{C} are either side of \emph{A} this will repeat as one comes into range the other will have become out or range and the cycle continues.
+
+This behaviour was occasionally seen in 25 node networks, but was often the case in 50 and 100 node networks, this can be seen in run 3 on figure~\ref{fig:singlefail_50node} where the travel distance is dramatically increased. This run did not actually converge but was still oscillating when the simulation ended. The number of nodes moved has increased due to the increase in the average number of neighbours.
+
+\begin{figure}
+ \centering
+    \includegraphics[width=\textwidth]{figures/singlefail_50node.png}
+    \caption{Results from three runs of a 50 node network with RIM.}
+    \label{fig:singlefail_50node}
+\end{figure}
+
+Despite having raised some concerns over the original process and evaluation presented for RIM, the results from my implementation seem consistent with theirs, which would suggest the simulation platform is able to provide accurate data. The data itself may show problems in the algorithm, but the similarity shows accuracy in the implementation and the platform itself.
+
+The 100 node network shows a similar trend, and all runs finished with nodes still oscillating their location. This seems to be a fairly major flaw in the algorithm as it is hugely wasteful of energy, and I suspect that the behaviour would be exhibited on any network with high density or a high node count. However discovering the flaw shows the strength of visual simulation, as it is obvious to any observer, whereas it would be unlikely to be discovered by purely analysing log file output unless it was specifically looked for. It is likely that the statistics presented on RIM would have been automatically generated from the logs without further analysis for oscillations or for network connectivity as previously mentioned.
 
 \section{Multi Node Failure}
 
