@@ -1,4 +1,5 @@
 addpath('D:/Octave/Toolboxes/jsonlab-1.2/');
+pkg load statistics;
 
 powerFiles = dir('*PowerLogger.json');
 motionFiles = dir('*MotionLogger.json');
@@ -42,13 +43,17 @@ for node = powerData
 end;
 
 totalPowerUse = sum(powerUses);
-AvgPowerUse = mean(powerAvgs);
+averagePowerUse = mean(powerAvgs);
 
 % Calculate motion stats
 distances = [];
 
 for node = motionData
-    distance = node{1}{end}.data.totalDistanceTraveled;
+    if (length(node{1}) > 1)
+        distance = node{1}{end}.data.totalDistanceTraveled;
+    else
+        distance = node{1}.data.totalDistanceTraveled;
+    end
     distances = [distances, distance];
 end;
 
@@ -86,14 +91,14 @@ for node = txData
         end
     end
 
-    hopAvgs = [hopAvgs, mean(hopcounts)];
+    hopAvgs = [hopAvgs, nanmean(hopcounts)];
     neighbourAvgs = [neighbourAvgs, mean(neighbours)];
 end;
 
 totalMessagesSent = sum(messagesSent);
 averageMessagesSent = mean(messagesSent);
 
-averageHopCount = mean(hopAvgs);
+averageHopCount = nanmean(hopAvgs);
 averageNeighbours = mean(neighbourAvgs);
 
 % Calculate RX stats
@@ -106,9 +111,3 @@ for element = commData{1}
 end
 
 dataMessagePercentage = dataMessageCountRX/dataMessageCountTX * 100;
-
-bar([messagesSent', powerAvgs']);
-figure;
-bar([hopAvgs', neighbourAvgs']);
-figure;
-bar([dataMessageCountTX, dataMessageCountRX]);
