@@ -532,7 +532,7 @@ Finally the mean hop count from the root node gives an idea of the topology of t
 
 \section{Single Node Failure}
 
-Running the single node failure scenario with 25 nodes produces relatively consistent results (shown in figure~\ref{fig:singlefail_25node}). RIM is able to restore connectivity and reach a stable state in the network quickly.
+Running the single node failure scenario with 25 nodes produces relatively consistent results (shown in figure~\ref{fig:singlefail_25node}). RIM is able to restore connectivity and reach a stable state in the network within a minute.
 
 \begin{figure}
  \centering
@@ -541,11 +541,13 @@ Running the single node failure scenario with 25 nodes produces relatively consi
     \label{fig:singlefail_25node}
 \end{figure}
 
-Even following the guideline parameters discussed previously run 1 had a partitioned network from the random placement and hence has a low percentage of data messages received back at the root node. The travel distance and number of nodes moved stay consistent between runs, as these are dependent upon the density of the network which can be seen by comparing to the results of 50 and 100 node networks. This is all consistent with the results produced by \citeauthor*{Younis2010}.
+Even following the guideline parameters discussed previously run 1 had a partitioned network from the random placement and hence has a low percentage of data messages received back at the root node. The travel distance and number of nodes moved stay consistent between runs, as these are dependent upon the density of the network which can be seen by comparing to the results of 50 and 100 node networks. Comparing against the results produced by \citeauthor*{Younis2010} shows that their network must be much more densely packed, as suggested previously, due to the average distance moved being considerably lower. However the trends in the data are consistent with the original results, particularly considering the increase in average travel with high communication ranges.
 
-Graphical visualisation of the simulation however shows some interesting behaviour. Certain arrangements of nodes when a failure occurs can lead to oscillations in location rapidly depleting the energy as the node moves back and forth. This does not seem specific to the implementation of RIM presented here, but is inherent to the algorithm (algorithm~\ref{alg:RIM}). This occurs when a node (\emph{A}) becomes just out of range from two other nodes (\emph{B} and \emph{C}) that have previously moved and set \variable{I\_Already\_Reconnected} true. When the \emph{A} notifies its intention to move \emph{B} and \emph{C} do not respond in chained motion because of lines 8--10 in algorithm~\ref{alg:RIM}, therefore as \emph{A} moves away and loses connection with \emph{B} or \emph{C} it detects them as failed and moves back towards them. When \emph{B} and \emph{C} are either side of \emph{A} this will repeat as one comes into range the other will have become out or range and the cycle continues.
+Energy use is not presented in the original results so cannot be compared. But using the average usage during the simulation the lifetime of the network can be estimated to be around 7 hours with a 2000mAh power source, this is incredibly low however the actual average consumption rate is likely to be much lower than the average presented in this short simulation as the majority of the simulation involved movement. This result shows a known flaw in the simulation platform, and a bad assumption that has been made in development. The communication module does not sleep, and takes a pessimistic 1s use of energy for each transmission and reception. This is gravely exaggerated as it is common for radio use to be in cycles of 250ms active per minute: this arrangement would draw a total of 1.8mAh per day for radio use, compared to the 408mAh currently simulated.
 
-This behaviour was occasionally seen in 25 node networks, but was often the case in 50 and 100 node networks, this can be seen in run 3 on figure~\ref{fig:singlefail_50node} where the travel distance is dramatically increased. This run did not actually converge but was still oscillating when the simulation ended. The number of nodes moved has increased due to the increase in the average number of neighbours.
+The average neighbour count is 4 which is a fairly high level of connectivity throughout, measuring this over time during the simulation would allow comparison of connectivity before and after recovery. The nature of RIM is to increase connectivity in its recovery process as it brings nodes closer together. The average hop count is also 4 which correlates with the neighbour count given the network size of 25.
+
+Graphical visualisation of the simulation shows some interesting behaviour. Certain arrangements of nodes when a failure occurs can lead to oscillations in location rapidly depleting the energy as the node moves back and forth. This does not seem specific to the implementation of RIM presented here, but is inherent to the algorithm (algorithm~\ref{alg:RIM}). This occurs when a node (\emph{A}) becomes just out of range from two other nodes (\emph{B} and \emph{C}) that have previously moved and set \variable{I\_Already\_Reconnected} true. When the \emph{A} notifies its intention to move \emph{B} and \emph{C} do not respond in chained motion because of lines 8--10 in algorithm~\ref{alg:RIM}, therefore as \emph{A} moves away and loses connection with \emph{B} or \emph{C} it detects them as failed and moves back towards them. When \emph{B} and \emph{C} are either side of \emph{A} this will repeat as one comes into range the other will have become out or range and the cycle continues.
 
 \begin{figure}
  \centering
@@ -553,6 +555,8 @@ This behaviour was occasionally seen in 25 node networks, but was often the case
     \caption{Results from three runs of a 50 node network with RIM.}
     \label{fig:singlefail_50node}
 \end{figure}
+
+This behaviour was occasionally seen in 25 node networks, but was often the case in 50 and 100 node networks, this can be seen in run 3 on figure~\ref{fig:singlefail_50node} where the travel distance is dramatically increased. This run did not actually converge but was still oscillating when the simulation ended. The number of nodes moved has increased due to the increase in the average number of neighbours.
 
 Despite having raised some concerns over the original process and evaluation presented for RIM, the results from my implementation seem consistent with theirs, which would suggest the simulation platform is able to provide accurate data. The data itself may show problems in the algorithm, but the similarity shows accuracy in the implementation and the platform itself.
 
@@ -563,7 +567,11 @@ The 100 node network shows a similar trend, and all runs finished with nodes sti
 \chapter{Conclusions}
 \label{cha:Conclusion}
 
+% RIM data seems accurate, but testing methods do not seem overly robust
 
+% Major flaw in simulation platform for energy consumption, but overall a useful platform
+
+% Many improvements could be made, and more scenarios developed.
 
 \bibliography{project-report}
 
