@@ -23,7 +23,7 @@
 
 There are two main approaches to network and device management for combating and fixing these issues: the distributed approach and the centralised approach. However the application for a particular WSN determines the effectiveness of a particular algorithm or management paradigm. In certain use cases power usage is less likely to be an important contributing factor but speed of detection and recovery will be more pressing. Whereas in an environmental monitoring situation network nodes are more likely to be physically difficult to get to once deployed, and longevity of battery power is highly important.
 
-With these considerations, performance metrics given for particular algorithms may not give a fair comparison, as algorithms optimised for low power consumption have a very different purpose to those optimised for rapid recovery. Because of this a common platform for comparison between approaches to self-healing is desired.}
+With these considerations, performance metrics given for particular algorithms may not give a fair comparison, as algorithms optimised for low power consumption have a very different purpose to those optimised for rapid recovery. Because of this a common platform for comparison between approaches to self-healing is desired. This project aims to develop such a platform and to evaluate it using existing approaches to self-healing. Finally concluding with suggestions for future developments in the field of self-healing wireless sensor networks and further development of the simulation platform.}
 
 \dedication{}
 
@@ -43,6 +43,12 @@ With these considerations, performance metrics given for particular algorithms m
 \chapter{Introduction}
 \label{cha:Introduction}
 \pagenumbering{arabic}
+
+Interest in embedded systems and their applications is ever growing in our society. In recent years the cost of developing small systems on chip and running software on embedded computing platforms has plummeted. This has particularly driven the so called `Internet of Things'; filling the world with Internet connected devices to analyse, report on, and control any system in any location from any other remote location. For many of these devices, alongside providing convenience to their users, the goal is collecting data from the environment. This data may be used to provide insight into how we interact with the world, to improve and guide development of infrastructure, or for many other applications.
+
+Wireless Sensor Networks are one specific area of this domain with a wide variety of applications for data gathering within a region of interest. The provide an independent system than can be deployed in any location from public buildings to forests to disaster zones. One consequence of this is that the networks need to be highly adaptable, and are often designed for bespoke situations. If there are changes to the environment they are in the networks need to be able to cope and continue their mission critical objectives. Because wireless sensor networks communicate through multi-hop routing, if links in the communication fail the network becomes dysfunctional and data will be lost from any network partition separate from the sink or root node.
+
+To combat this self-healing processes have been developed for wireless sensor networks. Often the deployment of nodes is done into inaccessible locations, so returning to manually adapt the network is not possible or desirable. One of the key advantages of wireless sensor networks is their low cost; often to the extent of disposability. The largest proportion of this cost is the deployment process, so if increasing the development costs fractionally to include self-healing can provide a longer lasting, more reliable network that needs no further intervention once deployed is negligible compared to the advantages.
 
 \section{Project Aims}
 
@@ -169,6 +175,7 @@ PADRA \citep{Akkaya2008} also aims to restore connectivity to a local area after
 
 RIM (Recovery through Inward Motion) \citep{Younis2010} improves upon DARA and PADRA which each need 2-hop knowledge of the network to only requiring 1-hop knowledge on each node. This significantly reduces the network overhead for maintaining the required knowledge of the network topology, however the simplicity means that the distance travelled by the nodes is greater in larger networks for RIM than for DARA or PADRA. Calculating and transmitting a lot of detailed information is often considered too much overhead for low-power, low-complexity systems, particularly if the network can change often or easily. Depending on the application for the WSN the communication overhead to maintain the topology data could be justified over the generally more efficient algorithm.
 
+% Mum
 % @TODO : add an example to explain the above point
 
 Another flaw in RIM is that it assumes and requires only one node failure at a time. Whilst this may be the case, failures in WSNs are most commonly battery depletion, which is likely to occur at similar times across the network, or random failure due to environmental conditions, which could happen at any time to one or multiple nodes.
@@ -300,7 +307,9 @@ Almost all algorithm evaluation in the literature is done by simulation. Whilst 
 
 % JAMES
 % Generally, add some additional diagrams, particularly to illustrate
-%the behaviour of your more complex protocols such as SFRA
+% the behaviour of your more complex protocols such as SFRA
+%
+% done
 
 \chapter{Problem Analysis}
 \label{cha:Problem}
@@ -502,6 +511,16 @@ Deployed nodes & Minimum range & Mean connected nodes & Std. Deviation \\ \midru
 The minimum range deemed suitable for this area for the number of deployed nodes is presented in table~\ref{tab:nodeRange}. As can be seen, these values are much larger parameters than most of the simulations run by \citeauthor*{Younis2010}. It would seem that their random deployments are either non-random enough to create a connected network, or their results for low density networks are incredibly sparse. To test this scenario on my platform the values from table~\ref{tab:nodeRange} were used as the network parameters.
 
 \subsection{Multi Node Failure}
+
+A multi node failure is as likely to occur as a single failure, if not more so. Yet recovery from such a failure is much more complex. As we have seen, until more recent developments in self-healing, very few algorithms were designed to be able to recover from a multi node failure, specifically discounting it as unlikely or too complex to be within scope for their development. The SFRA algorithm completely restructures the topology of the network to combat this issue, leaving behind many previous assumptions and providing a relatively simple solution to the complex problem.
+
+There are a few variations of this scenario. Firstly and most simply is sequential failing nodes, this could be considered as repeated single node failures within a single simulation run. This should not present any particularly new challenges to systems that can recover from single node failures, however the assumptions made in their development may cause problems for recovery.
+
+Secondly simultaneous node failure in distinct regions of the network. Again this should present no further challenge than the single node failure if the nodes a separated by a large enough distance. The challenge appears when they are close enough that a node is required in the recovery for both failed nodes. This challenge was beyond algorithms such as DARA and RIM, and simply not answered for them.
+
+Thirdly regional failure. This is where an entire region of nodes fails simultaneously and is the common consequence from an environmental change, for example, a landslide occurring due to an earthquake that destroys the nodes monitoring that area. In practice it may be unwise to attempt recovery into a lost region if the destructive event is repeated, or has left a region in a state where deployment is not possible, such as lava flow from an erupted volcano.
+
+Again the goal of these scenarios is to recover to a fully connected state with adequate coverage of the area of interest.
 
 \subsection{Further Scenarios}
 
