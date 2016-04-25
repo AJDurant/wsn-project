@@ -251,6 +251,7 @@ As discussed previously, connectivity and coverage are both important to WSNs. T
 Most distribution / relocation algorithms require knowledge of the node location. Investigation into this is outside the scope of this paper, however there are many methods of obtaining location from GPS receivers to self-localisation algorithms that are well summarised by \citet*{Hu2004} and \citet*{Mao2007}.
 
 \section{Review of evaluation techniques for WSNs}
+\label{sec:simReview}
 
 % JAMES
 % 2.4 Evaluation techniques: As we discussed last time, this should be
@@ -322,6 +323,10 @@ This chapter specifies what the project aims to achieve, and the requirements an
 This project aims to practically and critically evaluate approaches to self-healing in wireless sensor networks. A reference platform for implementing and testing self-healing algorithms will be designed and implemented; this platform will allow comparisons to be made between different approaches within a single environment thereby providing a fair contrast between the algorithms themselves.
 
 An example algorithm will be presented and critical analysis of its design and the evaluation presented by its designers will be conducted. This will provide a structure for obtaining and presenting results from the simulation platform for further algorithm comparison. The scenarios presented will be based upon those found to be common in the literature.
+
+A simulation rather than hardware platform is chosen for a number of reasons. As presented in section~\ref{sec:simReview}: hardware deployments are difficult and costly and extracting the data required for the evaluation metrics becomes a challenge within itself; particularly without affecting the performance of the rest of the system. With simulation all metrics can be gathered without side effects, and with considered design they can accurately emulate real-world environments. Finally the size of deployment is a large factor, simulation can relatively easily run large networks that would be infeasible to create during the evaluation stage of system development. The evaluator may not have access to much if any hardware, whereas anyone can run a simulation.
+
+Experiments on hardware did take place in the preliminary stages of investigation, however the above issues were encountered and the time required to implement a general enough platform for comparison with the simulation platform was too great to be feasible within this project.
 
 % Localisation assumption
 The scope of the platform is to accurately simulate communication and power use of the nodes as these are the primary factors affecting longevity of the network and recovery from failure. It is assumed that the nodes have an awareness of their own location, and that could be provided in a number of different ways that are outside the scope of this project.
