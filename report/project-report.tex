@@ -360,11 +360,19 @@ Additionally the project will attempt to:
 \chapter{Design and Implementation}
 \label{cha:Design}
 
+In this chapter the system design are architecture are described including the decisions made for their development. Firstly the platform architecture is developed drawing upon practices seen in the literature review, then the implementation of self-healing algorithms within the platform is described. Finally scenarios for evaluation are explained to show how the algorithms can be analysed and critiqued.
+
 \section{Platform Architecture}
 
 To build the simulation platform the PtolemyII VisualSense framework \citep{Baldwin2005} was used as it provides a full simulation package with the flexibility and detail to simulate anything that can be modelled. The actor based simulation enables fast prototyping of architectures that can then be developed into optimised Java components. I also had prior experience with PtolemyII so it required less familiarisation time.
 
+Many other simulation platforms are available with different advantages and disadvantages as seen in section~\ref{sec:simReview}. TOSSIM \citep{Levis2003} from TinyOS by \citet{Levis2005} was considered during initial investigation when a simultaneous hardware and simulation platform was being considered as this would enable a single code base for development. However the difficulties on hardware development mentioned previously, alongside the lack of existing structures within TOSSIM resulted in it being rejected. TOSSIM is designed as a low level simulation for TinyOS's execution ``rather than simulating the real world'', and real world simulation is one of the goals of this project.
+
+PtolemyII provides a large number of existing components and an easy to use visualisation so that the state and topology of the network can be observed throughout simulation, this has lead to interesting discoveries which will be discussed later.
+
 The architecture itself is based upon \citet{Rosello2009} using finite state machines (FSMs) for each key component: Communication, Motion, Power Processing, and Sensing. This modular approach ``allows dividing and encapsulating the functionalities included in the node'' which is very important for constructing a general use platform. It also allows individual modules to be worked on and improved individually, they can be changed and swapped out without affecting the rest of the system. VisualSense FSMs can be constructed in layers, where each state may have a state machine or system model of its own. This layering allows highly complex state machines to be implemented much more simply and for different functionality to easily be modelled within different states. This architecture design is based upon real hardware which, whilst different from the hardware within this project, shows the same goal of an accurate hardware simulation model.
+
+Using the actor model entirely can lead in inefficient systems as it constructs a very large number of objects that must intercommunicate to perform even the simplest tasks. PtolemyII alleviates this through the ability to create your own actors purely in Java code, this allows more efficient processing within single components. The initial design of most components within the platform will be using the VisualSense actors, but this can then be developed into single Java actors; providing the desired modularity is retained.
 
 \subsection{Communication}
 
