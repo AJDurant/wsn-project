@@ -403,7 +403,7 @@ Figure~\ref{fig:node} is the internal structure of a node showing its parameters
 
 The communication module interfaces with the outside world. It is linked directly to the wireless outer ports of the node. It controls what messages are received by the processor and assembles messages from the processor into transmissions into the network. The initial implementation of this module is relatively simplistic, rejecting messages that are not sent to it and sending messages either as broadcast or to the parent node. Further development should allow messages to be sent to any destination and more in-depth modelling of reception and transmission patterns for wireless antennae and communication. However, data messages need only reach the root node for logging in most applications so the decision was made to implement this simple routing structure.
 
-The power consumption model is also ideal and therefore unrealistic, as it should have to turn the radio on to send and receive messages, and off to sleep and conserve power. Currently the communication module is able to receive messages at any time, and outputs the standard consumption rate on message transmission and reception. The state machine should be used to signify transmission, reception and sleep state with the relevant power consumption at a constant level over time within each state.
+The power consumption model is also ideal and therefore unrealistic, as it should have to turn the radio on to send and receive messages, and off to sleep and conserve power. Currently the communication module is able to receive messages at any time, and outputs the standard consumption rate on message transmission and reception. The state machine should be used to signify transmission, reception and sleep state with the relevant power consumption at a constant level over time within each state. A common schedule for this is to activate once per minute with a 50ms activation time, and listening / transmission time depending upon the message size required. Modelling communication in this way would drastically change the power consumption simulation to have a much greater realism.
 
 \begin{figure}
  \centering
@@ -411,6 +411,8 @@ The power consumption model is also ideal and therefore unrealistic, as it shoul
     \caption{Internals of the Communication Module}
     \label{fig:commInternals}
 \end{figure}
+
+Further, the communication channel model is overly simplistic. VisualSense, without additional implementation, does not model transmission collisions as all inter-actor communication takes place instantaneously. To model this the transmission time would need to be calculated from the message size and any transmissions that took place simultaneously would need to be dropped by the receiver due to the channel conflict. Communication range is modelled in the channel, but conflicts, power dissipation, and external interference are not.
 
 \subsection{Motion}
 
