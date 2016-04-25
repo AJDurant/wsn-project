@@ -374,17 +374,70 @@ The architecture itself is based upon \citet{Rosello2009} using finite state mac
 
 Using the actor model entirely can lead in inefficient systems as it constructs a very large number of objects that must intercommunicate to perform even the simplest tasks. PtolemyII alleviates this through the ability to create your own actors purely in Java code, this allows more efficient processing within single components. The initial design of most components within the platform will be using the VisualSense actors, but this can then be developed into single Java actors; providing the desired modularity is retained.
 
+\begin{figure}
+ \centering
+    \includegraphics[width=\textwidth]{figures/nodeModel.png}
+    \caption{Overview of the platform annotated with the communication topology between nodes.}
+    \label{fig:nodeModel}
+\end{figure}
+
+The platform with 5 nodes is shown in figure~\ref{fig:nodeModel} which has been annotated to show the multi-hop connection topology from parent to child nodes. Node 1, the root node, is the sink node where data would be exported from the network to the external computers logging data. All data messages are passed back to here via multi-hop routing. It can be clearly seen here how node failure would cause partitioning, if node 2 was to fail then nodes 4 and 5 would no longer be connected to the root node as can be seen by their communication range radii. This topology was chosen as it provides the shortest path to the root from any node.
+
+\begin{figure}
+ \centering
+    \includegraphics[width=\textwidth]{figures/Node.png}
+    \caption{The internals of an individual node showing links between the modules.}
+    \label{fig:node}
+\end{figure}
+
+Figure~\ref{fig:node} is the internal structure of a node showing its parameters and the interconnections between modules. The modules themselves are modal actors with internal finite state machines as described above. Within these further composites are formed by connecting other actors together, each module is expanded upon in the following subsections. In the figures of the finite state machines bold outlined states are the initial state, green state have internal refinements, and double outlined states are final. The guard conditions shown on the transitions control state changes. Transitions to the dead and failed states are immediate, not waiting for any internal computation to complete.
+
 \subsection{Communication}
 
-The communication module interfaces with the outside world. It is linked directly to the wireless outer ports of the node. It controls what messages are received by the processor and assembles messages from the processor into transmissions into the network. The initial implementation of this module is relatively simplistic, rejecting messages that are not sent to it and sending messages either as broadcast or to the parent node. Further development should allow messages to be sent to any destination and more in-depth modelling of reception and transmission patterns for wireless antennae and communication.
+\begin{figure}
+ \centering
+    \includegraphics[width=0.6\textwidth]{figures/communication_Controller.png}
+    \caption{Finite State Machine of the Communication Module}
+    \label{fig:commControl}
+\end{figure}
+
+The communication module interfaces with the outside world. It is linked directly to the wireless outer ports of the node. It controls what messages are received by the processor and assembles messages from the processor into transmissions into the network. The initial implementation of this module is relatively simplistic, rejecting messages that are not sent to it and sending messages either as broadcast or to the parent node. Further development should allow messages to be sent to any destination and more in-depth modelling of reception and transmission patterns for wireless antennae and communication. However, data messages need only reach the root node for logging in most applications so the decision was made to implement this simple routing structure.
 
 The power consumption model is also ideal and therefore unrealistic, as it should have to turn the radio on to send and receive messages, and off to sleep and conserve power. Currently the communication module is able to receive messages at any time, and outputs the standard consumption rate on message transmission and reception. The state machine should be used to signify transmission, reception and sleep state with the relevant power consumption at a constant level over time within each state.
 
+\begin{figure}
+ \centering
+    \includegraphics[width=\textwidth]{figures/communicationInternals.png}
+    \caption{Internals of the Communication Module}
+    \label{fig:commInternals}
+\end{figure}
+
 \subsection{Motion}
+
+\begin{figure}
+ \centering
+    \includegraphics[width=\textwidth]{figures/motion_Controller.png}
+    \caption{Finite State Machine of the Motion Module}
+    \label{fig:motionControl}
+\end{figure}
 
 The motion module provides localisation and movement for the node. As localisation is outside of the scope of this project it is simply assumed that the node is aware of its location by some means that has been abstracted away from. VisualSense provides a location parameter for each actor that can be read and set, so this is used by the module. The current location is periodically updated and checked against a target location which can be set. When the target is set to a location that the node is not currently at the module causes the node to move towards the target over time; this is done by incrementing/decrementing the location parameter of the node towards the target value. By changing location by small amounts over time the speed of the node motion can be controlled by the module instead of simply jumping to the target which is unrealistic.
 
+\begin{figure}
+ \centering
+    \includegraphics[width=\textwidth]{figures/motionInternals.png}
+    \caption{Internals of the Motion Module}
+    \label{fig:motionInternals}
+\end{figure}
+
 \subsection{Power}
+
+\begin{figure}
+ \centering
+    \includegraphics[width=0.6\textwidth]{figures/power_Controller.png}
+    \caption{Finite State Machine of the Power Module}
+    \label{fig:powerControl}
+\end{figure}
 
 The power module takes an input from each of the other modules as they work and reduces its stored power level by their consumption over time until the energy level reaches 0. At this point the battery is depleted and it sends out a `Dead' signal. All of the modules have alive states and a single dead state that is the final state. At any point if a `Dead' signal is received the modules should transition immediately to the dead state which ceases all computation of that module. The power level and consumption rates of each component are customisable on each node. They are set in my tests using the Memsic IRIS node data-sheet \citep{Memsic2011}. These consumption rates are shown in table~\ref{tab:powerRates}.
 
@@ -401,6 +454,13 @@ Motion          & 2500                        \\ \bottomrule
 \caption{Power consumption rates of the various node modules}
 \label{tab:powerRates}
 \end{table}
+
+\begin{figure}
+ \centering
+    \includegraphics[width=\textwidth]{figures/powerInternals.png}
+    \caption{Internals of the Power Module}
+    \label{fig:powerInternals}
+\end{figure}
 
 \subsection{Processing}
 
@@ -422,6 +482,13 @@ The processor has three periodic tasks that are controlled by the clocks in the 
 When messages are received from other nodes application data is forwarded on to the parent, eventually reaching the root, and heartbeat messages are stored in a neighbour data store. As the heartbeat period across the network is known the time between heartbeats from neighbours can be used to check if they are still alive --- the reasoning behind the naming of the heartbeat protocol. This time-out is calculated to be larger than the heartbeat period to reduce the likelihood of transient failures. When the neighbour check is carried out the data store of neighbours is update with the alive state for each neighbour. The processor is then able to read this information to trigger recovery.
 
 \subsection{Sensing}
+
+\begin{figure}
+ \centering
+    \includegraphics[width=\textwidth]{figures/sensor_Controller.png}
+    \caption{Finite State Machine of the Sensor Module}
+    \label{fig:sensorControl}
+\end{figure}
 
 The sensing module is the simplest: it outputs an environment measurement when triggered, this models the behaviour of reading from a sensor board and the power consumption required to do so and gives data to send in the periodic application messages.
 
