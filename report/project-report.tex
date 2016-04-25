@@ -561,7 +561,9 @@ Using the pseudocode the algorithm was implemented to run when the neighbour che
 
 \lstinputlisting[language=Java,firstlineandnumber=60,lastline=89,widthgobble=3,float,caption={Java implementation of RIM},label={lst:RIM}]{../sim/actor/NodeProcessorRIM.java}
 
-The implementation of RIM (algorithm~\ref{alg:RIM}) can be seen in listing~\ref{lst:RIM} which is run periodically for each neighbour of a node.
+The implementation of RIM (algorithm~\ref{alg:RIM}) can be seen in listing~\ref{lst:RIM} which is run periodically for each neighbour of a node. My implementation differs slightly as it does not implement the ``do-not-move'' behaviour. Therefore if a leaf node fails the algorithm will send a node to recover that will not return. However this behaviour should not affect the success of recovery due to cascaded motion of the other nodes, and actually improves the sustained coverage of the network. It is also unclear whether the algorithm continues to run detecting failed nodes whilst in motion. In my implementation all nodes are periodically checked and if they are detected as failed then the rest of the algorithm is executed. This can cause one recovery action to override another depending on the \variable{I\_Already\_Reconnected} guard. Whether or not \variable{I\_Already\_Reconnected} should be reset upon post-recovery stabilisation is unclear, but it is assumed not due to the design being for single-node recovery only. It would be advantageous to multi-node recovery if it could be reset as it allows cascaded motion to occur.
+
+These differences should not affect the evaluation of RIM as the overall recovery process is unchanged. And the assumptions made over unspecified behaviour of the system outside of this algorithm are an integral part of an independent implementation and evaluation. The algorithm documentation should provide everything that is needed for it to be implemented and should deal appropriately with any assumptions that do need to be made; these should not affect the performance of the algorithm. In this case I would have expected specification over continued detection of failures during recovery as it does change the behaviour.
 
 %\subsection{Simultaneous Failures Recovery Approach (SFRA)}
 
@@ -671,6 +673,11 @@ The 100 node network shows a similar trend, and all runs finished with nodes sti
 
 \chapter{Conclusions}
 \label{cha:Conclusion}
+
+% James
+%  Generally stress in introduction and conclusion which aspects of your project development are unique and novel, e.g. an independent reimplementation of a protocol from the literature.
+%
+% Write the conclusion in a more positive tone, stressing how have considered how you can correct any flaws and what you have discovered about the RIM protocol e.g. its oscillation behaviour in certain circumstances.
 
 % RIM data seems accurate, but testing methods do not seem overly robust
 
