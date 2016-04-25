@@ -145,7 +145,7 @@ Due to the differences in applications a number of application specific methods 
         \caption{NETGEN mesh simplification with INRCDTS algorithm; 60 nodes.}
         \label{fig:inrcdts}
     \end{subfigure}
- \caption{Mesh generation and simplification.}
+ \caption[Mesh generation and simplification.]{Mesh generation and simplification. Reproduced from \citet{Derr2013}.}
  \label{fig:netgen-inrcdts}
 \end{figure}
 
@@ -185,7 +185,7 @@ Another flaw in RIM is that it assumes and requires only one node failure at a t
 \begin{figure}
  \centering
     \includegraphics[width=0.6\textwidth]{figures/rim.png}
-    \caption{(a)--(d) An example for how RIM restoration process; each shaded node moves based on the position of its neighbours, denoted in double-lined circles.}
+    \caption[(a)--(d) An example for how RIM restoration process; each shaded node moves based on the position of its neighbours, denoted in double-lined circles.]{(a)--(d) An example for how RIM restoration process; each shaded node moves based on the position of its neighbours, denoted in double-lined circles. Reproduced from \citet{Younis2010}.}
     \label{fig:rim}
 \end{figure}
 
@@ -200,7 +200,7 @@ SFRA (Simultaneous Failures Recovery Approach) \citep{Alfadhly2012} is designed 
 \begin{figure}
  \centering
     \includegraphics[width=\textwidth]{figures/sfra.png}
-    \caption{Detailed example to illustrate how SFRA algorithm restores connectivity after multiple nodes fail.}
+    \caption[Detailed example to illustrate how SFRA algorithm restores connectivity after multiple nodes fail.]{Detailed example to illustrate how SFRA algorithm restores connectivity after multiple nodes fail. Reproduced from \citet{Alfadhly2012}.}
     \label{fig:sfra}
 \end{figure}
 
@@ -338,6 +338,7 @@ The platform itself needs to be structured in such a way that it can be easily m
 The implementation should be based upon real hardware, and systems found in the literature, however adaptations may be made to achieve the aims of this project.
 
 \section{Objectives}
+\label{sec:objectives}
 
 This section presents the key and optional objectives for the project. The key objectives should all be achieved to result in a usable research output from the project. And the optional objectives extend the research and provide additional confidence in the platform for use with other algorithms and in other scenarios.
 
@@ -597,7 +598,7 @@ Deployed nodes & Minimum range & Mean connected nodes & Std. Deviation \\ \midru
 The minimum range deemed suitable for this area for the number of deployed nodes is presented in table~\ref{tab:nodeRange}. As can be seen, these values are much larger parameters than most of the simulations run by \citeauthor*{Younis2010}. It would seem that their random deployments are either non-random enough to create a connected network, or their results for low density networks are incredibly sparse. To test this scenario on my platform the values from table~\ref{tab:nodeRange} were used as the network parameters.
 
 \subsection{Multi Node Failure}
-
+\label{subsec:multiFailScenario}
 A multi node failure is as likely to occur as a single failure, if not more so. Yet recovery from such a failure is much more complex. As we have seen, until more recent developments in self-healing, very few algorithms were designed to be able to recover from a multi node failure, specifically discounting it as unlikely or too complex to be within scope for their development. The SFRA algorithm completely restructures the topology of the network to combat this issue, leaving behind many previous assumptions and providing a relatively simple solution to the complex problem.
 
 There are a few variations of this scenario. Firstly and most simply is sequential failing nodes, this could be considered as repeated single node failures within a single simulation run. This should not present any particularly new challenges to systems that can recover from single node failures, however the assumptions made in their development may cause problems for recovery.
@@ -609,7 +610,7 @@ Thirdly regional failure. This is where an entire region of nodes fails simultan
 Again the goal of these scenarios is to recover to a fully connected state with adequate coverage of the area of interest.
 
 \subsection{Further Scenarios}
-
+\label{subsec:otherScenarios}
 There are several other scenarios that could be developed for the platform. One particularly useful scenario is using an unreliable communication channel. Doing so would produce a more realistic transmission model and show the resilience to real-world problems in communication for the algorithm under test. All kinds of outside actors can affect radio transmission; interference from other sources or even from within the network itself is a major issue in all forms of wireless communication. As discussed in the literature, the radio pattern for transmission and reception vary greatly from the ideal fixed radius circle used in the previous scenarios. Modelling this degradation would be another challenge, but a worthwhile development to improve the simulation platform.
 
 The wireless channel model in PtolemyII provides power loss modelling and probabilistic transmission loss alongside the limited range properties which have been used. And within VisualSense collision detection is possible by providing a message size / transmission time per transmission. Using these to extend the communications module of the nodes could greatly increase the resemblance to real world environments and allow testing in harsh settings during the development of a self-healing algorithm.
@@ -669,7 +670,7 @@ Despite having raised some concerns over the original process and evaluation pre
 
 The 100 node network shows a similar trend, and all runs finished with nodes still oscillating their location. This seems to be a fairly major flaw in the algorithm as it is hugely wasteful of energy, and I suspect that the behaviour would be exhibited on any network with high density or a high node count. However discovering the flaw shows the strength of visual simulation, as it is obvious to any observer, whereas it would be unlikely to be discovered by purely analysing log file output unless it was specifically looked for. It is likely that the statistics presented on RIM would have been automatically generated from the logs without further analysis for oscillations or for network connectivity as previously mentioned.
 
-\section{Multi Node Failure}
+% \section{Multi Node Failure}
 
 \chapter{Conclusions}
 \label{cha:Conclusion}
@@ -679,11 +680,56 @@ The 100 node network shows a similar trend, and all runs finished with nodes sti
 %
 % Write the conclusion in a more positive tone, stressing how have considered how you can correct any flaws and what you have discovered about the RIM protocol e.g. its oscillation behaviour in certain circumstances.
 
+Although the energy consumption model is less accurate than desired, the simulation platform successfully models self-healing algorithms and is able to provide new insights into the performance of different solutions to the problem. A number of key contributions have been made that will be summarised after reviewing the objectives set out in section~\ref{sec:objectives}.
+
+\section{Completed Objectives}
+
+\subsection{Key Objectives}
+\begin{enumerate}
+% \item develop a simulation platform for wireless sensor networks, providing wireless communication, power management / monitoring, and movement control for the nodes.
+\item The simulation platform developed with VisualSense provides a generic model for wireless sensor nodes with the flexibility to extend their basic processing for any self-healing algorithm.
+% \item implement a self-healing algorithm within the platform and run it in a failure scenario.
+\item The RIM implementation runs on top of the platform and is able to provide network recovery from the single node failure scenario.
+% \item gather metrics from the scenario simulation.
+\item The platform provides data logs which provide information from the individual nodes which is collated and analysed by Octave.
+% \item use the metrics to evaluate both the platform and the algorithm and to compare the algorithm with its original results.
+\item Analysis of the data gathered from running the scenario has lead to a number of observations of both RIM and self-healing in general, this is expanded further in section~\ref{sec:keyContrib}.
+\end{enumerate}
+
+\subsection{Optional Objectives}
+\begin{enumerate}
+% \item run further scenarios such as multi-node failure and unreliable data channels.
+\item The specification for additional scenarios is defined, but the platform does not implement them.
+% \item implement further algorithms and compare between those run on the platform.
+\item Additional algorithms have not been implemented but support exists within the platform to do so in future with no further modification required.
+\end{enumerate}
+
+\section{Key Contributions}
+\label{sec:keyContrib}
+
 % RIM data seems accurate, but testing methods do not seem overly robust
+Through the implementation and running of RIM with a graphical simulation several points have been raised that were either not discovered or not described in its original presentation.
+
+Firstly the node location edge cases that cause oscillation of node movement. This is a fairly major flaw as not only does it prevent full recovery of the network, but also is hugely wasteful of the limited energy the nodes have available. Oscillations like this are difficult to detect so protection against them needs to be inherent in the algorithms to prevent them from ever occurring. It would seem from RIM that the main cause of the oscillation from the algorithm it itself to prevent unnecessary movement, which it does in many situations, however a better preventative measure should be made to combat both situations.
+
+Secondly, from the descriptions given of the simulated deployments: random dispersement of nodes in a 1000x1000m area with varying numbers of nodes from 25 to 250 and communication ranges from 25m to 200m, deployments would be produced that are highly partitioned and therefore not involve many of the nodes in any part of the process. If this is the case it would skew the results making them inaccurate and unrealistic for the reported parameters.
 
 % Major flaw in simulation platform for energy consumption, but overall a useful platform
+The simulation platform created does provide all that it is designed to do, despite the flaw in energy measurement, all different self-healing algorithms can be implemented on top of it, and the results produced will provide a fair comparison between them. This was the primary goal of the project. And with a relatively small amount of modification the energy consumption for each module can be improved to match real-world implementations. The basic platform is there to be built upon and improved over time, but even now it can facilitate evaluation of self-healing algorithms.
 
+\section{Future Work}
 % Many improvements could be made, and more scenarios developed.
+As mentioned previously there are many iterative improvements that could be made to the platform. Primarily to the energy consumption of the communication module. By changing this to follow the behaviour of wake-sleep cycles used commonly in wireless sensor networks, the lifetime of the simulated system would dramatically increase to match those of real-world applications. Secondly in the communication module, applying more detailed properties of wireless channels, particularly transmission collisions, would create a much more realistic model for communications. Using varying power loss factors would also improve realism.
+
+Additional scenarios, such as those described in sections~\ref{subsec:multiFailScenario} and \ref{subsec:otherScenarios}, would provide a wider range of tests for the implemented algorithms giving a more in-depth analysis. These would particularly show the robustness of the recovery algorithm in dealing with large scale failures and lossy communications, which are fairly common situations.
+
+\section{Closing Remarks}
+
+Throughout this project the simulation platform has just been called that, however following the various algorithms researched and other platforms and frameworks used a suitable name should be given to it, therefore it will be named SimPl.
+
+The aim of this project was to develop a system through which self-healing for wireless sensor networks could be evaluated. SimPl achieves this goal providing a platform on which any algorithm can be implemented and evaluated in a variety of scenarios.
+
+I hope it also provides a good introduction to self-healing and the factors that should be considered when designing a robust wireless sensor network. Throughout the research and development a number of issues in the field were brought to my attention alongside the need for a common platform, particularly the lack of comparison and development on real hardware to demonstrate theoretical systems working in practice. These themes were mentioned in the literature review, but too far reaching to be further developed upon, I hope that they can be addressed in the future and that SimPl may be able to provide a basis for realistic simulation moving to real-world testing.
 
 \bibliography{project-report}
 
