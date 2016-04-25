@@ -38,7 +38,7 @@
 
 % Koma-script report style
 \PassOptionsToPackage{twoside}{typearea}
-\LoadClass[fontsize=11pt,a4paper,twoside,abstracton,numbers=noenddot,BCOR13mm,DIV=calc]{scrreprt}
+\LoadClass[fontsize=11pt,a4paper,twoside,abstract=on,numbers=noenddot,BCOR13mm,DIV=calc]{scrreprt}
 
 \RequirePackage[T1]{fontenc} % prevents < in text mode turning into
 \RequirePackage{textcomp}    % ?', etc
@@ -136,7 +136,7 @@
              .%
 }
 
-\let\old@abstract\
+\let\old@abstract\abstract
 \let\endold@abstract\endabstract
 \renewcommand{\abstract}[1]{\newcommand{\UoYCSP@abstract}{#1}}
 \renewcommand{\endabstract}{}
