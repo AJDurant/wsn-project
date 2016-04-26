@@ -737,8 +737,37 @@ Number of Nodes & Wall clock Runtime \\ \midrule
 \label{tab:runtimes}
 \end{table}
 
-% \section{Multi Node Failure}
+\section{Multi Node Failure}
 
+Multi-node failure was briefly investigated with RIM producing the results shown in table~\ref{tab:multiResults}. The first multi-node scenario of sequential failing was run for a total of three failures. RIM coped surprisingly well despite being solely for single node failures, the network is fully recovered and reconnected as can be seen in figure~\ref{fig:multiNode}, however four nodes are in a state of oscillation which can be seen in the large distance and energy use values.
+
+\begin{figure}
+ \centering
+    \includegraphics[width=\textwidth]{figures/multiNodePost.png}
+    \caption[Network state post recovery from three sequentially failed nodes.]{Network state post recovery from three sequentially failed nodes. Nodes 6, 10, 17 and 19 are in a state of oscillation.}
+    \label{fig:multiNode}
+\end{figure}
+
+\begin{table}[]
+\centering
+\begin{tabular}{@{}lrl@{}}
+\toprule
+Metric                  & Value    & Units \\ \midrule
+Mean Distance Traveled  & 280.07   & units \\
+Mean Hop Count          & 1.63     &       \\
+Mean Neighbours         & 6.76     &       \\
+Mean Power Use          & 542.67   & mA    \\
+Data Message RX         & 82.19    & \%    \\
+Nodes Moved             & 24       &       \\
+Total Distance Traveled & 6721.8   & units \\
+Total Messages Sent     & 14845    &       \\
+Total Power Use         & 13512124 & mA    \\ \bottomrule
+\end{tabular}
+\caption{Results from 25 node network with multi-node scenario: Three nodes fail sequentially.}
+\label{tab:multiResults}
+\end{table}
+
+\section{Conclusion}
 Overall RIM seems functional, but the caveats with oscillation, and the specification against multi-node recovery would lead to problems in a real-world deployment. The oscillation issues could be solved with minor adaptations to the algorithm. But it is inherently designed for single-node failure recovery and the unspecified behaviour exhibited in such situations would need fundamental changes to solve. Performing these changes would result in an entirely different algorithm. This development can be seen in SFRA \citep{Alfadhly2012} which takes the lessons learned from RIM into an entirely new algorithm specifically designed for simultaneous failures.
 
 \chapter{Conclusions}
@@ -768,7 +797,7 @@ To conclude, the objectives set out in section~\ref{sec:objectives} are reviewed
 \subsection{Optional Objectives}
 \begin{enumerate}
 % \item run further scenarios such as multi-node failure and unreliable data channels.
-\item The specification for additional scenarios is defined, but the platform does not implement them.
+\item The specification for several additional scenarios is defined, and the platform implements multi-node failure scenarios, however not all forms were able to be tested.
 % \item implement further algorithms and compare between those run on the platform.
 \item Additional algorithms have not been implemented but support exists within the platform to do so in future with no further modification required.
 \end{enumerate}
