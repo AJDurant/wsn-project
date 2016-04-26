@@ -10,10 +10,10 @@
 \documentclass[authoryearcitations]{UoYCSproject}
 \author{Andrew Durant}
 \title{Developing a platform for common evaluation of self-healing in wireless sensor networks}
-%\date{}
+\date{\today}
 \supervisor{James Harbin}
 \CSESE
-\wordcount{0}
+\wordcount{11598}
 
 \includes{}
 
@@ -177,7 +177,7 @@ No consideration is made for the energy cost of transmitting additional messages
 In \citet{Abbasi2007}'s seminal paper DARA (a Distributed Actor Recovery Algorithm) is introduced. This develops a localised scheme to restore a network of mobile nodes when it has become partitioned due to a node failure. The distributed nature of the algorithm avoids involving every single node, only requiring the local nodes to respond. The algorithm selects a node to replace a failed node and coordinates the local nodes to relocate to rebuild the network. As nodes relocate they may cause other partitioning, but this is dealt with in the same way forming a chain reaction until the entire network is reconnected. The self-healing process requires no supervision or centralised control. The use of cascaded movement reduces the overall movement of nodes as instead of entire blocks moving to recover only a few nodes are needed. This contributes to the main goal of minimising the total distance moved by the network nodes.
 However, DARA produces particularly bad results when used with cyclic network topologies. When the node movement is cascaded the entire cycle of nodes will be moved, when only one may need to be for the optimal solution. To combat this a variant is produced that sends flooding messages to check connectivity before moving. This increases message overhead, but can significantly reduce node movement which tends to be more power hungry.
 
-PADRA (Partition Detection and Recovery Algorithm) \citep{Akkaya2008} also aims to restore connectivity to a local area after a node has failed, whilst minimising the total distance travelled, and without external supervision or involvement. However unlike DARA it provides the functionality to detect the cut-vertices that are the cause of partitioning. PADRA determines potential cut vertices in advance by forming a connected dominating set of the whole network. The dominating set is also used for selection of recovery nodes as the dominating node moves to recover the network. Through this PADRA improves significantly upon DARA towards total travel distance of the optimal cascade model.
+PADRA (Partition Detection and Recovery Algorithm) \citep{Akkaya2008,Akkaya2010} also aims to restore connectivity to a local area after a node has failed, whilst minimising the total distance travelled, and without external supervision or involvement. However unlike DARA it provides the functionality to detect the cut-vertices that are the cause of partitioning. PADRA determines potential cut vertices in advance by forming a connected dominating set of the whole network. The dominating set is also used for selection of recovery nodes as the dominating node moves to recover the network. Through this PADRA improves significantly upon DARA towards total travel distance of the optimal cascade model.
 
 RIM (Recovery through Inward Motion) \citep{Younis2010} improves upon DARA and PADRA which each need 2-hop knowledge of the network to only requiring 1-hop knowledge on each node. This significantly reduces the network overhead for maintaining the required knowledge of the network topology, however the simplicity means that the distance travelled by the nodes is greater in larger networks for RIM than for DARA or PADRA. Calculating and transmitting a lot of detailed information is often considered too much overhead for low-power, low-complexity systems, particularly if the network can change often or easily. Depending on the application for the WSN the communication overhead to maintain the topology data could be justified over the generally more efficient algorithm.
 
